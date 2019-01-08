@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://yoursite.com/2019/01/08/Redis%E5%92%8CMemcached%E6%AF%94%E8%BE%83/</loc>
+    
+    <lastmod>2019-01-08T06:36:16.053Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/01/08/Redis%E7%AE%80%E4%BB%8B/</loc>
+    
+    <lastmod>2019-01-08T06:32:04.017Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/01/08/Git%E4%BD%BF%E7%94%A8%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
+    
+    <lastmod>2019-01-08T06:29:58.885Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/about/index.html</loc>
+    
+    <lastmod>2019-01-08T06:25:50.170Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/08/31/hello-world/</loc>
+    
+    <lastmod>2019-01-08T06:12:54.428Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/index.html</loc>
+    
+    <lastmod>2019-01-08T06:12:22.330Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/categories/index.html</loc>
+    
+    <lastmod>2019-01-08T06:12:21.249Z</lastmod>
+    
+  </url>
+  
+</urlset>

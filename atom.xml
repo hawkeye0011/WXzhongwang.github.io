@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>咸鱼有点闲</title>
+  
+  <subtitle>Dick</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2019-01-08T06:36:16.053Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>Dick Zhong</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Redis和Memcached比较</title>
+    <link href="http://yoursite.com/2019/01/08/Redis%E5%92%8CMemcached%E6%AF%94%E8%BE%83/"/>
+    <id>http://yoursite.com/2019/01/08/Redis和Memcached比较/</id>
+    <published>2019-01-08T06:33:59.000Z</published>
+    <updated>2019-01-08T06:36:16.053Z</updated>
+    
+    <content type="html"><![CDATA[<p>Redis和Memcache都是将数据存放在内存中，都是内存数据库。本文介绍两者的区别。</p><h1 id="Redis和Memcached比较"><a href="#Redis和Memcached比较" class="headerlink" title="Redis和Memcached比较"></a>Redis和Memcached比较</h1><ul><li><p>Memcached是多线程，而Redis使用单线程.</p></li><li><p>Memcached使用预分配的内存池的方式，Redis使用现场申请内存的方式来存储数据，并且可以配置虚拟内存。</p></li><li><p>Redis可以实现持久化，主从复制，实现故障恢复。</p></li><li><p>Memcached只是简单的key与value,但是Redis支持数据类型比较多。</p></li></ul><p>Redis的存储分为内存存储、磁盘存储 .从这一点，也说明了Redis与Memcached是有区别的。Redis 与Memcached一样，为了保证效率，数据都是缓存在内存中。区别的是redis会周期性的把更新的数据写入磁盘或者把修改 操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。</p><p>Redis有两种存储方式(默认:snapshot)</p><ol><li>snapshot<blockquote><p>实现方法是定时将内存的快照(snapshot)持久化到硬盘，<br>这种方法缺点是持久化之后如果出现crash则会丢失一段数据。<br>因此在完美主义者的推动下作者增加了aof方式。</p></blockquote></li></ol><ol start="2"><li>aof<blockquote><p>即append only mode，在写入内存数据的同时将操作命令保存到日志文件，在一个并发更改上万的系统中，命令日志是一个非常庞大的数据，管理维护成本非常高，恢复重建时间会非常长，这样导致失去aof高可用性本意。另外更重要的是Redis是一个内存数据结构模型，所有的优势都是建立在对内存复杂数据结构高效的原子操作</p></blockquote></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Redis和Memcache都是将数据存放在内存中，都是内存数据库。本文介绍两者的区别。&lt;/p&gt;
+&lt;h1 id=&quot;Redis和Memcached比较&quot;&gt;&lt;a href=&quot;#Redis和Memcached比较&quot; class=&quot;headerlink&quot; title=&quot;Redis和
+      
+    
+    </summary>
+    
+      <category term="Redis" scheme="http://yoursite.com/categories/Redis/"/>
+    
+    
+      <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
+    
+      <category term="NOSQL" scheme="http://yoursite.com/tags/NOSQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis简介</title>
+    <link href="http://yoursite.com/2019/01/08/Redis%E7%AE%80%E4%BB%8B/"/>
+    <id>http://yoursite.com/2019/01/08/Redis简介/</id>
+    <published>2019-01-08T06:31:13.000Z</published>
+    <updated>2019-01-08T06:32:04.017Z</updated>
+    
+    <content type="html"><![CDATA[<p>Redis是一个开源的，使用C语言编写，面向“键/值”对类型数据的分布式NoSQL数据库系统，特点是高性能，持久存储，适应高并发的应用场景。Redis纯粹为应用而产生，它是一个高性能的key-value数据库,并且提供了多种语言的API，性能测试结果表示SET操作每秒钟可达110000次，GET操作每秒81000次（当然不同的服务器配置性能不同）。</p><h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><p>Redis是一个开源的，使用C语言编写，面向“键/值”对类型数据的分布式NoSQL数据库系统，特点是高性能，持久存储，适应高并发的应用场景。Redis纯粹为应用而产生，它是一个高性能的key-value数据库,并且提供了多种语言的API，性能测试结果表示SET操作每秒钟可达110000次，GET操作每秒81000次（当然不同的服务器配置性能不同）。</p><p>Redis目前提供五种数据类型：</p><ul><li>string(字符串),</li><li>list（链表）, </li><li>Hash（哈希）,</li><li>set（集合）,</li><li>zset(sorted set)  （有序集合）</li></ul><p>Redis开发维护很活跃，虽然它是一个Key-Value数据库存储系统，但它本身支持MQ功能，所以完全可以当做一个轻量级的队列服务来使用。</p><p>Redis可以做消息队列？</p><blockquote><p>首先，redis设计用来做缓存的，但是由于它自身的某种特性使得它可以用来做消息队列，它有几个阻塞式的API可以使用，正是这些阻塞式的API让其有能力做消息队列；另外，做消息队列的其他特性例如FIFO（先入先出）也很容易实现，只需要一个list对象从头取数据，从尾部塞数据即可；redis能做消息队列还得益于其list对象blpop brpop接口以及Pub/Sub（发布/订阅）的某些接口，它们都是阻塞版的，所以可以用来做消息队列。</p></blockquote><p>对于RabbitMQ和Redis的入队和出队操作，各执行100万次，每10万次记录一次执行时间。测试数据分为128Bytes、512Bytes、1K和10K四个不同大小的数据。<br>实验表明：</p><blockquote><p>入队时，当数据比较小时Redis的性能要高于RabbitMQ，而如果数据大小超过了10K，Redis则慢的无法忍<br>受；出队时，无论数据大小，Redis都表现出非常好的性能，而RabbitMQ的出队性能则远低于Redis。</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Redis是一个开源的，使用C语言编写，面向“键/值”对类型数据的分布式NoSQL数据库系统，特点是高性能，持久存储，适应高并发的应用场景。Redis纯粹为应用而产生，它是一个高性能的key-value数据库,并且提供了多种语言的API，性能测试结果表示SET操作每秒钟可达
+      
+    
+    </summary>
+    
+      <category term="Redis" scheme="http://yoursite.com/categories/Redis/"/>
+    
+    
+      <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
+    
+      <category term="消息队列" scheme="http://yoursite.com/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git使用中的问题</title>
+    <link href="http://yoursite.com/2019/01/08/Git%E4%BD%BF%E7%94%A8%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://yoursite.com/2019/01/08/Git使用中的问题/</id>
+    <published>2019-01-08T06:18:02.000Z</published>
+    <updated>2019-01-08T06:29:58.885Z</updated>
+    
+    <content type="html"><![CDATA[<p>git push失败 fatal: Could not read from remote repository</p><h2 id="阐述问题"><a href="#阐述问题" class="headerlink" title="阐述问题"></a>阐述问题</h2><p>git push失败 fatal: Could not read from remote repository. 因为仓库地址不对。更改地址就可以push了。</p><h3 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git remote -v</span><br><span class="line">$ git remote <span class="built_in">set</span>-url origin XXX</span><br></pre></td></tr></table></figure><h2 id="服务器上的-Git-生成-SSH-公钥"><a href="#服务器上的-Git-生成-SSH-公钥" class="headerlink" title="服务器上的 Git - 生成 SSH 公钥"></a>服务器上的 Git - 生成 SSH 公钥</h2><h3 id="生成-SSH-公钥"><a href="#生成-SSH-公钥" class="headerlink" title="生成 SSH 公钥"></a>生成 SSH 公钥</h3><p>大多数 Git 服务器都会选择使用 SSH 公钥来进行授权。系统中的每个用户都必须提供一个公钥用于授权，没有的话就要生成一个。生成公钥的过程在所有操作系统上都差不多。首先先确认一下是否已经有一个公钥了。SSH 公钥默认储存在账户的主目录下的 ~/.ssh 目录。<br>若想在github中使用的话需要将公钥复制到github&gt;setting&gt;SSH and GPG keys中添加ssh keys。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">生成钥匙</span><br><span class="line">$ ssh-keygen</span><br><span class="line">查看公钥</span><br><span class="line"><span class="variable">$cat</span> ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;git push失败 fatal: Could not read from remote repository&lt;/p&gt;
+&lt;h2 id=&quot;阐述问题&quot;&gt;&lt;a href=&quot;#阐述问题&quot; class=&quot;headerlink&quot; title=&quot;阐述问题&quot;&gt;&lt;/a&gt;阐述问题&lt;/h2&gt;&lt;p
+      
+    
+    </summary>
+    
+      <category term="版本控制工具" scheme="http://yoursite.com/categories/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="Git" scheme="http://yoursite.com/tags/Git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>你好，世界</title>
+    <link href="http://yoursite.com/2018/08/31/hello-world/"/>
+    <id>http://yoursite.com/2018/08/31/hello-world/</id>
+    <published>2018-08-31T09:54:54.000Z</published>
+    <updated>2019-01-08T06:12:54.428Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      
+    
+    </summary>
+    
+      <category term="博客搭建" scheme="http://yoursite.com/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
+    
+    
+      <category term="博客系统" scheme="http://yoursite.com/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+</feed>
