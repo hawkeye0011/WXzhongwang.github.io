@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wxzhongwang.github.io/"/>
-  <updated>2019-01-08T06:36:16.053Z</updated>
+  <updated>2019-01-13T03:34:54.734Z</updated>
   <id>https://wxzhongwang.github.io/</id>
   
   <author>
@@ -17,137 +17,77 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Redis和Memcached比较</title>
-    <link href="https://wxzhongwang.github.io/2019/01/08/Redis%E5%92%8CMemcached%E6%AF%94%E8%BE%83/"/>
-    <id>https://wxzhongwang.github.io/2019/01/08/Redis和Memcached比较/</id>
-    <published>2019-01-08T06:33:59.000Z</published>
-    <updated>2019-01-08T06:36:16.053Z</updated>
+    <title>互联网金融行业数仓分层</title>
+    <link href="https://wxzhongwang.github.io/2019/01/13/%E4%BA%92%E8%81%94%E7%BD%91%E9%87%91%E8%9E%8D%E8%A1%8C%E4%B8%9A%E6%95%B0%E4%BB%93%E5%88%86%E5%B1%82/"/>
+    <id>https://wxzhongwang.github.io/2019/01/13/互联网金融行业数仓分层/</id>
+    <published>2019-01-13T03:34:12.678Z</published>
+    <updated>2019-01-13T03:34:54.734Z</updated>
     
-    <content type="html"><![CDATA[<p>Redis和Memcache都是将数据存放在内存中，都是内存数据库。本文介绍两者的区别。</p><h1 id="Redis和Memcached比较"><a href="#Redis和Memcached比较" class="headerlink" title="Redis和Memcached比较"></a>Redis和Memcached比较</h1><ul><li><p>Memcached是多线程，而Redis使用单线程.</p></li><li><p>Memcached使用预分配的内存池的方式，Redis使用现场申请内存的方式来存储数据，并且可以配置虚拟内存。</p></li><li><p>Redis可以实现持久化，主从复制，实现故障恢复。</p></li><li><p>Memcached只是简单的key与value,但是Redis支持数据类型比较多。</p></li></ul><p>Redis的存储分为内存存储、磁盘存储 .从这一点，也说明了Redis与Memcached是有区别的。Redis 与Memcached一样，为了保证效率，数据都是缓存在内存中。区别的是redis会周期性的把更新的数据写入磁盘或者把修改 操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。</p><p>Redis有两种存储方式(默认:snapshot)</p><ol><li>snapshot<blockquote><p>实现方法是定时将内存的快照(snapshot)持久化到硬盘，<br>这种方法缺点是持久化之后如果出现crash则会丢失一段数据。<br>因此在完美主义者的推动下作者增加了aof方式。</p></blockquote></li></ol><ol start="2"><li>aof<blockquote><p>即append only mode，在写入内存数据的同时将操作命令保存到日志文件，在一个并发更改上万的系统中，命令日志是一个非常庞大的数据，管理维护成本非常高，恢复重建时间会非常长，这样导致失去aof高可用性本意。另外更重要的是Redis是一个内存数据结构模型，所有的优势都是建立在对内存复杂数据结构高效的原子操作</p></blockquote></li></ol>]]></content>
+    <content type="html"><![CDATA[<h1 id="互联网金融行业数仓分层"><a href="#互联网金融行业数仓分层" class="headerlink" title="互联网金融行业数仓分层"></a>互联网金融行业数仓分层</h1><h2 id="专业术语"><a href="#专业术语" class="headerlink" title="专业术语"></a>专业术语</h2><ul><li><p>ODL层 （Operational Data Layer）：操作数据层</p><blockquote><p>外部数据什么样，该层数据就是什么样（关系型数据库、JSON格式等)<br>部分关系型数据可以直接转IDL层</p></blockquote></li><li><p>BDL层 （Base Data Layer）：基础数据层</p><blockquote><p>ODL层经过简单格式化解析后存储到BDL层，常见于JSON日志格式的解析。</p></blockquote></li><li><p>IDL层 （Interface Data Layer）：接口层，也称主题表，宽表</p><blockquote><p>由BDL层经过去重、去噪、字典翻译、空值转化，日期格式化、关联JOIN、维度分析等清洗后的数据。如：用户、产品、绑卡、订单、用户行为等明细数据。</p></blockquote></li><li><p>ADL层（Application Data Layer）：应用层 ，也称数据集市</p><blockquote><p>通常与需求对接，由IDL层基于某些维度的深度加工统计汇总等操作转化而来，涉及到多个主题以及tmp数据之间的关联JOIN后的结果。</p></blockquote></li><li><p>DIC层（Dictionary Data Layer）：字典层</p><blockquote><p>存储一些诸如省、市、县区域表、渠道列表、商品类目等等表数据，可以从数据源直接sqoop生成dic_xxx表，也可以通过odl层转化层dic_表。</p></blockquote></li><li><p>TMP层（Temporary Data Layer）：临时层</p><blockquote><p>存储一些中间计算结果</p></blockquote></li></ul><p><img src="https://upload-images.jianshu.io/upload_images/3763924-bfd47ed0607208d2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p><p>简要说明:</p><blockquote><ol><li>层次间的转换没必要循规蹈矩，按部就班，适当做到灵活，避免重复清洗浪费资源</li><li>ODL层干净的关系型数据可以直接转换为IDL层数据，减少计算量</li><li>ODL层侧重与外部对接，BDL层/TMP层/IDL层侧重清洗，IDL层和ADL层侧重对外提供应用服务</li><li>层数太少不够灵活，太多则在数据推翻重洗耗时，时间成本（一个坑）<br>数据源提供的数据越详细越好，避免后期大量重复的清洗工作。</li></ol></blockquote><h2 id="“星型模型”和“雪花模型”"><a href="#“星型模型”和“雪花模型”" class="headerlink" title="“星型模型”和“雪花模型”"></a>“星型模型”和“雪花模型”</h2><p>简单解释：  </p><ul><li>（1）星型模型：事实表+维度表（区域、类目、性别…)等多表通过预先JOIN冗余到一张宽表里去，常见IDL层。</li><li>（2）雪花模型：在计算的时候，才将事实表跟维度表做join。</li></ul><blockquote><p>现在一般都是采用（1）的模式，为什么呢？   预先计算，挺高性能，避免后续重复计算。CPU和内存的资源永远比磁盘空间宝贵的多。<br>至于（2)的方式，有点就是灵活，不需要太多的重复清洗，但是性能不如（1）.</p></blockquote><h2 id="建设思路"><a href="#建设思路" class="headerlink" title="建设思路"></a>建设思路</h2><blockquote><p>从需求出发，逆推应用层ADL结构，进而推导出它涉及的主题表IDL表结构，再推导可能涉及的基础表BDL表结构，最后分析所需的数据源取自何处。<br>需求包含“明确”需求和“潜在”需求。</p></blockquote><h2 id="开发步骤"><a href="#开发步骤" class="headerlink" title="开发步骤"></a>开发步骤</h2><ol><li>创建ODL、BDL、IDL、ADL层表结构(HQL)</li><li>确定数据抽取方案（增量或全量）</li><li>编写sqoop脚本将data同步到ODL层</li><li>编写ODL-&gt;BDL-&gt;IDL-&gt;ADL层ETL清洗脚本(HQL),注意：清洗的顺序，时间<br>确保上一层的数据稳定，减少对下一层的影响</li><li>编写Hue workflow Ooize脚本</li><li>打通Kylin、FineBI、Hive关系，实现数据可视化、可导出目标,将稳定后所有脚本WIKI上保存一份</li></ol><p>其他相关的请参照原博客</p><p>作者：水星有鱼<br>链接：<a href="https://www.jianshu.com/p/f941967aeee8" target="_blank" rel="noopener">https://www.jianshu.com/p/f941967aeee8</a></p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;Redis和Memcache都是将数据存放在内存中，都是内存数据库。本文介绍两者的区别。&lt;/p&gt;
-&lt;h1 id=&quot;Redis和Memcached比较&quot;&gt;&lt;a href=&quot;#Redis和Memcached比较&quot; class=&quot;headerlink&quot; title=&quot;Redis和
+        &lt;h1 id=&quot;互联网金融行业数仓分层&quot;&gt;&lt;a href=&quot;#互联网金融行业数仓分层&quot; class=&quot;headerlink&quot; title=&quot;互联网金融行业数仓分层&quot;&gt;&lt;/a&gt;互联网金融行业数仓分层&lt;/h1&gt;&lt;h2 id=&quot;专业术语&quot;&gt;&lt;a href=&quot;#专业术语&quot; class=&quot;
       
     
     </summary>
     
-      <category term="Redis" scheme="https://wxzhongwang.github.io/categories/Redis/"/>
+      <category term="数据仓库" scheme="https://wxzhongwang.github.io/categories/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
     
     
-      <category term="Redis" scheme="https://wxzhongwang.github.io/tags/Redis/"/>
-    
-      <category term="NOSQL" scheme="https://wxzhongwang.github.io/tags/NOSQL/"/>
+      <category term="数据仓库" scheme="https://wxzhongwang.github.io/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
     
   </entry>
   
   <entry>
-    <title>Redis简介</title>
-    <link href="https://wxzhongwang.github.io/2019/01/08/Redis%E7%AE%80%E4%BB%8B/"/>
-    <id>https://wxzhongwang.github.io/2019/01/08/Redis简介/</id>
-    <published>2019-01-08T06:31:13.000Z</published>
-    <updated>2019-01-08T06:32:04.017Z</updated>
+    <title>SparkStreaming和Storm</title>
+    <link href="https://wxzhongwang.github.io/2019/01/13/SparkStreaming%E5%92%8CStorm%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <id>https://wxzhongwang.github.io/2019/01/13/SparkStreaming和Storm的区别/</id>
+    <published>2019-01-13T03:33:19.819Z</published>
+    <updated>2019-01-13T03:35:11.776Z</updated>
     
-    <content type="html"><![CDATA[<p>Redis是一个开源的，使用C语言编写，面向“键/值”对类型数据的分布式NoSQL数据库系统，特点是高性能，持久存储，适应高并发的应用场景。Redis纯粹为应用而产生，它是一个高性能的key-value数据库,并且提供了多种语言的API，性能测试结果表示SET操作每秒钟可达110000次，GET操作每秒81000次（当然不同的服务器配置性能不同）。</p><h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><p>Redis是一个开源的，使用C语言编写，面向“键/值”对类型数据的分布式NoSQL数据库系统，特点是高性能，持久存储，适应高并发的应用场景。Redis纯粹为应用而产生，它是一个高性能的key-value数据库,并且提供了多种语言的API，性能测试结果表示SET操作每秒钟可达110000次，GET操作每秒81000次（当然不同的服务器配置性能不同）。</p><p>Redis目前提供五种数据类型：</p><ul><li>string(字符串),</li><li>list（链表）, </li><li>Hash（哈希）,</li><li>set（集合）,</li><li>zset(sorted set)  （有序集合）</li></ul><p>Redis开发维护很活跃，虽然它是一个Key-Value数据库存储系统，但它本身支持MQ功能，所以完全可以当做一个轻量级的队列服务来使用。</p><p>Redis可以做消息队列？</p><blockquote><p>首先，redis设计用来做缓存的，但是由于它自身的某种特性使得它可以用来做消息队列，它有几个阻塞式的API可以使用，正是这些阻塞式的API让其有能力做消息队列；另外，做消息队列的其他特性例如FIFO（先入先出）也很容易实现，只需要一个list对象从头取数据，从尾部塞数据即可；redis能做消息队列还得益于其list对象blpop brpop接口以及Pub/Sub（发布/订阅）的某些接口，它们都是阻塞版的，所以可以用来做消息队列。</p></blockquote><p>对于RabbitMQ和Redis的入队和出队操作，各执行100万次，每10万次记录一次执行时间。测试数据分为128Bytes、512Bytes、1K和10K四个不同大小的数据。<br>实验表明：</p><blockquote><p>入队时，当数据比较小时Redis的性能要高于RabbitMQ，而如果数据大小超过了10K，Redis则慢的无法忍<br>受；出队时，无论数据大小，Redis都表现出非常好的性能，而RabbitMQ的出队性能则远低于Redis。</p></blockquote>]]></content>
+    <content type="html"><![CDATA[<h1 id="SparkStreaming和Storm"><a href="#SparkStreaming和Storm" class="headerlink" title="SparkStreaming和Storm"></a>SparkStreaming和Storm</h1><p>Storm和Spark Streaming都是分布式流处理的开源框架，但是它们之间还是有一些区别的，这里将进行比较并指出它们的重要的区别。</p><h2 id="处理模型以及延迟"><a href="#处理模型以及延迟" class="headerlink" title="处理模型以及延迟"></a>处理模型以及延迟</h2><p>虽然这两个框架都提供可扩展性(Scalability)和可容错性(Fault Tolerance),但是它们的处理模型从根本上说是不一样的。Storm处理的是每次传入的一个事件，而Spark Streaming是处理某个时间段窗口内的事件流。因此，Storm处理一个事件可以达到亚秒级的延迟，而Spark Streaming则有秒级的延迟。</p><h2 id="容错和数据保证"><a href="#容错和数据保证" class="headerlink" title="容错和数据保证"></a>容错和数据保证</h2><p>在容错数据保证方面的权衡方面，Spark Streaming提供了更好的支持容错状态计算。在Storm中，当每条单独的记录通过系统时必须被跟踪，所以Storm能够至少保证每条记录将被处理一次，但是在从错误中恢复过来时候允许出现重复记录，这意味着可变状态可能不正确地被更新两次。而Spark Streaming只需要在批处理级别对记录进行跟踪处理，因此可以有效地保证每条记录将完全被处理一次，即便一个节点发生故障。虽然Storm的 Trident library库也提供了完全一次处理的功能。但是它依赖于事务更新状态，而这个过程是很慢的，并且通常必须由用户实现。</p><p>简而言之,如果你需要亚秒级的延迟，Storm是一个不错的选择，而且没有数据丢失。如果你需要有状态的计算，而且要完全保证每个事件只被处理一次，Spark Streaming则更好。Spark Streaming编程逻辑也可能更容易，因为它类似于批处理程序，特别是在你使用批次(尽管是很小的)时。</p><h2 id="实现和编程API"><a href="#实现和编程API" class="headerlink" title="实现和编程API"></a>实现和编程API</h2><p>Storm主要是由Clojure语言实现，SparkStreaming是由Scala实现。如果你想看看这两个框架是如何实现的或者你想自定义一些东西你就得记住这一点。Storm是由BackType和Twitter开发，而Spark Streaming是在UC Berkeley开发的。</p><p>Storm提供了Java API，同时也支持其他语言的API。SparkStreaming支持Scala和Java语言(其实也支持Python)。另外SparkStreaming的一个很棒的特性就是它是在Spark框架上运行的。这样你就可以想使用其他批处理代码一样来写SparkStreaming程序，或者是在Spark中交互查询。这就减少了单独编写流批量处理程序和历史数据处理程序。</p><h2 id="生产支持"><a href="#生产支持" class="headerlink" title="生产支持"></a>生产支持</h2><p>Storm已经出现好多年了，而且自从2011年开始就在Twitter内部生产环境中使用，还有其他一些公司。而Spark Streaming是一个新的项目，并且在2013年仅仅被Sharethrough使用(据作者了解)。</p><p>Storm是 Hortonworks Hadoop数据平台中流处理的解决方案，而Spark Streaming出现在 MapR的分布式平台和Cloudera的企业数据平台中。除此之外，Databricks是为Spark提供技术支持的公司，包括了Spark Streaming。</p><h2 id="集群管理集成"><a href="#集群管理集成" class="headerlink" title="集群管理集成"></a>集群管理集成</h2><p>尽管两个系统都运行在它们自己的集群上，Storm也能运行在Mesos，而SparkStreaming能运行在YARN 和 Mesos上。</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;Redis是一个开源的，使用C语言编写，面向“键/值”对类型数据的分布式NoSQL数据库系统，特点是高性能，持久存储，适应高并发的应用场景。Redis纯粹为应用而产生，它是一个高性能的key-value数据库,并且提供了多种语言的API，性能测试结果表示SET操作每秒钟可达
+        &lt;h1 id=&quot;SparkStreaming和Storm&quot;&gt;&lt;a href=&quot;#SparkStreaming和Storm&quot; class=&quot;headerlink&quot; title=&quot;SparkStreaming和Storm&quot;&gt;&lt;/a&gt;SparkStreaming和Storm&lt;/h1&gt;&lt;
       
     
     </summary>
     
-      <category term="Redis" scheme="https://wxzhongwang.github.io/categories/Redis/"/>
+      <category term="大数据" scheme="https://wxzhongwang.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
     
-      <category term="Redis" scheme="https://wxzhongwang.github.io/tags/Redis/"/>
-    
-      <category term="消息队列" scheme="https://wxzhongwang.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"/>
+      <category term="Hadoop" scheme="https://wxzhongwang.github.io/tags/Hadoop/"/>
     
   </entry>
   
   <entry>
-    <title>sass sass-loader</title>
-    <link href="https://wxzhongwang.github.io/2019/01/08/windows%E4%B8%8B%E5%AE%89%E8%A3%85node-sass%E5%92%8Csass-loader%E5%A4%B1%E8%B4%A5/"/>
-    <id>https://wxzhongwang.github.io/2019/01/08/windows下安装node-sass和sass-loader失败/</id>
-    <published>2019-01-08T06:18:02.000Z</published>
-    <updated>2019-01-09T02:00:59.017Z</updated>
+    <title>Hadoop Hive Hbase 简单区别及应用场景</title>
+    <link href="https://wxzhongwang.github.io/2019/01/13/Hadoop%20Hive%20Hbase%20%E7%AE%80%E5%8D%95%E5%8C%BA%E5%88%AB%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/"/>
+    <id>https://wxzhongwang.github.io/2019/01/13/Hadoop Hive Hbase 简单区别及应用场景/</id>
+    <published>2019-01-13T03:30:12.445Z</published>
+    <updated>2019-01-13T03:35:18.907Z</updated>
     
-    <content type="html"><![CDATA[<p>window下无法安装sass sass-loader</p><h2 id="node-sass安装失败的原因是网络限制导致无法下载-node文件"><a href="#node-sass安装失败的原因是网络限制导致无法下载-node文件" class="headerlink" title="node-sass安装失败的原因是网络限制导致无法下载.node文件"></a>node-sass安装失败的原因是网络限制导致无法下载.node文件</h2><blockquote><p>推荐方法：使用淘宝镜像</p></blockquote><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm set <span class="attr">sass_binary_site=</span>https://npm.taobao.org/mirrors/<span class="keyword">node</span><span class="title">-sass</span>/</span><br></pre></td></tr></table></figure><p>or</p><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm --<span class="attr">registry=</span>https://registry.npm.taobao.org</span><br><span class="line">cnpm install <span class="keyword">node</span><span class="title">-sass</span> sass-loader -S</span><br></pre></td></tr></table></figure><p>其他翻墙、手动导入文件的方式不推荐。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;window下无法安装sass sass-loader&lt;/p&gt;
-&lt;h2 id=&quot;node-sass安装失败的原因是网络限制导致无法下载-node文件&quot;&gt;&lt;a href=&quot;#node-sass安装失败的原因是网络限制导致无法下载-node文件&quot; class=&quot;headerli
-      
-    
-    </summary>
-    
-      <category term="前端" scheme="https://wxzhongwang.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
-    
-    
-      <category term="Web" scheme="https://wxzhongwang.github.io/tags/Web/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux常用命令</title>
-    <link href="https://wxzhongwang.github.io/2019/01/08/Linux%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
-    <id>https://wxzhongwang.github.io/2019/01/08/Linux 常用命令/</id>
-    <published>2019-01-08T06:18:02.000Z</published>
-    <updated>2019-01-09T01:59:11.725Z</updated>
-    
-    <content type="html"><![CDATA[<p>Linux常用命令</p><p>#Linux 常用命令</p><h2 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h2><ul><li>==cd /== 进入主目录</li><li>==cd ~== 进入Home目录</li><li>==cd -== 进入上一次工作中路径</li></ul><h2 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h2><ul><li>==ls -a== 列出所有</li><li>==ls -r== 反序排列</li><li>==ls -t== 以文件修改时间排列</li><li>==ls -l== 将文件名,文件所有者，文件大小信息详细信息列出来</li></ul><h2 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h2><ul><li>==pwd== 展示当前工作目录路径</li></ul><h2 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h2><p>创建文件夹<br>可用选项：</p><ul><li>==mkdir -m==: 对新建目录设置存取权限,也可以用chmod命令设置;</li><li>==mkdir -p==: 可以是一个路径名称。此时若路径中的某些目录尚不存在,加上此选项后,系统将自动建立那 些尚不在的目录,即一次可以建立多个目录;</li></ul><h2 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h2><p>删除文件，删除一个目录中的一个或多个文件或目录，如果没有使用- r选项，则rm不会删除目录</p><h2 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h2><p>从一个目录中删除一个或多个子目录项，删除某目录时也必须具有对其父目录的写权限。</p><h2 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h2><p>移动文件或修改文件名，根据第二参数类型（如目录，则移动文件；如为文件则重命令该文件）。</p><h2 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h2><p>将源文件复制至目标文件，或将多个源文件复制至目标目录。</p><h2 id="free"><a href="#free" class="headerlink" title="free"></a>free</h2><p>显示系统内存使用情况，包括物理内存、交互区内存(swap)和内核缓冲区内存</p><ul><li>-b 以Byte显示内存使用情况</li><li>-k 以kb为单位显示内存使用情况</li><li>-m 以mb为单位显示内存使用情况</li><li>-g 以gb为单位显示内存使用情况</li><li>-s &lt;间隔秒数&gt; 持续显示内存</li><li>-t 显示内存使用总合</li></ul><h2 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h2><p>  cat主要有三大功能：</p><ul><li>一次显示整个文件:cat filename</li><li>从键盘创建一个文件:cat &gt; filename 只能创建新文件,不能编辑已有文件.</li><li>将几个文件合并为一个文件:cat file1 file2 &gt; file</li></ul><ol><li>-b对非空输出行号</li><li>-n输出所有行号</li></ol>]]></content>
+    <content type="html"><![CDATA[<h1 id="Hadoop-Hive-Hbase-简单区别及应用场景"><a href="#Hadoop-Hive-Hbase-简单区别及应用场景" class="headerlink" title="Hadoop Hive Hbase 简单区别及应用场景"></a>Hadoop Hive Hbase 简单区别及应用场景</h1><h2 id="Hadoop"><a href="#Hadoop" class="headerlink" title="Hadoop"></a>Hadoop</h2><p>它是一个分布式计算+分布式文件系统，前者其实就是MapReduce，后者是HDFS。后者可以独立运行，前者可以选择性使用，也可以不使用。</p><h2 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h2><p>通俗的说是一个数据仓库，仓库中的数据是被HDFS管理的数据文件，它支持类似sql语句的功能，你可以通过该语句完成分布式环境下的计算功能，Hive会把语句转换成MapReduce，然后交给Hadoop执行。这里的计算，仅限于查找和分析，而不是更新、增加和删除。它的优势是对历史数据进行处理，用时下流行的说法是离线计算，因为它的底层是MapReduce，MapReduce在实时计算上性能很差。它的做法是把数据文件加载进来作为一个Hive表（或者外部表），让你觉得你的sql操作的是传统的表。</p><h2 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h2><p>通俗的说，HBase的作用类似于数据库，传统数据库管理的是集中的本地数据文件，而HBase基于Hdfs实现对分布式数据文件的管理，比如增删改查。也就是说，HBase只是利用Hadoop的Hdfs帮助其管理数据的持久化文件（HFile），它跟MapReduce没任何关系。HBase的优势在于实时计算，所有实时数据都直接存入Hbase中，客户端通过API直接访问Hbase，实现实时计算。由于它使用的是nosql，或者说是列式结构，从而提高了查找性能，使其能运用于大数据场景，这是它跟MapReduce的区别。</p><h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><ol><li>Hadoop是Hive和HBase的基础，Hive依赖Hadoop</li><li>HBase仅依赖Hadoop的Hdfs模块。</li><li>Hive适用于离线数据的分析，操作的是通用格式的（如通用的日志文件）、被Hadoop管理的数据文件，它支持类sql，比编写MapReduce的java代码来的更加方便，它的定位是数据仓库，存储和分析历史数据</li><li>Hbase适用于实时计算，采用列式结构的nosql，操作的是自己生成的特殊格式的HFile、被hadoop管理的数据文件，它的定位是数据库，或者叫DBMS</li></ol><blockquote><p>最后补充一下：Hive可以直接操作Hdfs中的文件作为它的表的数据，也可以使HBase数据库作为它的表</p></blockquote>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;Linux常用命令&lt;/p&gt;
-&lt;p&gt;#Linux 常用命令&lt;/p&gt;
-&lt;h2 id=&quot;cd&quot;&gt;&lt;a href=&quot;#cd&quot; class=&quot;headerlink&quot; title=&quot;cd&quot;&gt;&lt;/a&gt;cd&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;==cd /== 进入主目录&lt;/li&gt;
-&lt;li&gt;==cd
+        &lt;h1 id=&quot;Hadoop-Hive-Hbase-简单区别及应用场景&quot;&gt;&lt;a href=&quot;#Hadoop-Hive-Hbase-简单区别及应用场景&quot; class=&quot;headerlink&quot; title=&quot;Hadoop Hive Hbase 简单区别及应用场景&quot;&gt;&lt;/a&gt;Hadoo
       
     
     </summary>
     
-      <category term="Linux" scheme="https://wxzhongwang.github.io/categories/Linux/"/>
+      <category term="大数据" scheme="https://wxzhongwang.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
     
-      <category term="Linux" scheme="https://wxzhongwang.github.io/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mock.js</title>
-    <link href="https://wxzhongwang.github.io/2019/01/08/Mockjs/"/>
-    <id>https://wxzhongwang.github.io/2019/01/08/Mockjs/</id>
-    <published>2019-01-08T06:18:02.000Z</published>
-    <updated>2019-01-09T01:59:54.941Z</updated>
-    
-    <content type="html"><![CDATA[<p>目前的大部分公司的项目都是采用的前后端分离, 后端接口的开发和前端人员是同时进行的. 那么这个时候就会存在一个问题, 在页面需要使用大量数据进行渲染生成前, 后端开发人员的接口也许并没有写完, 作为前端的我们也就没有办法获取数据. 所以 前端工程师就需要自己按照接口文档模拟后端人员提供的数据, 以此进行页面的开发.<br>这个时候, Mock.js的作用就体现出来了, 在数据量较大的情况下, 我们不用一个一个的编写数据, 只需要根据接口文档将数据的格式填入,Mock.js就能够自动的按需生成大量的模拟数据. 且Mock.js提供了大量的数据类型, 包括文本, 数字, 布尔值, 日期, 邮箱, 链接, 图片, 颜色等.</p><h1 id="Mock-js"><a href="#Mock-js" class="headerlink" title="Mock.js"></a>Mock.js</h1><h2 id="Mockjs是什么"><a href="#Mockjs是什么" class="headerlink" title="Mockjs是什么?"></a>Mockjs是什么?</h2><p>目前的大部分公司的项目都是采用的前后端分离, 后端接口的开发和前端人员是同时进行的. 那么这个时候就会存在一个问题, 在页面需要使用大量数据进行渲染生成前, 后端开发人员的接口也许并没有写完, 作为前端的我们也就没有办法获取数据. 所以 前端工程师就需要自己按照接口文档模拟后端人员提供的数据, 以此进行页面的开发.<br>这个时候, Mock.js的作用就体现出来了, 在数据量较大的情况下, 我们不用一个一个的编写数据, 只需要根据接口文档将数据的格式填入,Mock.js就能够自动的按需生成大量的模拟数据. 且Mock.js提供了大量的数据类型, 包括文本, 数字, 布尔值, 日期, 邮箱, 链接, 图片, 颜色等.</p><h2 id="安装Mockjs"><a href="#安装Mockjs" class="headerlink" title="安装Mockjs"></a>安装Mockjs</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> mockjs -S </span><br><span class="line"><span class="keyword">or</span> </span><br><span class="line">npm <span class="keyword">install</span> mockjs -D</span><br></pre></td></tr></table></figure><h2 id="引用Mockjs"><a href="#引用Mockjs" class="headerlink" title="引用Mockjs"></a>引用Mockjs</h2><p>Mock.js暴露了一个全局的Mock对象, 我们只需要将Mock对象引入到文件中, 调用Mock对象的方法即可</p><ul><li>CommonJS的引入方式</li></ul><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//CommonJS引入</span></span><br><span class="line"><span class="keyword">let</span> Mock = require(<span class="symbol">'mockjs</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">//调用Mock.mock()方法模拟数据</span></span><br><span class="line"><span class="keyword">let</span> data = Mock.mock(&#123;</span><br><span class="line"><span class="symbol">'list</span>|<span class="number">1</span>-<span class="number">10</span>': [&#123;</span><br><span class="line">  <span class="symbol">'id</span>|+<span class="number">1</span>': <span class="number">1</span></span><br><span class="line">&#125;]</span><br><span class="line">&#125;);</span><br><span class="line">console.log(data);</span><br></pre></td></tr></table></figure><ul><li>ES6的引入方式</li></ul><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ES6的引入方式</span></span><br><span class="line"><span class="keyword">import</span> Mock <span class="keyword">from</span> <span class="string">'mockjs'</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">let</span> data = Mock.mock(&#123;</span><br><span class="line"><span class="string">'list|1-10'</span>: [&#123;</span><br><span class="line">  <span class="string">'id|+1'</span>: <span class="number">1</span></span><br><span class="line">&#125;]</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(data);</span><br></pre></td></tr></table></figure><h2 id="简单用法"><a href="#简单用法" class="headerlink" title="简单用法"></a>简单用法</h2><p>Mock对象提供了4个方法, 分别是</p><ul><li>Mock.mock()</li><li>Mock.setup()</li><li>Mock.valid</li><li>Mock.toJSONSchema()</li></ul><p>以及一个工具库 Mock.Random. 其中我们经常使用到的就是Mock.mock()和Mock.Random.</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;目前的大部分公司的项目都是采用的前后端分离, 后端接口的开发和前端人员是同时进行的. 那么这个时候就会存在一个问题, 在页面需要使用大量数据进行渲染生成前, 后端开发人员的接口也许并没有写完, 作为前端的我们也就没有办法获取数据. 所以 前端工程师就需要自己按照接口文档模拟
-      
-    
-    </summary>
-    
-      <category term="前端" scheme="https://wxzhongwang.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
-    
-    
-      <category term="Web" scheme="https://wxzhongwang.github.io/tags/Web/"/>
+      <category term="Hadoop" scheme="https://wxzhongwang.github.io/tags/Hadoop/"/>
     
   </entry>
   
@@ -178,55 +118,34 @@
   </entry>
   
   <entry>
-    <title>HttpStatusCode</title>
-    <link href="https://wxzhongwang.github.io/2019/01/08/HttpStatusCode/"/>
-    <id>https://wxzhongwang.github.io/2019/01/08/HttpStatusCode/</id>
+    <title>流处理、批处理、交互式查询</title>
+    <link href="https://wxzhongwang.github.io/2019/01/08/%E6%B5%81%E5%A4%84%E7%90%86%E3%80%81%E6%89%B9%E5%A4%84%E7%90%86%E3%80%81%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%9F%A5%E8%AF%A2/"/>
+    <id>https://wxzhongwang.github.io/2019/01/08/流处理、批处理、交互式查询/</id>
     <published>2019-01-08T06:18:02.000Z</published>
-    <updated>2019-01-09T01:57:21.644Z</updated>
+    <updated>2019-01-13T03:36:07.439Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="HttpStatusCode"><a href="#HttpStatusCode" class="headerlink" title="HttpStatusCode"></a>HttpStatusCode</h1><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> <span class="comment">/*</span></span><br><span class="line"><span class="comment">    1xx：相关信息</span></span><br><span class="line"><span class="comment">    2xx：操作成功</span></span><br><span class="line"><span class="comment">    3xx：重定向</span></span><br><span class="line"><span class="comment">    4xx：客户端错误</span></span><br><span class="line"><span class="comment">    5xx：服务器错误</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure><table><thead><tr><th style="text-align:center">字段</th><th style="text-align:left">状态码</th><th style="text-align:left">说明</th></tr></thead><tbody><tr><td style="text-align:center">Continue</td><td style="text-align:left">100</td><td style="text-align:left">指示客户端可能继续其请求。</td></tr><tr><td style="text-align:center">SwitchingProtocols</td><td style="text-align:left">100</td><td style="text-align:left">指示正在更改协议版本或协议。</td></tr><tr><td style="text-align:center">OK</td><td style="text-align:left">200</td><td style="text-align:left">指示请求成功，且请求的信息包含在响应中。</td></tr><tr><td style="text-align:center">Created</td><td style="text-align:left">201</td><td style="text-align:left">指示请求导致在响应被发送前创建新资源。</td></tr><tr><td style="text-align:center">Accepted</td><td style="text-align:left">202</td><td style="text-align:left">指示请求已被接受做进一步处理。</td></tr><tr><td style="text-align:center">NonAuthoritativeInformation</td><td style="text-align:left">202</td><td style="text-align:left">指示返回的元信息来自缓存副本而不是原始服务器，因此可能不正确。</td></tr><tr><td style="text-align:center">NoContent</td><td style="text-align:left">204</td><td style="text-align:left">指示请求成功，指示已成功处理请求并且响应已被设定为无内容。</td></tr><tr><td style="text-align:center">ResetContent</td><td style="text-align:left">205</td><td style="text-align:left">指示客户端应重置（或重新加载）当前资源。</td></tr><tr><td style="text-align:center">PartialContent</td><td style="text-align:left">206</td><td style="text-align:left">指示响应是包括字节范围的 GET 请求所请求的部分响应。</td></tr><tr><td style="text-align:center">MultipleChoices</td><td style="text-align:left">300</td><td style="text-align:left">指示请求的信息有多种表示形式，默认操作是将此状态视为重定向，并遵循与此响应关联的 Location 头的内容。</td></tr><tr><td style="text-align:center">Ambiguous</td><td style="text-align:left">300</td><td style="text-align:left">指示请求的信息有多种表示形式。默认操作是将此状态视为重定向，并遵循与此响应关联的 Location 头的内容。</td></tr><tr><td style="text-align:center">MovedPermanently</td><td style="text-align:left">301</td><td style="text-align:left">指示请求的信息已移到 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。</td></tr><tr><td style="text-align:center">Moved</td><td style="text-align:left">301</td><td style="text-align:left">指示请求的信息已移到 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求将使用 GET 方法。</td></tr><tr><td style="text-align:center">Found</td><td style="text-align:left">302</td><td style="text-align:left">指示请求的信息位于 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求将使用 GET 方法。</td></tr><tr><td style="text-align:center">Redirect</td><td style="text-align:left">302</td><td style="text-align:left">指示请求的信息位于 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求将使用 GET 方法。</td></tr><tr><td style="text-align:center">SeeOther</td><td style="text-align:left">303</td><td style="text-align:left">作为 POST 的结果，SeeOther 将客户端自动重定向到 Location 头中指定的 URI。用 GET 生成对 Location 头所指定的资源的请求。</td></tr><tr><td style="text-align:center">RedirectMethod</td><td style="text-align:left">303</td><td style="text-align:left">作为 POST 的结果，RedirectMethod 将客户端自动重定向到 Location 头中指定的 URI。用 GET 生成对 Location 头所指定的资源的请求。</td></tr><tr><td style="text-align:center">NotModified</td><td style="text-align:left">304</td><td style="text-align:left">指示客户端的缓存副本是最新的。未传输此资源的内容。</td></tr><tr><td style="text-align:center">UseProxy</td><td style="text-align:left">305</td><td style="text-align:left">指示请求应使用位于 Location 头中指定的 URI 的代理服务器。</td></tr><tr><td style="text-align:center">Unused</td><td style="text-align:left">306</td><td style="text-align:left">是未完全指定的 HTTP/1.1 规范的建议扩展。</td></tr><tr><td style="text-align:center">TemporaryRedirect</td><td style="text-align:left">307</td><td style="text-align:left">指示请求信息位于 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求还将使用 POST 方法。</td></tr><tr><td style="text-align:center">RedirectKeepVerb</td><td style="text-align:left">307</td><td style="text-align:left">指示请求信息位于 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求还将使用 POST 方法。</td></tr><tr><td style="text-align:center">BadRequest</td><td style="text-align:left">400</td><td style="text-align:left">指示服务器未能识别请求。如果没有其他适用的错误，或者如果不知道准确的错误或错误没有自己的错误代码，则发送 BadRequest。</td></tr><tr><td style="text-align:center">Unauthorized</td><td style="text-align:left">401</td><td style="text-align:left">指示请求的资源要求身份验证。WWW-Authenticate头包含如何执行身份验证的详细信息。</td></tr><tr><td style="text-align:center">PaymentRequired</td><td style="text-align:left">402</td><td style="text-align:left">保留 PaymentRequired 以供将来使用。</td></tr><tr><td style="text-align:center">Forbidden</td><td style="text-align:left">403</td><td style="text-align:left">指示服务器拒绝满足请求。</td></tr><tr><td style="text-align:center">NotFound</td><td style="text-align:left">404</td><td style="text-align:left">指示请求的资源不在服务器上。</td></tr><tr><td style="text-align:center">MethodNotAllowed</td><td style="text-align:left">405</td><td style="text-align:left">指示请求的资源上不允许请求方法（POST 或 GET）。</td></tr><tr><td style="text-align:center">NotAcceptable</td><td style="text-align:left">406</td><td style="text-align:left">指示客户端已用 Accept 头指示将不接受资源的任何可用表示形式。</td></tr><tr><td style="text-align:center">ProxyAuthenticationRequired</td><td style="text-align:left">407</td><td style="text-align:left">指示请求的代理要求身份验证。Proxy-authenticate 头包含如何执行身份验证的详细信息。</td></tr><tr><td style="text-align:center">RequestTimeout</td><td style="text-align:left">408</td><td style="text-align:left">指示客户端没有在服务器期望请求的时间内发送请求。</td></tr><tr><td style="text-align:center">Conflict</td><td style="text-align:left">409</td><td style="text-align:left">指示由于服务器上的冲突而未能执行请求。</td></tr><tr><td style="text-align:center">Gone</td><td style="text-align:left">410</td><td style="text-align:left">指示请求的资源不再可用。</td></tr><tr><td style="text-align:center">LengthRequired</td><td style="text-align:left">411</td><td style="text-align:left">指示缺少必需的 Content-length 头。</td></tr><tr><td style="text-align:center">PreconditionFailed</td><td style="text-align:left">412</td><td style="text-align:left">指示为此请求设置的条件失败，且无法执行此请求。条件是用条件请求标头（如 If-Match、If-None-Match 或 If-Unmodified-Since）设置的。</td></tr><tr><td style="text-align:center">RequestEntityTooLarge</td><td style="text-align:left">413</td><td style="text-align:left">指示请求太大，服务器无法处理。</td></tr><tr><td style="text-align:center">RequestUriTooLong</td><td style="text-align:left">414</td><td style="text-align:left">指示 URI 太长。</td></tr><tr><td style="text-align:center">UnsupportedMediaType</td><td style="text-align:left">415</td><td style="text-align:left">指示请求是不支持的类型。</td></tr><tr><td style="text-align:center">RequestedRangeNotSatisfiable</td><td style="text-align:left">416</td><td style="text-align:left">RequestedRangeNotSatisfiable指示无法返回从资源请求的数据范围，因为范围的开头在资源的开头之前，或因为范围的结尾在资源的结尾之后。</td></tr><tr><td style="text-align:center">ExpectationFailed</td><td style="text-align:left">417</td><td style="text-align:left">指示服务器未能符合 Expect 头中给定的预期值。</td></tr><tr><td style="text-align:center">UpgradeRequired</td><td style="text-align:left">426</td><td style="text-align:left">客户端应当切换到TLS/1.0</td></tr><tr><td style="text-align:center">InternalServerError</td><td style="text-align:left">500</td><td style="text-align:left">指示服务器上发生了一般错误。</td></tr><tr><td style="text-align:center">NotImplemented</td><td style="text-align:left">501</td><td style="text-align:left">指示服务器不支持请求的函数。</td></tr><tr><td style="text-align:center">BadGateway</td><td style="text-align:left">502</td><td style="text-align:left">指示中间代理服务器从另一代理或原始服务器接收到错误响应。</td></tr><tr><td style="text-align:center">ServiceUnavailable</td><td style="text-align:left">503</td><td style="text-align:left">指示服务器暂时不可用，通常是由于过多加载或维护。</td></tr><tr><td style="text-align:center">GatewayTimeout</td><td style="text-align:left">504</td><td style="text-align:left">指示中间代理服务器在等待来自另一个代理或原始服务器的响应时已超时。</td></tr><tr><td style="text-align:center">HttpVersionNotSupported</td><td style="text-align:left">505</td><td style="text-align:left">指示服务器不支持请求的 HTTP 版本。</td></tr></tbody></table>]]></content>
+    <content type="html"><![CDATA[<pre><code>我们将大数据处理按处理时间的跨度要求分为以下几类基于实时数据流的处理，通常的时间跨度在数百毫秒到数秒之间基于历史数据的交互式查询，通常时间跨度在数十秒到数分钟之间复杂的批量数据处理，通常的时间跨度在几分钟到数小时之间</code></pre>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;HttpStatusCode&quot;&gt;&lt;a href=&quot;#HttpStatusCode&quot; class=&quot;headerlink&quot; title=&quot;HttpStatusCode&quot;&gt;&lt;/a&gt;HttpStatusCode&lt;/h1&gt;&lt;figure class=&quot;highlight 
+        &lt;pre&gt;&lt;code&gt;我们将大数据处理按处理时间的跨度要求分为以下几类
+
+基于实时数据流的处理，通常的时间跨度在数百毫秒到数秒之间
+
+基于历史数据的交互式查询，通常时间跨度在数十秒到数分钟之间
+
+复杂的批量数据处理，通常的时间跨度在几分钟到数小时之间
+&lt;/code&gt;&lt;/pre&gt;
       
     
     </summary>
     
-      <category term="前端" scheme="https://wxzhongwang.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
+      <category term="大数据" scheme="https://wxzhongwang.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
     
-      <category term="Web" scheme="https://wxzhongwang.github.io/tags/Web/"/>
-    
-      <category term="前端" scheme="https://wxzhongwang.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>优秀的开源项目</title>
-    <link href="https://wxzhongwang.github.io/2019/01/08/%E4%BC%98%E7%A7%80%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E5%8F%8A%E4%BC%98%E7%A7%80%E6%96%87%E7%AB%A0%E5%9C%B0%E5%9D%80/"/>
-    <id>https://wxzhongwang.github.io/2019/01/08/优秀的开源项目及优秀文章地址/</id>
-    <published>2019-01-08T06:18:02.000Z</published>
-    <updated>2019-01-09T02:01:27.580Z</updated>
-    
-    <content type="html"><![CDATA[<p>此部分总结平时工作中积累的项目或者见过的优秀开源项目的总结</p><h1 id="优秀的开源项目"><a href="#优秀的开源项目" class="headerlink" title="优秀的开源项目"></a>优秀的开源项目</h1><p>此部分总结平时工作中积累的项目或者见过的优秀开源项目的总结</p><h2 id="前端相关"><a href="#前端相关" class="headerlink" title="前端相关"></a>前端相关</h2><h2 id="NET相关"><a href="#NET相关" class="headerlink" title="NET相关"></a>NET相关</h2><h2 id="NodeJS相关"><a href="#NodeJS相关" class="headerlink" title="NodeJS相关"></a>NodeJS相关</h2><h3 id="NodeJS-中文社区开源"><a href="#NodeJS-中文社区开源" class="headerlink" title="NodeJS 中文社区开源"></a>NodeJS 中文社区开源</h3><p>官网地址:</p><blockquote><p><a href="https://cnodejs.org/" target="_blank" rel="noopener">https://cnodejs.org/</a></p></blockquote><p>项目开源地址：</p><blockquote><p><a href="https://github.com/cnodejs/nodeclub/" target="_blank" rel="noopener">https://github.com/cnodejs/nodeclub/</a></p></blockquote><h2 id="JAVA相关"><a href="#JAVA相关" class="headerlink" title="JAVA相关"></a>JAVA相关</h2><h2 id="数据库相关"><a href="#数据库相关" class="headerlink" title="数据库相关"></a>数据库相关</h2><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h2 id="架构相关"><a href="#架构相关" class="headerlink" title="架构相关"></a>架构相关</h2><h1 id="优秀文章地址"><a href="#优秀文章地址" class="headerlink" title="优秀文章地址"></a>优秀文章地址</h1><p>此部分总结平时工作中积累的优秀文章或者博客</p><h2 id="前端、JAVA、Python"><a href="#前端、JAVA、Python" class="headerlink" title="前端、JAVA、Python"></a>前端、JAVA、Python</h2><blockquote><p><a href="https://www.jqhtml.com/" target="_blank" rel="noopener">https://www.jqhtml.com/</a></p></blockquote><h2 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx:"></a>Nginx:</h2><p>详细文档:</p><blockquote><p><a href="http://tengine.taobao.org/book/index.html" target="_blank" rel="noopener">http://tengine.taobao.org/book/index.html</a></p></blockquote><h2 id="Jekins"><a href="#Jekins" class="headerlink" title="Jekins:"></a>Jekins:</h2><p>教程<br><a href="http://blog.51cto.com/12832314/2140304" target="_blank" rel="noopener">http://blog.51cto.com/12832314/2140304</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;此部分总结平时工作中积累的项目或者见过的优秀开源项目的总结&lt;/p&gt;
-&lt;h1 id=&quot;优秀的开源项目&quot;&gt;&lt;a href=&quot;#优秀的开源项目&quot; class=&quot;headerlink&quot; title=&quot;优秀的开源项目&quot;&gt;&lt;/a&gt;优秀的开源项目&lt;/h1&gt;&lt;p&gt;此部分总结平时工作中积累的
-      
-    
-    </summary>
-    
-      <category term="前端" scheme="https://wxzhongwang.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
-    
-    
-      <category term="Web" scheme="https://wxzhongwang.github.io/tags/Web/"/>
+      <category term="Hadoop" scheme="https://wxzhongwang.github.io/tags/Hadoop/"/>
     
   </entry>
   
@@ -283,10 +202,10 @@
   
   <entry>
     <title>消息队列</title>
-    <link href="https://wxzhongwang.github.io/2019/01/08/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"/>
-    <id>https://wxzhongwang.github.io/2019/01/08/消息队列/</id>
-    <published>2019-01-08T06:18:02.000Z</published>
-    <updated>2019-01-09T02:03:22.149Z</updated>
+    <link href="https://wxzhongwang.github.io/2018/12/08/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"/>
+    <id>https://wxzhongwang.github.io/2018/12/08/消息队列/</id>
+    <published>2018-12-08T03:18:02.000Z</published>
+    <updated>2019-01-13T03:39:22.644Z</updated>
     
     <content type="html"><![CDATA[<h1 id="一、消息队列的基本概念"><a href="#一、消息队列的基本概念" class="headerlink" title="一、消息队列的基本概念"></a>一、消息队列的基本概念</h1><h2 id="1-1-Broker"><a href="#1-1-Broker" class="headerlink" title="1.1 Broker"></a>1.1 Broker</h2><p>==Broker== 的概念来自与Apache ActiveMQ，通俗的讲就是消息队列服务器。</p><h2 id="1-2-消息生产者和消费者"><a href="#1-2-消息生产者和消费者" class="headerlink" title="1.2 消息生产者和消费者"></a>1.2 消息生产者和消费者</h2><ul><li>消息生产者 ==Producer==：发送消息到消息队列。</li><li>消息消费者 ==Consumer==：从消息队列接收消息。</li></ul><h2 id="1-3-消息模型"><a href="#1-3-消息模型" class="headerlink" title="1.3 消息模型"></a>1.3 消息模型</h2><h3 id="点对点消息队列模型"><a href="#点对点消息队列模型" class="headerlink" title="点对点消息队列模型"></a>点对点消息队列模型</h3><p>消息生产者向一个特定的队列发送消息，消息消费者从该队列中接收消息。消息的生产者和消费者可以不同时处于运行状态。每一个成功处理的消息都由消息消费者签收确认（Acknowledge）。</p><h3 id="发布订阅消息模型-Topic"><a href="#发布订阅消息模型-Topic" class="headerlink" title="发布订阅消息模型-Topic"></a>发布订阅消息模型-Topic</h3><p>发布订阅消息模型中，支持向一个特定的主题Topic发布消息，0个或多个订阅者接收来自这个消息主题的消息。在这种模型下，发布者和订阅者彼此不知道对方。实际操作过程中，必须先订阅，再发送消息，而后接收订阅的消息，这个顺序必须保证。 </p><h2 id="1-4-消息顺序性保证"><a href="#1-4-消息顺序性保证" class="headerlink" title="1.4 消息顺序性保证"></a>1.4 消息顺序性保证</h2><p>基于Queue消息模型，利用FIFO先进先出的特性，可以保证消息的顺序性。</p><h2 id="1-5-消息的ACK确认机制"><a href="#1-5-消息的ACK确认机制" class="headerlink" title="1.5 消息的ACK确认机制"></a>1.5 消息的ACK确认机制</h2><p>即消息的Ackownledge确认机制：<br>为了保证消息不丢失，消息队列提供了消息Acknowledge机制，即ACK机制，当Consumer确认消息已经消费处理，发送一个ACK给消息队列，此时消息队列便可以删除这个消息了。如果Consumer宕机/关闭，没有发送ACK，消息队列将认为这个消息没有被处理，会将这个消息重新发送给其他的Consumer重新消费处理。</p><h2 id="1-6-消息的持久化"><a href="#1-6-消息的持久化" class="headerlink" title="1.6 消息的持久化"></a>1.6 消息的持久化</h2><p>消息的持久化，对于一些关键的核心业务来说是非常重要的，启用消息持久化后，消息队列宕机重启后，消息可以从持久化存储恢复，消息不丢失，可以继续消费处理。</p><h2 id="1-7-消息的同步和异步收发"><a href="#1-7-消息的同步和异步收发" class="headerlink" title="1.7 消息的同步和异步收发"></a>1.7 消息的同步和异步收发</h2><h3 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h3><p>消息的收发支持同步收发的方式<br>同步收发场景下，消息生产者和消费者双向应答模式，例如：张三写封信送到邮局中转站，然后李四从中转站获得信，然后在写一份回执信，放到中转站，然后张三去取，当然张三写信的时候就得写明回信地址。<br>消息的接收如果以同步的方式(Pull)进行接收，如果队列中为空，此时接收将处于同步阻塞状态，会一直等待，直到消息的到达。</p><h3 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h3><p>消息的收发同样支持异步方式：异步发送消息，不需要等待消息队列的接收确认。<br>异步接收消息，以Push的方式触发消息消费者接收消息。</p><h2 id="1-8-消息的事务支持"><a href="#1-8-消息的事务支持" class="headerlink" title="1.8 消息的事务支持"></a>1.8 消息的事务支持</h2><p>消息的收发处理支持事务，例如：在任务中心场景中，一次处理可能涉及多个消息的接收、处理，这处于同一个事务范围内，如果一个消息处理失败，事务回滚，消息重新回到队列中。</p><h1 id="二、JMS消费服务"><a href="#二、JMS消费服务" class="headerlink" title="二、JMS消费服务"></a>二、JMS消费服务</h1><p>Java消息服务（Java Message Service，JMS）应用程序接口是一个Java平台中关于面向消息中间件（MOM）的API，用于在两个应用程序之间，或分布式系统中发送消息，进行异步通信。 点对点与发布订阅最初是由JMS定义的。这两种模式主要区别或解决的问题就是发送到队列的消息能否重复消费(多订阅) 。</p><p>JMS规范目前支持两种消息模型：</p><ol><li>点对点（point to point， queue）</li><li>发布/订阅（publish/subscribe，topic）</li></ol><h2 id="2-1-点对点：Queue，不可重复消费"><a href="#2-1-点对点：Queue，不可重复消费" class="headerlink" title="2.1 点对点：Queue，不可重复消费"></a>2.1 点对点：Queue，不可重复消费</h2><p>消息生产者生产消息发送到queue中，然后消息消费者从queue中取出并且消费消息。<br>消息被消费以后，queue中不再有存储，所以消息消费者不可能消费到已经被消费的消息。<br>Queue支持存在多个消费者，但是对一个消息而言，只会有一个消费者可以消费。 </p><p>P2P模式包含三个角色：</p><ul><li>消息队列（Queue）</li><li>发送者(Sender)</li><li>接收者(Receiver)</li></ul><p>每个消息都被发送到一个特定的队列，接收者从队列中获取消息。队列保留着消息，<br>直到他们被消费或超时。</p><h2 id="2-2-发布-订阅：Topic，可以重复消费"><a href="#2-2-发布-订阅：Topic，可以重复消费" class="headerlink" title="2.2 发布/订阅：Topic，可以重复消费"></a>2.2 发布/订阅：Topic，可以重复消费</h2><p>消息生产者（发布）将消息发布到topic中，同时有多个消息消费者（订阅）消费该消息。<br>和点对点方式不同，发布到topic的消息会被所有订阅者消费。 </p><p>支持订阅组的发布订阅模式：<br>发布订阅模式下，当发布者消息量很大时，显然单个订阅者的处理能力是不足的。实际上现实场景中是多个订阅者节点组成一个订阅组负载均衡消费topic消息即分组订阅，这样订阅者很容易实现消费能力线性扩展。可以看成是一个topic下有多个Queue，每个Queue是点对点的方式，Queue之间是发布订阅方式。 </p><h2 id="2-3-区别"><a href="#2-3-区别" class="headerlink" title="2.3 区别"></a>2.3 区别</h2><h3 id="点对点模式"><a href="#点对点模式" class="headerlink" title="点对点模式"></a>点对点模式</h3><p>生产者发送一条消息到queue，一个queue可以有很多消费者，但是一个消息只能被一个消费者接受，当没有消费者可用时，这个消息会被保存直到有一个可用的消费者，所以Queue实现了一个可靠的负载均衡。</p><h3 id="发布订阅模式"><a href="#发布订阅模式" class="headerlink" title="发布订阅模式"></a>发布订阅模式</h3><p>发布者发送到topic的消息，只有订阅了topic的订阅者才会收到消息。topic实现了发布和订阅，当你发布一个消息，所有订阅这个topic的服务都能得到这个消息，所以从1到N个订阅者都能得到这个消息的拷贝。</p><h1 id="三、流行模型对比"><a href="#三、流行模型对比" class="headerlink" title="三、流行模型对比"></a>三、流行模型对比</h1><p>传统企业型消息队列ActiveMQ遵循了JMS规范，实现了点对点和发布订阅模型，但其他流行的消息队列RabbitMQ、Kafka并没有遵循JMS规范。</p><h2 id="3-1-RabbitMQ"><a href="#3-1-RabbitMQ" class="headerlink" title="3.1 RabbitMQ"></a>3.1 RabbitMQ</h2><p>RabbitMQ实现了AQMP协议，AQMP协议定义了消息路由规则和方式。生产端通过路由规则发送消息到不同queue，消费端根据queue名称消费消息。RabbitMQ既支持内存队列也支持持久化队列，消费端为推模型，消费状态和订阅关系由服务端负责维护，消息消费完后立即删除，不保留历史消息。</p><h3 id="点对点"><a href="#点对点" class="headerlink" title="点对点"></a>点对点</h3><p>生产端发送一条消息通过路由投递到Queue，只有一个消费者能消费到。 </p><h3 id="多订阅"><a href="#多订阅" class="headerlink" title="多订阅"></a>多订阅</h3><p>当RabbitMQ需要支持多订阅时，发布者发送的消息通过路由同时写到多个Queue，不同订阅组消费不同的Queue。所以支持多订阅时，消息会多个拷贝。 </p><h2 id="3-2-Kafka"><a href="#3-2-Kafka" class="headerlink" title="3.2 Kafka"></a>3.2 Kafka</h2><p>Kafka只支持消息持久化，消费端为拉模型，消费状态和订阅关系由客户端端负责维护，消息消费完后不会立即删除，会保留历史消息。因此支持多订阅时，消息只会存储一份就可以了。但是可能产生重复消费的情况。</p>]]></content>
     
@@ -303,32 +222,6 @@
     
     
       <category term="MessageQueue" scheme="https://wxzhongwang.github.io/tags/MessageQueue/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git使用中的问题</title>
-    <link href="https://wxzhongwang.github.io/2019/01/08/Git%E4%BD%BF%E7%94%A8%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98/"/>
-    <id>https://wxzhongwang.github.io/2019/01/08/Git使用中的问题/</id>
-    <published>2019-01-08T06:18:02.000Z</published>
-    <updated>2019-01-08T06:29:58.885Z</updated>
-    
-    <content type="html"><![CDATA[<p>git push失败 fatal: Could not read from remote repository</p><h2 id="阐述问题"><a href="#阐述问题" class="headerlink" title="阐述问题"></a>阐述问题</h2><p>git push失败 fatal: Could not read from remote repository. 因为仓库地址不对。更改地址就可以push了。</p><h3 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git remote -v</span><br><span class="line">$ git remote <span class="built_in">set</span>-url origin XXX</span><br></pre></td></tr></table></figure><h2 id="服务器上的-Git-生成-SSH-公钥"><a href="#服务器上的-Git-生成-SSH-公钥" class="headerlink" title="服务器上的 Git - 生成 SSH 公钥"></a>服务器上的 Git - 生成 SSH 公钥</h2><h3 id="生成-SSH-公钥"><a href="#生成-SSH-公钥" class="headerlink" title="生成 SSH 公钥"></a>生成 SSH 公钥</h3><p>大多数 Git 服务器都会选择使用 SSH 公钥来进行授权。系统中的每个用户都必须提供一个公钥用于授权，没有的话就要生成一个。生成公钥的过程在所有操作系统上都差不多。首先先确认一下是否已经有一个公钥了。SSH 公钥默认储存在账户的主目录下的 ~/.ssh 目录。<br>若想在github中使用的话需要将公钥复制到github&gt;setting&gt;SSH and GPG keys中添加ssh keys。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">生成钥匙</span><br><span class="line">$ ssh-keygen</span><br><span class="line">查看公钥</span><br><span class="line"><span class="variable">$cat</span> ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;git push失败 fatal: Could not read from remote repository&lt;/p&gt;
-&lt;h2 id=&quot;阐述问题&quot;&gt;&lt;a href=&quot;#阐述问题&quot; class=&quot;headerlink&quot; title=&quot;阐述问题&quot;&gt;&lt;/a&gt;阐述问题&lt;/h2&gt;&lt;p
-      
-    
-    </summary>
-    
-      <category term="版本控制工具" scheme="https://wxzhongwang.github.io/categories/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7/"/>
-    
-    
-      <category term="Git" scheme="https://wxzhongwang.github.io/tags/Git/"/>
     
   </entry>
   
@@ -356,6 +249,220 @@
       <category term="前端" scheme="https://wxzhongwang.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
     
       <category term="博客系统" scheme="https://wxzhongwang.github.io/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>sass sass-loader</title>
+    <link href="https://wxzhongwang.github.io/2018/06/12/windows%E4%B8%8B%E5%AE%89%E8%A3%85node-sass%E5%92%8Csass-loader%E5%A4%B1%E8%B4%A5/"/>
+    <id>https://wxzhongwang.github.io/2018/06/12/windows下安装node-sass和sass-loader失败/</id>
+    <published>2018-06-12T08:45:02.000Z</published>
+    <updated>2019-01-13T03:38:42.723Z</updated>
+    
+    <content type="html"><![CDATA[<p>window下无法安装sass sass-loader</p><h2 id="node-sass安装失败的原因是网络限制导致无法下载-node文件"><a href="#node-sass安装失败的原因是网络限制导致无法下载-node文件" class="headerlink" title="node-sass安装失败的原因是网络限制导致无法下载.node文件"></a>node-sass安装失败的原因是网络限制导致无法下载.node文件</h2><blockquote><p>推荐方法：使用淘宝镜像</p></blockquote><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm set <span class="attr">sass_binary_site=</span>https://npm.taobao.org/mirrors/<span class="keyword">node</span><span class="title">-sass</span>/</span><br></pre></td></tr></table></figure><p>or</p><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm --<span class="attr">registry=</span>https://registry.npm.taobao.org</span><br><span class="line">cnpm install <span class="keyword">node</span><span class="title">-sass</span> sass-loader -S</span><br></pre></td></tr></table></figure><p>其他翻墙、手动导入文件的方式不推荐。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;window下无法安装sass sass-loader&lt;/p&gt;
+&lt;h2 id=&quot;node-sass安装失败的原因是网络限制导致无法下载-node文件&quot;&gt;&lt;a href=&quot;#node-sass安装失败的原因是网络限制导致无法下载-node文件&quot; class=&quot;headerli
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="https://wxzhongwang.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="Web" scheme="https://wxzhongwang.github.io/tags/Web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mock.js</title>
+    <link href="https://wxzhongwang.github.io/2018/04/08/Mockjs/"/>
+    <id>https://wxzhongwang.github.io/2018/04/08/Mockjs/</id>
+    <published>2018-04-08T05:22:02.000Z</published>
+    <updated>2019-01-13T03:37:54.591Z</updated>
+    
+    <content type="html"><![CDATA[<p>目前的大部分公司的项目都是采用的前后端分离, 后端接口的开发和前端人员是同时进行的. 那么这个时候就会存在一个问题, 在页面需要使用大量数据进行渲染生成前, 后端开发人员的接口也许并没有写完, 作为前端的我们也就没有办法获取数据. 所以 前端工程师就需要自己按照接口文档模拟后端人员提供的数据, 以此进行页面的开发.<br>这个时候, Mock.js的作用就体现出来了, 在数据量较大的情况下, 我们不用一个一个的编写数据, 只需要根据接口文档将数据的格式填入,Mock.js就能够自动的按需生成大量的模拟数据. 且Mock.js提供了大量的数据类型, 包括文本, 数字, 布尔值, 日期, 邮箱, 链接, 图片, 颜色等.</p><h1 id="Mock-js"><a href="#Mock-js" class="headerlink" title="Mock.js"></a>Mock.js</h1><h2 id="Mockjs是什么"><a href="#Mockjs是什么" class="headerlink" title="Mockjs是什么?"></a>Mockjs是什么?</h2><p>目前的大部分公司的项目都是采用的前后端分离, 后端接口的开发和前端人员是同时进行的. 那么这个时候就会存在一个问题, 在页面需要使用大量数据进行渲染生成前, 后端开发人员的接口也许并没有写完, 作为前端的我们也就没有办法获取数据. 所以 前端工程师就需要自己按照接口文档模拟后端人员提供的数据, 以此进行页面的开发.<br>这个时候, Mock.js的作用就体现出来了, 在数据量较大的情况下, 我们不用一个一个的编写数据, 只需要根据接口文档将数据的格式填入,Mock.js就能够自动的按需生成大量的模拟数据. 且Mock.js提供了大量的数据类型, 包括文本, 数字, 布尔值, 日期, 邮箱, 链接, 图片, 颜色等.</p><h2 id="安装Mockjs"><a href="#安装Mockjs" class="headerlink" title="安装Mockjs"></a>安装Mockjs</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> mockjs -S </span><br><span class="line"><span class="keyword">or</span> </span><br><span class="line">npm <span class="keyword">install</span> mockjs -D</span><br></pre></td></tr></table></figure><h2 id="引用Mockjs"><a href="#引用Mockjs" class="headerlink" title="引用Mockjs"></a>引用Mockjs</h2><p>Mock.js暴露了一个全局的Mock对象, 我们只需要将Mock对象引入到文件中, 调用Mock对象的方法即可</p><ul><li>CommonJS的引入方式</li></ul><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//CommonJS引入</span></span><br><span class="line"><span class="keyword">let</span> Mock = require(<span class="symbol">'mockjs</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">//调用Mock.mock()方法模拟数据</span></span><br><span class="line"><span class="keyword">let</span> data = Mock.mock(&#123;</span><br><span class="line"><span class="symbol">'list</span>|<span class="number">1</span>-<span class="number">10</span>': [&#123;</span><br><span class="line">  <span class="symbol">'id</span>|+<span class="number">1</span>': <span class="number">1</span></span><br><span class="line">&#125;]</span><br><span class="line">&#125;);</span><br><span class="line">console.log(data);</span><br></pre></td></tr></table></figure><ul><li>ES6的引入方式</li></ul><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ES6的引入方式</span></span><br><span class="line"><span class="keyword">import</span> Mock <span class="keyword">from</span> <span class="string">'mockjs'</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">let</span> data = Mock.mock(&#123;</span><br><span class="line"><span class="string">'list|1-10'</span>: [&#123;</span><br><span class="line">  <span class="string">'id|+1'</span>: <span class="number">1</span></span><br><span class="line">&#125;]</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(data);</span><br></pre></td></tr></table></figure><h2 id="简单用法"><a href="#简单用法" class="headerlink" title="简单用法"></a>简单用法</h2><p>Mock对象提供了4个方法, 分别是</p><ul><li>Mock.mock()</li><li>Mock.setup()</li><li>Mock.valid</li><li>Mock.toJSONSchema()</li></ul><p>以及一个工具库 Mock.Random. 其中我们经常使用到的就是Mock.mock()和Mock.Random.</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;目前的大部分公司的项目都是采用的前后端分离, 后端接口的开发和前端人员是同时进行的. 那么这个时候就会存在一个问题, 在页面需要使用大量数据进行渲染生成前, 后端开发人员的接口也许并没有写完, 作为前端的我们也就没有办法获取数据. 所以 前端工程师就需要自己按照接口文档模拟
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="https://wxzhongwang.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="Web" scheme="https://wxzhongwang.github.io/tags/Web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux常用命令</title>
+    <link href="https://wxzhongwang.github.io/2018/03/06/Linux%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+    <id>https://wxzhongwang.github.io/2018/03/06/Linux 常用命令/</id>
+    <published>2018-03-06T08:18:02.000Z</published>
+    <updated>2019-01-13T03:37:33.554Z</updated>
+    
+    <content type="html"><![CDATA[<p>Linux常用命令</p><p>#Linux 常用命令</p><h2 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h2><ul><li>==cd /== 进入主目录</li><li>==cd ~== 进入Home目录</li><li>==cd -== 进入上一次工作中路径</li></ul><h2 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h2><ul><li>==ls -a== 列出所有</li><li>==ls -r== 反序排列</li><li>==ls -t== 以文件修改时间排列</li><li>==ls -l== 将文件名,文件所有者，文件大小信息详细信息列出来</li></ul><h2 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h2><ul><li>==pwd== 展示当前工作目录路径</li></ul><h2 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h2><p>创建文件夹<br>可用选项：</p><ul><li>==mkdir -m==: 对新建目录设置存取权限,也可以用chmod命令设置;</li><li>==mkdir -p==: 可以是一个路径名称。此时若路径中的某些目录尚不存在,加上此选项后,系统将自动建立那 些尚不在的目录,即一次可以建立多个目录;</li></ul><h2 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h2><p>删除文件，删除一个目录中的一个或多个文件或目录，如果没有使用- r选项，则rm不会删除目录</p><h2 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h2><p>从一个目录中删除一个或多个子目录项，删除某目录时也必须具有对其父目录的写权限。</p><h2 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h2><p>移动文件或修改文件名，根据第二参数类型（如目录，则移动文件；如为文件则重命令该文件）。</p><h2 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h2><p>将源文件复制至目标文件，或将多个源文件复制至目标目录。</p><h2 id="free"><a href="#free" class="headerlink" title="free"></a>free</h2><p>显示系统内存使用情况，包括物理内存、交互区内存(swap)和内核缓冲区内存</p><ul><li>-b 以Byte显示内存使用情况</li><li>-k 以kb为单位显示内存使用情况</li><li>-m 以mb为单位显示内存使用情况</li><li>-g 以gb为单位显示内存使用情况</li><li>-s &lt;间隔秒数&gt; 持续显示内存</li><li>-t 显示内存使用总合</li></ul><h2 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h2><p>  cat主要有三大功能：</p><ul><li>一次显示整个文件:cat filename</li><li>从键盘创建一个文件:cat &gt; filename 只能创建新文件,不能编辑已有文件.</li><li>将几个文件合并为一个文件:cat file1 file2 &gt; file</li></ul><ol><li>-b对非空输出行号</li><li>-n输出所有行号</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Linux常用命令&lt;/p&gt;
+&lt;p&gt;#Linux 常用命令&lt;/p&gt;
+&lt;h2 id=&quot;cd&quot;&gt;&lt;a href=&quot;#cd&quot; class=&quot;headerlink&quot; title=&quot;cd&quot;&gt;&lt;/a&gt;cd&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;==cd /== 进入主目录&lt;/li&gt;
+&lt;li&gt;==cd
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://wxzhongwang.github.io/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="https://wxzhongwang.github.io/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HttpStatusCode</title>
+    <link href="https://wxzhongwang.github.io/2018/02/08/HttpStatusCode/"/>
+    <id>https://wxzhongwang.github.io/2018/02/08/HttpStatusCode/</id>
+    <published>2018-02-08T04:18:45.000Z</published>
+    <updated>2019-01-13T03:37:19.719Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="HttpStatusCode"><a href="#HttpStatusCode" class="headerlink" title="HttpStatusCode"></a>HttpStatusCode</h1><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> <span class="comment">/*</span></span><br><span class="line"><span class="comment">    1xx：相关信息</span></span><br><span class="line"><span class="comment">    2xx：操作成功</span></span><br><span class="line"><span class="comment">    3xx：重定向</span></span><br><span class="line"><span class="comment">    4xx：客户端错误</span></span><br><span class="line"><span class="comment">    5xx：服务器错误</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure><table><thead><tr><th style="text-align:center">字段</th><th style="text-align:left">状态码</th><th style="text-align:left">说明</th></tr></thead><tbody><tr><td style="text-align:center">Continue</td><td style="text-align:left">100</td><td style="text-align:left">指示客户端可能继续其请求。</td></tr><tr><td style="text-align:center">SwitchingProtocols</td><td style="text-align:left">100</td><td style="text-align:left">指示正在更改协议版本或协议。</td></tr><tr><td style="text-align:center">OK</td><td style="text-align:left">200</td><td style="text-align:left">指示请求成功，且请求的信息包含在响应中。</td></tr><tr><td style="text-align:center">Created</td><td style="text-align:left">201</td><td style="text-align:left">指示请求导致在响应被发送前创建新资源。</td></tr><tr><td style="text-align:center">Accepted</td><td style="text-align:left">202</td><td style="text-align:left">指示请求已被接受做进一步处理。</td></tr><tr><td style="text-align:center">NonAuthoritativeInformation</td><td style="text-align:left">202</td><td style="text-align:left">指示返回的元信息来自缓存副本而不是原始服务器，因此可能不正确。</td></tr><tr><td style="text-align:center">NoContent</td><td style="text-align:left">204</td><td style="text-align:left">指示请求成功，指示已成功处理请求并且响应已被设定为无内容。</td></tr><tr><td style="text-align:center">ResetContent</td><td style="text-align:left">205</td><td style="text-align:left">指示客户端应重置（或重新加载）当前资源。</td></tr><tr><td style="text-align:center">PartialContent</td><td style="text-align:left">206</td><td style="text-align:left">指示响应是包括字节范围的 GET 请求所请求的部分响应。</td></tr><tr><td style="text-align:center">MultipleChoices</td><td style="text-align:left">300</td><td style="text-align:left">指示请求的信息有多种表示形式，默认操作是将此状态视为重定向，并遵循与此响应关联的 Location 头的内容。</td></tr><tr><td style="text-align:center">Ambiguous</td><td style="text-align:left">300</td><td style="text-align:left">指示请求的信息有多种表示形式。默认操作是将此状态视为重定向，并遵循与此响应关联的 Location 头的内容。</td></tr><tr><td style="text-align:center">MovedPermanently</td><td style="text-align:left">301</td><td style="text-align:left">指示请求的信息已移到 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。</td></tr><tr><td style="text-align:center">Moved</td><td style="text-align:left">301</td><td style="text-align:left">指示请求的信息已移到 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求将使用 GET 方法。</td></tr><tr><td style="text-align:center">Found</td><td style="text-align:left">302</td><td style="text-align:left">指示请求的信息位于 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求将使用 GET 方法。</td></tr><tr><td style="text-align:center">Redirect</td><td style="text-align:left">302</td><td style="text-align:left">指示请求的信息位于 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求将使用 GET 方法。</td></tr><tr><td style="text-align:center">SeeOther</td><td style="text-align:left">303</td><td style="text-align:left">作为 POST 的结果，SeeOther 将客户端自动重定向到 Location 头中指定的 URI。用 GET 生成对 Location 头所指定的资源的请求。</td></tr><tr><td style="text-align:center">RedirectMethod</td><td style="text-align:left">303</td><td style="text-align:left">作为 POST 的结果，RedirectMethod 将客户端自动重定向到 Location 头中指定的 URI。用 GET 生成对 Location 头所指定的资源的请求。</td></tr><tr><td style="text-align:center">NotModified</td><td style="text-align:left">304</td><td style="text-align:left">指示客户端的缓存副本是最新的。未传输此资源的内容。</td></tr><tr><td style="text-align:center">UseProxy</td><td style="text-align:left">305</td><td style="text-align:left">指示请求应使用位于 Location 头中指定的 URI 的代理服务器。</td></tr><tr><td style="text-align:center">Unused</td><td style="text-align:left">306</td><td style="text-align:left">是未完全指定的 HTTP/1.1 规范的建议扩展。</td></tr><tr><td style="text-align:center">TemporaryRedirect</td><td style="text-align:left">307</td><td style="text-align:left">指示请求信息位于 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求还将使用 POST 方法。</td></tr><tr><td style="text-align:center">RedirectKeepVerb</td><td style="text-align:left">307</td><td style="text-align:left">指示请求信息位于 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求还将使用 POST 方法。</td></tr><tr><td style="text-align:center">BadRequest</td><td style="text-align:left">400</td><td style="text-align:left">指示服务器未能识别请求。如果没有其他适用的错误，或者如果不知道准确的错误或错误没有自己的错误代码，则发送 BadRequest。</td></tr><tr><td style="text-align:center">Unauthorized</td><td style="text-align:left">401</td><td style="text-align:left">指示请求的资源要求身份验证。WWW-Authenticate头包含如何执行身份验证的详细信息。</td></tr><tr><td style="text-align:center">PaymentRequired</td><td style="text-align:left">402</td><td style="text-align:left">保留 PaymentRequired 以供将来使用。</td></tr><tr><td style="text-align:center">Forbidden</td><td style="text-align:left">403</td><td style="text-align:left">指示服务器拒绝满足请求。</td></tr><tr><td style="text-align:center">NotFound</td><td style="text-align:left">404</td><td style="text-align:left">指示请求的资源不在服务器上。</td></tr><tr><td style="text-align:center">MethodNotAllowed</td><td style="text-align:left">405</td><td style="text-align:left">指示请求的资源上不允许请求方法（POST 或 GET）。</td></tr><tr><td style="text-align:center">NotAcceptable</td><td style="text-align:left">406</td><td style="text-align:left">指示客户端已用 Accept 头指示将不接受资源的任何可用表示形式。</td></tr><tr><td style="text-align:center">ProxyAuthenticationRequired</td><td style="text-align:left">407</td><td style="text-align:left">指示请求的代理要求身份验证。Proxy-authenticate 头包含如何执行身份验证的详细信息。</td></tr><tr><td style="text-align:center">RequestTimeout</td><td style="text-align:left">408</td><td style="text-align:left">指示客户端没有在服务器期望请求的时间内发送请求。</td></tr><tr><td style="text-align:center">Conflict</td><td style="text-align:left">409</td><td style="text-align:left">指示由于服务器上的冲突而未能执行请求。</td></tr><tr><td style="text-align:center">Gone</td><td style="text-align:left">410</td><td style="text-align:left">指示请求的资源不再可用。</td></tr><tr><td style="text-align:center">LengthRequired</td><td style="text-align:left">411</td><td style="text-align:left">指示缺少必需的 Content-length 头。</td></tr><tr><td style="text-align:center">PreconditionFailed</td><td style="text-align:left">412</td><td style="text-align:left">指示为此请求设置的条件失败，且无法执行此请求。条件是用条件请求标头（如 If-Match、If-None-Match 或 If-Unmodified-Since）设置的。</td></tr><tr><td style="text-align:center">RequestEntityTooLarge</td><td style="text-align:left">413</td><td style="text-align:left">指示请求太大，服务器无法处理。</td></tr><tr><td style="text-align:center">RequestUriTooLong</td><td style="text-align:left">414</td><td style="text-align:left">指示 URI 太长。</td></tr><tr><td style="text-align:center">UnsupportedMediaType</td><td style="text-align:left">415</td><td style="text-align:left">指示请求是不支持的类型。</td></tr><tr><td style="text-align:center">RequestedRangeNotSatisfiable</td><td style="text-align:left">416</td><td style="text-align:left">RequestedRangeNotSatisfiable指示无法返回从资源请求的数据范围，因为范围的开头在资源的开头之前，或因为范围的结尾在资源的结尾之后。</td></tr><tr><td style="text-align:center">ExpectationFailed</td><td style="text-align:left">417</td><td style="text-align:left">指示服务器未能符合 Expect 头中给定的预期值。</td></tr><tr><td style="text-align:center">UpgradeRequired</td><td style="text-align:left">426</td><td style="text-align:left">客户端应当切换到TLS/1.0</td></tr><tr><td style="text-align:center">InternalServerError</td><td style="text-align:left">500</td><td style="text-align:left">指示服务器上发生了一般错误。</td></tr><tr><td style="text-align:center">NotImplemented</td><td style="text-align:left">501</td><td style="text-align:left">指示服务器不支持请求的函数。</td></tr><tr><td style="text-align:center">BadGateway</td><td style="text-align:left">502</td><td style="text-align:left">指示中间代理服务器从另一代理或原始服务器接收到错误响应。</td></tr><tr><td style="text-align:center">ServiceUnavailable</td><td style="text-align:left">503</td><td style="text-align:left">指示服务器暂时不可用，通常是由于过多加载或维护。</td></tr><tr><td style="text-align:center">GatewayTimeout</td><td style="text-align:left">504</td><td style="text-align:left">指示中间代理服务器在等待来自另一个代理或原始服务器的响应时已超时。</td></tr><tr><td style="text-align:center">HttpVersionNotSupported</td><td style="text-align:left">505</td><td style="text-align:left">指示服务器不支持请求的 HTTP 版本。</td></tr></tbody></table>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;HttpStatusCode&quot;&gt;&lt;a href=&quot;#HttpStatusCode&quot; class=&quot;headerlink&quot; title=&quot;HttpStatusCode&quot;&gt;&lt;/a&gt;HttpStatusCode&lt;/h1&gt;&lt;figure class=&quot;highlight 
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="https://wxzhongwang.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="Web" scheme="https://wxzhongwang.github.io/tags/Web/"/>
+    
+      <category term="前端" scheme="https://wxzhongwang.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git使用中的问题</title>
+    <link href="https://wxzhongwang.github.io/2018/01/08/Git%E4%BD%BF%E7%94%A8%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>https://wxzhongwang.github.io/2018/01/08/Git使用中的问题/</id>
+    <published>2018-01-08T04:20:02.000Z</published>
+    <updated>2019-01-13T03:36:57.223Z</updated>
+    
+    <content type="html"><![CDATA[<p>git push失败 fatal: Could not read from remote repository</p><h2 id="阐述问题"><a href="#阐述问题" class="headerlink" title="阐述问题"></a>阐述问题</h2><p>git push失败 fatal: Could not read from remote repository. 因为仓库地址不对。更改地址就可以push了。</p><h3 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git remote -v</span><br><span class="line">$ git remote <span class="built_in">set</span>-url origin XXX</span><br></pre></td></tr></table></figure><h2 id="服务器上的-Git-生成-SSH-公钥"><a href="#服务器上的-Git-生成-SSH-公钥" class="headerlink" title="服务器上的 Git - 生成 SSH 公钥"></a>服务器上的 Git - 生成 SSH 公钥</h2><h3 id="生成-SSH-公钥"><a href="#生成-SSH-公钥" class="headerlink" title="生成 SSH 公钥"></a>生成 SSH 公钥</h3><p>大多数 Git 服务器都会选择使用 SSH 公钥来进行授权。系统中的每个用户都必须提供一个公钥用于授权，没有的话就要生成一个。生成公钥的过程在所有操作系统上都差不多。首先先确认一下是否已经有一个公钥了。SSH 公钥默认储存在账户的主目录下的 ~/.ssh 目录。<br>若想在github中使用的话需要将公钥复制到github&gt;setting&gt;SSH and GPG keys中添加ssh keys。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">生成钥匙</span><br><span class="line">$ ssh-keygen</span><br><span class="line">查看公钥</span><br><span class="line"><span class="variable">$cat</span> ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;git push失败 fatal: Could not read from remote repository&lt;/p&gt;
+&lt;h2 id=&quot;阐述问题&quot;&gt;&lt;a href=&quot;#阐述问题&quot; class=&quot;headerlink&quot; title=&quot;阐述问题&quot;&gt;&lt;/a&gt;阐述问题&lt;/h2&gt;&lt;p
+      
+    
+    </summary>
+    
+      <category term="版本控制工具" scheme="https://wxzhongwang.github.io/categories/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="Git" scheme="https://wxzhongwang.github.io/tags/Git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>优秀的开源项目</title>
+    <link href="https://wxzhongwang.github.io/2017/12/08/%E4%BC%98%E7%A7%80%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E5%8F%8A%E4%BC%98%E7%A7%80%E6%96%87%E7%AB%A0%E5%9C%B0%E5%9D%80/"/>
+    <id>https://wxzhongwang.github.io/2017/12/08/优秀的开源项目及优秀文章地址/</id>
+    <published>2017-12-08T02:18:02.000Z</published>
+    <updated>2019-01-13T03:38:58.165Z</updated>
+    
+    <content type="html"><![CDATA[<p>此部分总结平时工作中积累的项目或者见过的优秀开源项目的总结</p><h1 id="优秀的开源项目"><a href="#优秀的开源项目" class="headerlink" title="优秀的开源项目"></a>优秀的开源项目</h1><p>此部分总结平时工作中积累的项目或者见过的优秀开源项目的总结</p><h2 id="前端相关"><a href="#前端相关" class="headerlink" title="前端相关"></a>前端相关</h2><h2 id="NET相关"><a href="#NET相关" class="headerlink" title="NET相关"></a>NET相关</h2><h2 id="NodeJS相关"><a href="#NodeJS相关" class="headerlink" title="NodeJS相关"></a>NodeJS相关</h2><h3 id="NodeJS-中文社区开源"><a href="#NodeJS-中文社区开源" class="headerlink" title="NodeJS 中文社区开源"></a>NodeJS 中文社区开源</h3><p>官网地址:</p><blockquote><p><a href="https://cnodejs.org/" target="_blank" rel="noopener">https://cnodejs.org/</a></p></blockquote><p>项目开源地址：</p><blockquote><p><a href="https://github.com/cnodejs/nodeclub/" target="_blank" rel="noopener">https://github.com/cnodejs/nodeclub/</a></p></blockquote><h2 id="JAVA相关"><a href="#JAVA相关" class="headerlink" title="JAVA相关"></a>JAVA相关</h2><h2 id="数据库相关"><a href="#数据库相关" class="headerlink" title="数据库相关"></a>数据库相关</h2><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h2 id="架构相关"><a href="#架构相关" class="headerlink" title="架构相关"></a>架构相关</h2><h1 id="优秀文章地址"><a href="#优秀文章地址" class="headerlink" title="优秀文章地址"></a>优秀文章地址</h1><p>此部分总结平时工作中积累的优秀文章或者博客</p><h2 id="前端、JAVA、Python"><a href="#前端、JAVA、Python" class="headerlink" title="前端、JAVA、Python"></a>前端、JAVA、Python</h2><blockquote><p><a href="https://www.jqhtml.com/" target="_blank" rel="noopener">https://www.jqhtml.com/</a></p></blockquote><h2 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx:"></a>Nginx:</h2><p>详细文档:</p><blockquote><p><a href="http://tengine.taobao.org/book/index.html" target="_blank" rel="noopener">http://tengine.taobao.org/book/index.html</a></p></blockquote><h2 id="Jekins"><a href="#Jekins" class="headerlink" title="Jekins:"></a>Jekins:</h2><p>教程<br><a href="http://blog.51cto.com/12832314/2140304" target="_blank" rel="noopener">http://blog.51cto.com/12832314/2140304</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;此部分总结平时工作中积累的项目或者见过的优秀开源项目的总结&lt;/p&gt;
+&lt;h1 id=&quot;优秀的开源项目&quot;&gt;&lt;a href=&quot;#优秀的开源项目&quot; class=&quot;headerlink&quot; title=&quot;优秀的开源项目&quot;&gt;&lt;/a&gt;优秀的开源项目&lt;/h1&gt;&lt;p&gt;此部分总结平时工作中积累的
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="https://wxzhongwang.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="Web" scheme="https://wxzhongwang.github.io/tags/Web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis和Memcached比较</title>
+    <link href="https://wxzhongwang.github.io/2017/09/12/Redis%E5%92%8CMemcached%E6%AF%94%E8%BE%83/"/>
+    <id>https://wxzhongwang.github.io/2017/09/12/Redis和Memcached比较/</id>
+    <published>2017-09-12T10:33:59.000Z</published>
+    <updated>2019-01-13T03:38:11.229Z</updated>
+    
+    <content type="html"><![CDATA[<p>Redis和Memcache都是将数据存放在内存中，都是内存数据库。本文介绍两者的区别。</p><h1 id="Redis和Memcached比较"><a href="#Redis和Memcached比较" class="headerlink" title="Redis和Memcached比较"></a>Redis和Memcached比较</h1><ul><li><p>Memcached是多线程，而Redis使用单线程.</p></li><li><p>Memcached使用预分配的内存池的方式，Redis使用现场申请内存的方式来存储数据，并且可以配置虚拟内存。</p></li><li><p>Redis可以实现持久化，主从复制，实现故障恢复。</p></li><li><p>Memcached只是简单的key与value,但是Redis支持数据类型比较多。</p></li></ul><p>Redis的存储分为内存存储、磁盘存储 .从这一点，也说明了Redis与Memcached是有区别的。Redis 与Memcached一样，为了保证效率，数据都是缓存在内存中。区别的是redis会周期性的把更新的数据写入磁盘或者把修改 操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。</p><p>Redis有两种存储方式(默认:snapshot)</p><ol><li>snapshot<blockquote><p>实现方法是定时将内存的快照(snapshot)持久化到硬盘，<br>这种方法缺点是持久化之后如果出现crash则会丢失一段数据。<br>因此在完美主义者的推动下作者增加了aof方式。</p></blockquote></li></ol><ol start="2"><li>aof<blockquote><p>即append only mode，在写入内存数据的同时将操作命令保存到日志文件，在一个并发更改上万的系统中，命令日志是一个非常庞大的数据，管理维护成本非常高，恢复重建时间会非常长，这样导致失去aof高可用性本意。另外更重要的是Redis是一个内存数据结构模型，所有的优势都是建立在对内存复杂数据结构高效的原子操作</p></blockquote></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Redis和Memcache都是将数据存放在内存中，都是内存数据库。本文介绍两者的区别。&lt;/p&gt;
+&lt;h1 id=&quot;Redis和Memcached比较&quot;&gt;&lt;a href=&quot;#Redis和Memcached比较&quot; class=&quot;headerlink&quot; title=&quot;Redis和
+      
+    
+    </summary>
+    
+      <category term="Redis" scheme="https://wxzhongwang.github.io/categories/Redis/"/>
+    
+    
+      <category term="Redis" scheme="https://wxzhongwang.github.io/tags/Redis/"/>
+    
+      <category term="NOSQL" scheme="https://wxzhongwang.github.io/tags/NOSQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis简介</title>
+    <link href="https://wxzhongwang.github.io/2017/09/12/Redis%E7%AE%80%E4%BB%8B/"/>
+    <id>https://wxzhongwang.github.io/2017/09/12/Redis简介/</id>
+    <published>2017-09-12T10:33:59.000Z</published>
+    <updated>2019-01-13T03:38:22.523Z</updated>
+    
+    <content type="html"><![CDATA[<p>Redis是一个开源的，使用C语言编写，面向“键/值”对类型数据的分布式NoSQL数据库系统，特点是高性能，持久存储，适应高并发的应用场景。Redis纯粹为应用而产生，它是一个高性能的key-value数据库,并且提供了多种语言的API，性能测试结果表示SET操作每秒钟可达110000次，GET操作每秒81000次（当然不同的服务器配置性能不同）。</p><h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><p>Redis是一个开源的，使用C语言编写，面向“键/值”对类型数据的分布式NoSQL数据库系统，特点是高性能，持久存储，适应高并发的应用场景。Redis纯粹为应用而产生，它是一个高性能的key-value数据库,并且提供了多种语言的API，性能测试结果表示SET操作每秒钟可达110000次，GET操作每秒81000次（当然不同的服务器配置性能不同）。</p><p>Redis目前提供五种数据类型：</p><ul><li>string(字符串),</li><li>list（链表）, </li><li>Hash（哈希）,</li><li>set（集合）,</li><li>zset(sorted set)  （有序集合）</li></ul><p>Redis开发维护很活跃，虽然它是一个Key-Value数据库存储系统，但它本身支持MQ功能，所以完全可以当做一个轻量级的队列服务来使用。</p><p>Redis可以做消息队列？</p><blockquote><p>首先，redis设计用来做缓存的，但是由于它自身的某种特性使得它可以用来做消息队列，它有几个阻塞式的API可以使用，正是这些阻塞式的API让其有能力做消息队列；另外，做消息队列的其他特性例如FIFO（先入先出）也很容易实现，只需要一个list对象从头取数据，从尾部塞数据即可；redis能做消息队列还得益于其list对象blpop brpop接口以及Pub/Sub（发布/订阅）的某些接口，它们都是阻塞版的，所以可以用来做消息队列。</p></blockquote><p>对于RabbitMQ和Redis的入队和出队操作，各执行100万次，每10万次记录一次执行时间。测试数据分为128Bytes、512Bytes、1K和10K四个不同大小的数据。<br>实验表明：</p><blockquote><p>入队时，当数据比较小时Redis的性能要高于RabbitMQ，而如果数据大小超过了10K，Redis则慢的无法忍<br>受；出队时，无论数据大小，Redis都表现出非常好的性能，而RabbitMQ的出队性能则远低于Redis。</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Redis是一个开源的，使用C语言编写，面向“键/值”对类型数据的分布式NoSQL数据库系统，特点是高性能，持久存储，适应高并发的应用场景。Redis纯粹为应用而产生，它是一个高性能的key-value数据库,并且提供了多种语言的API，性能测试结果表示SET操作每秒钟可达
+      
+    
+    </summary>
+    
+      <category term="Redis" scheme="https://wxzhongwang.github.io/categories/Redis/"/>
+    
+    
+      <category term="Redis" scheme="https://wxzhongwang.github.io/tags/Redis/"/>
+    
+      <category term="消息队列" scheme="https://wxzhongwang.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"/>
     
   </entry>
   

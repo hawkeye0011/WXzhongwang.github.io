@@ -1,0 +1,287 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>HttpStatusCode | 咸鱼有点闲</title><link rel="stylesheet" type="text/css" href="//fonts.neworld.org/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.1"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.1"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">HttpStatusCode</h1><a id="logo" href="/.">咸鱼有点闲</a><p class="description">Dick</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="Arama"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">HttpStatusCode</h1><div class="post-meta"><a href="/2018/02/08/HttpStatusCode/#comments" class="comment-count"><i id="changyan_count_unit" data-xid="2018/02/08/HttpStatusCode/"></i>留言,<i id="changyan_parti_unit" data-xid="2018/02/08/HttpStatusCode/"></i>参与</a><p><span class="date">Feb 08, 2018</span><span><a href="/categories/前端/" class="category">前端</a></span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h1 id="HttpStatusCode"><a href="#HttpStatusCode" class="headerlink" title="HttpStatusCode"></a>HttpStatusCode</h1><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> <span class="comment">/*</span></span><br><span class="line"><span class="comment">    1xx：相关信息</span></span><br><span class="line"><span class="comment">    2xx：操作成功</span></span><br><span class="line"><span class="comment">    3xx：重定向</span></span><br><span class="line"><span class="comment">    4xx：客户端错误</span></span><br><span class="line"><span class="comment">    5xx：服务器错误</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">字段</th>
+<th style="text-align:left">状态码</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Continue</td>
+<td style="text-align:left">100</td>
+<td style="text-align:left">指示客户端可能继续其请求。</td>
+</tr>
+<tr>
+<td style="text-align:center">SwitchingProtocols</td>
+<td style="text-align:left">100</td>
+<td style="text-align:left">指示正在更改协议版本或协议。</td>
+</tr>
+<tr>
+<td style="text-align:center">OK</td>
+<td style="text-align:left">200</td>
+<td style="text-align:left">指示请求成功，且请求的信息包含在响应中。</td>
+</tr>
+<tr>
+<td style="text-align:center">Created</td>
+<td style="text-align:left">201</td>
+<td style="text-align:left">指示请求导致在响应被发送前创建新资源。</td>
+</tr>
+<tr>
+<td style="text-align:center">Accepted</td>
+<td style="text-align:left">202</td>
+<td style="text-align:left">指示请求已被接受做进一步处理。</td>
+</tr>
+<tr>
+<td style="text-align:center">NonAuthoritativeInformation</td>
+<td style="text-align:left">202</td>
+<td style="text-align:left">指示返回的元信息来自缓存副本而不是原始服务器，因此可能不正确。</td>
+</tr>
+<tr>
+<td style="text-align:center">NoContent</td>
+<td style="text-align:left">204</td>
+<td style="text-align:left">指示请求成功，指示已成功处理请求并且响应已被设定为无内容。</td>
+</tr>
+<tr>
+<td style="text-align:center">ResetContent</td>
+<td style="text-align:left">205</td>
+<td style="text-align:left">指示客户端应重置（或重新加载）当前资源。</td>
+</tr>
+<tr>
+<td style="text-align:center">PartialContent</td>
+<td style="text-align:left">206</td>
+<td style="text-align:left">指示响应是包括字节范围的 GET 请求所请求的部分响应。</td>
+</tr>
+<tr>
+<td style="text-align:center">MultipleChoices</td>
+<td style="text-align:left">300</td>
+<td style="text-align:left">指示请求的信息有多种表示形式，默认操作是将此状态视为重定向，并遵循与此响应关联的 Location 头的内容。</td>
+</tr>
+<tr>
+<td style="text-align:center">Ambiguous</td>
+<td style="text-align:left">300</td>
+<td style="text-align:left">指示请求的信息有多种表示形式。默认操作是将此状态视为重定向，并遵循与此响应关联的 Location 头的内容。</td>
+</tr>
+<tr>
+<td style="text-align:center">MovedPermanently</td>
+<td style="text-align:left">301</td>
+<td style="text-align:left">指示请求的信息已移到 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。</td>
+</tr>
+<tr>
+<td style="text-align:center">Moved</td>
+<td style="text-align:left">301</td>
+<td style="text-align:left">指示请求的信息已移到 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求将使用 GET 方法。</td>
+</tr>
+<tr>
+<td style="text-align:center">Found</td>
+<td style="text-align:left">302</td>
+<td style="text-align:left">指示请求的信息位于 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求将使用 GET 方法。</td>
+</tr>
+<tr>
+<td style="text-align:center">Redirect</td>
+<td style="text-align:left">302</td>
+<td style="text-align:left">指示请求的信息位于 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求将使用 GET 方法。</td>
+</tr>
+<tr>
+<td style="text-align:center">SeeOther</td>
+<td style="text-align:left">303</td>
+<td style="text-align:left">作为 POST 的结果，SeeOther 将客户端自动重定向到 Location 头中指定的 URI。用 GET 生成对 Location 头所指定的资源的请求。</td>
+</tr>
+<tr>
+<td style="text-align:center">RedirectMethod</td>
+<td style="text-align:left">303</td>
+<td style="text-align:left">作为 POST 的结果，RedirectMethod 将客户端自动重定向到 Location 头中指定的 URI。用 GET 生成对 Location 头所指定的资源的请求。</td>
+</tr>
+<tr>
+<td style="text-align:center">NotModified</td>
+<td style="text-align:left">304</td>
+<td style="text-align:left">指示客户端的缓存副本是最新的。未传输此资源的内容。</td>
+</tr>
+<tr>
+<td style="text-align:center">UseProxy</td>
+<td style="text-align:left">305</td>
+<td style="text-align:left">指示请求应使用位于 Location 头中指定的 URI 的代理服务器。</td>
+</tr>
+<tr>
+<td style="text-align:center">Unused</td>
+<td style="text-align:left">306</td>
+<td style="text-align:left">是未完全指定的 HTTP/1.1 规范的建议扩展。</td>
+</tr>
+<tr>
+<td style="text-align:center">TemporaryRedirect</td>
+<td style="text-align:left">307</td>
+<td style="text-align:left">指示请求信息位于 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求还将使用 POST 方法。</td>
+</tr>
+<tr>
+<td style="text-align:center">RedirectKeepVerb</td>
+<td style="text-align:left">307</td>
+<td style="text-align:left">指示请求信息位于 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求还将使用 POST 方法。</td>
+</tr>
+<tr>
+<td style="text-align:center">BadRequest</td>
+<td style="text-align:left">400</td>
+<td style="text-align:left">指示服务器未能识别请求。如果没有其他适用的错误，或者如果不知道准确的错误或错误没有自己的错误代码，则发送 BadRequest。</td>
+</tr>
+<tr>
+<td style="text-align:center">Unauthorized</td>
+<td style="text-align:left">401</td>
+<td style="text-align:left">指示请求的资源要求身份验证。WWW-Authenticate头包含如何执行身份验证的详细信息。</td>
+</tr>
+<tr>
+<td style="text-align:center">PaymentRequired</td>
+<td style="text-align:left">402</td>
+<td style="text-align:left">保留 PaymentRequired 以供将来使用。</td>
+</tr>
+<tr>
+<td style="text-align:center">Forbidden</td>
+<td style="text-align:left">403</td>
+<td style="text-align:left">指示服务器拒绝满足请求。</td>
+</tr>
+<tr>
+<td style="text-align:center">NotFound</td>
+<td style="text-align:left">404</td>
+<td style="text-align:left">指示请求的资源不在服务器上。</td>
+</tr>
+<tr>
+<td style="text-align:center">MethodNotAllowed</td>
+<td style="text-align:left">405</td>
+<td style="text-align:left">指示请求的资源上不允许请求方法（POST 或 GET）。</td>
+</tr>
+<tr>
+<td style="text-align:center">NotAcceptable</td>
+<td style="text-align:left">406</td>
+<td style="text-align:left">指示客户端已用 Accept 头指示将不接受资源的任何可用表示形式。</td>
+</tr>
+<tr>
+<td style="text-align:center">ProxyAuthenticationRequired</td>
+<td style="text-align:left">407</td>
+<td style="text-align:left">指示请求的代理要求身份验证。Proxy-authenticate 头包含如何执行身份验证的详细信息。</td>
+</tr>
+<tr>
+<td style="text-align:center">RequestTimeout</td>
+<td style="text-align:left">408</td>
+<td style="text-align:left">指示客户端没有在服务器期望请求的时间内发送请求。</td>
+</tr>
+<tr>
+<td style="text-align:center">Conflict</td>
+<td style="text-align:left">409</td>
+<td style="text-align:left">指示由于服务器上的冲突而未能执行请求。</td>
+</tr>
+<tr>
+<td style="text-align:center">Gone</td>
+<td style="text-align:left">410</td>
+<td style="text-align:left">指示请求的资源不再可用。</td>
+</tr>
+<tr>
+<td style="text-align:center">LengthRequired</td>
+<td style="text-align:left">411</td>
+<td style="text-align:left">指示缺少必需的 Content-length 头。</td>
+</tr>
+<tr>
+<td style="text-align:center">PreconditionFailed</td>
+<td style="text-align:left">412</td>
+<td style="text-align:left">指示为此请求设置的条件失败，且无法执行此请求。条件是用条件请求标头（如 If-Match、If-None-Match 或 If-Unmodified-Since）设置的。</td>
+</tr>
+<tr>
+<td style="text-align:center">RequestEntityTooLarge</td>
+<td style="text-align:left">413</td>
+<td style="text-align:left">指示请求太大，服务器无法处理。</td>
+</tr>
+<tr>
+<td style="text-align:center">RequestUriTooLong</td>
+<td style="text-align:left">414</td>
+<td style="text-align:left">指示 URI 太长。</td>
+</tr>
+<tr>
+<td style="text-align:center">UnsupportedMediaType</td>
+<td style="text-align:left">415</td>
+<td style="text-align:left">指示请求是不支持的类型。</td>
+</tr>
+<tr>
+<td style="text-align:center">RequestedRangeNotSatisfiable</td>
+<td style="text-align:left">416</td>
+<td style="text-align:left">RequestedRangeNotSatisfiable指示无法返回从资源请求的数据范围，因为范围的开头在资源的开头之前，或因为范围的结尾在资源的结尾之后。</td>
+</tr>
+<tr>
+<td style="text-align:center">ExpectationFailed</td>
+<td style="text-align:left">417</td>
+<td style="text-align:left">指示服务器未能符合 Expect 头中给定的预期值。</td>
+</tr>
+<tr>
+<td style="text-align:center">UpgradeRequired</td>
+<td style="text-align:left">426</td>
+<td style="text-align:left">客户端应当切换到TLS/1.0</td>
+</tr>
+<tr>
+<td style="text-align:center">InternalServerError</td>
+<td style="text-align:left">500</td>
+<td style="text-align:left">指示服务器上发生了一般错误。</td>
+</tr>
+<tr>
+<td style="text-align:center">NotImplemented</td>
+<td style="text-align:left">501</td>
+<td style="text-align:left">指示服务器不支持请求的函数。</td>
+</tr>
+<tr>
+<td style="text-align:center">BadGateway</td>
+<td style="text-align:left">502</td>
+<td style="text-align:left">指示中间代理服务器从另一代理或原始服务器接收到错误响应。</td>
+</tr>
+<tr>
+<td style="text-align:center">ServiceUnavailable</td>
+<td style="text-align:left">503</td>
+<td style="text-align:left">指示服务器暂时不可用，通常是由于过多加载或维护。</td>
+</tr>
+<tr>
+<td style="text-align:center">GatewayTimeout</td>
+<td style="text-align:left">504</td>
+<td style="text-align:left">指示中间代理服务器在等待来自另一个代理或原始服务器的响应时已超时。</td>
+</tr>
+<tr>
+<td style="text-align:center">HttpVersionNotSupported</td>
+<td style="text-align:left">505</td>
+<td style="text-align:left">指示服务器不支持请求的 HTTP 版本。</td>
+</tr>
+</tbody>
+</table>
+</div><div class="tags"><a href="/tags/Web/">Web</a><a href="/tags/前端/">前端</a></div><div class="post-share"><div class="bdsharebuttonbox"><span style="float:left;line-height: 28px;height: 28px;font-size:16px;font-weight:blod">分享到：</span><a href="#" data-cmd="more" class="bds_more"></a><a href="#" data-cmd="mshare" title="分享到一键分享" class="bds_mshare"></a><a href="#" data-cmd="fbook" title="分享到Facebook" class="bds_fbook"></a><a href="#" data-cmd="twi" title="分享到Twitter" class="bds_twi"></a><a href="#" data-cmd="linkedin" title="分享到linkedin" class="bds_linkedin"></a><a href="#" data-cmd="youdao" title="分享到有道云笔记" class="bds_youdao"></a><a href="#" data-cmd="evernotecn" title="分享到印象笔记" class="bds_evernotecn"></a><a href="#" data-cmd="weixin" title="分享到微信" class="bds_weixin"></a><a href="#" data-cmd="qzone" title="分享到QQ空间" class="bds_qzone"></a><a href="#" data-cmd="tsina" title="分享到新浪微博" class="bds_tsina"></a></div></div><div class="post-nav"><a href="/2018/03/06/Linux 常用命令/" class="pre">Linux常用命令</a><a href="/2018/01/08/Git使用中的问题/" class="next">Git使用中的问题</a></div><div id="comments"><div id="SOHUCS" sid="2018/02/08/HttpStatusCode/"></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HttpStatusCode"><span class="toc-text">HttpStatusCode</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/01/13/互联网金融行业数仓分层/">互联网金融行业数仓分层</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/13/SparkStreaming和Storm的区别/">SparkStreaming和Storm</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/13/Hadoop Hive Hbase 简单区别及应用场景/">Hadoop Hive Hbase 简单区别及应用场景</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/Hadoop/">Hadoop概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/流处理、批处理、交互式查询/">流处理、批处理、交互式查询</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/大数据/">大数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/大数据相关技术（Hadoop体系）/">Hadoop技术体系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/08/消息队列/">消息队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/31/hello-world/">你好，世界</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/12/windows下安装node-sass和sass-loader失败/">sass sass-loader</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客搭建/">博客搭建</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据仓库/">数据仓库</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/消息队列/">消息队列</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制工具/">版本控制工具</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/消息队列/" style="font-size: 15px;">消息队列</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Web/" style="font-size: 15px;">Web</a> <a href="/tags/前端/" style="font-size: 15px;">前端</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/NOSQL/" style="font-size: 15px;">NOSQL</a> <a href="/tags/博客系统/" style="font-size: 15px;">博客系统</a> <a href="/tags/数据仓库/" style="font-size: 15px;">数据仓库</a> <a href="/tags/MessageQueue/" style="font-size: 15px;">MessageQueue</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://weibo.com/u/6558527999" title="我的微博" target="_blank">我的微博</a><ul></ul><a href="https://github.com/WXzhongwang" title="github" target="_blank">github</a><ul></ul><a href="http://www.example3.com/" title="email" target="_blank">email</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">Baidu Site Haritası</a> |  <a href="/atom.xml">订阅</a> |  <a href="/about/">关于</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次</p><p><span> Copyright &copy;<a href="/." rel="nofollow">Dick Zhong.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?59fa73ee21368457120313eaa537ac31";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/search.json.js?v=2.0.1"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.1" async></script><script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","weixin","tsina","qzone","linkedin","fbook","twi","print","renren","sqq","evernotecn","bdysc","tqq","tqf","bdxc","kaixin001","tieba","douban","bdhome","thx","ibaidu","meilishuo","mogujie","diandian","huaban","duitang","hx","fx","youdao","sdo","qingbiji","people","xinhua","mail","isohu","yaolan","wealink","ty","iguba","h163","copy"],"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"]}};with(document)0[(getElementsByTagName('head')[0]||head).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script><script>window._config = { showScore: true };
+(function(){ 
+  var appid = 'cyu1zewvb'; 
+  var conf = 'prod_73a0ca7e825d7aebdbe06ce3c3dabb52'; 
+  var width = window.innerWidth || document.documentElement.clientWidth; 
+  var nodes =document.getElementsByTagName("head")[0]||document.head||document.documentElement;
+  if (/(Android|iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent) && width < 750) {  
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+  }
+  else { 
+    var loadJs=function(d,a){
+      var b=document.createElement("script");b.setAttribute("type","text/javascript");
+      b.setAttribute("charset","UTF-8");
+      b.setAttribute("src",d);
+      if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}
+      nodes.appendChild(b)
+    };
+    loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); 
+  } 
+  var loadCss = function(cssString){  
+    var style=document.createElement("style");  
+    style.setAttribute("type", "text/css");  
+    if(style.styleSheet){// IE  
+        style.styleSheet.cssText = cssString;  
+    } else {// w3c  
+        var cssText = document.createTextNode(cssString);  
+        style.appendChild(cssText);  
+    }
+    nodes.appendChild(style);
+  }
+  window.onload=function(){loadCss('.module-hot-topic,.module-cmt-float-bar{display:none!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .cbox-prompt-w span.prompt-empty-w,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-form-w .form-text-w span.text-null,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-minwidth-w div.cont-comment-w a.comment-link-w,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-minwidth-w div.cont-comment-w span.comment-text-w,#SOHUCS #SOHU_MAIN .module-cmt-footer .section-service-w div.service-wrap-w a:hover,#SOHUCS #SOHU_MAIN .module-cmt-header .section-cbox-w .block-head-w div.header-login,#SOHUCS #SOHU_MAIN .module-cmt-header .section-title-w .title-user-w .user-wrap-w span.wrap-name-w,#SOHUCS #SOHU_MAIN .module-cmt-list .action-click-gw span.click-disable-eg a em.icon-name-bg,#SOHUCS #SOHU_MAIN .module-cmt-list .block-title-gw ul li div.title-name-gw,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .cmt-list-number .comment-number span.cy-number,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .cmt-list-number span.comment-number,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li.active,#SOHUCS #SOHU_MAIN .module-cmt-list .msg-wrap-gw .wrap-action-gw .action-click-gw span a:hover,#SOHUCS #SOHU_MAIN .module-cmt-list .picture-box-gw div.box-action-gw a:hover,#SOHUCS #SOHU_MAIN .module-cmt-list .wrap-action-gw .action-click-gw span a:hover em.icon-name-bg,#SOHUCS #SOHU_MAIN .module-cmt-list .wrap-user-gw span.user-name-gw a{color:#40759b!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .post-wrap-border-t div.post-wrap-border-t-r,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-border-l,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-border-r{display:none!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .post-wrap-border-t div.post-wrap-border-t-l{background:#FFF!important;top:-2px!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-function-w .uploading-wrapper-dw div.wrapper-image-dw,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-main,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-form-w div.form-text-w,#SOHUCS #SOHU_MAIN .module-cmt-header .section-cbox-w .block-head-w div.header-login,#SOHUCS #SOHU_MAIN .module-cmt-list .module-cmt-box .post-wrap-w div.post-wrap-main{border:1px solid #e6e6e6!important;border-radius:20px 20px 20px 20px;margin:0!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a .btn-fw{width:130px!important;height:34px!important;line-height:33px!important;font-size:17px!important;background:#5483b1!important;border-radius:20px!important;color:#FFF!important;-webkit-box-shadow:0 -1px 4px #5483b1 inset;box-shadow:0 -1px 10px #5483b1 inset}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a .btn-fw:before{content:"发表评论"}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a:hover .btn-fw{color:#40759b!important;background:#FFF!important}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li{background:none!important;border-bottom:1px solid #e6e6e6}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li.active{border:1px solid #e6e6e6;border-radius:10px 10px 0 0;border-bottom:none}#SOHUCS #SOHU_MAIN .module-cmt-list .block-title-gw ul li .title-name-gw div.title-name-gw-tag{background:#5483b1!important;border-radius:3px}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type div.cmt-list-border{background-color:#e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item{border:1px solid #e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item .nt-logo{text-align:center;line-height:40px;border-radius:50%!important;background:#e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item .nt-logo:before{content:"畅";font-size:22px;color:#FFF}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item a.nt-text,#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item a.nt-text i{color:#5483b1!important}#SOHUCS #SOHU_MAIN .module-cmt-header .section-title-w .title-user-w .user-wrap-w{background:#FFF!important}');};
+})();</script><script src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script></body></html>
