@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://wxzhongwang.github.io/2019/01/24/Git%E8%B5%B7%E6%AD%A5/</loc>
-    <lastmod>2019-01-24</lastmod>
-  </url>  <url>
     <loc>https://wxzhongwang.github.io/2019/01/24/Git%20Diff/</loc>
+    <lastmod>2019-01-25</lastmod>
+  </url>  <url>
+    <loc>https://wxzhongwang.github.io/2019/01/25/Git%20%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2/</loc>
+    <lastmod>2019-01-25</lastmod>
+  </url>  <url>
+    <loc>https://wxzhongwang.github.io/2019/01/25/Git%20%E7%A7%BB%E5%8A%A8%E6%96%87%E4%BB%B6/</loc>
+    <lastmod>2019-01-25</lastmod>
+  </url>  <url>
+    <loc>https://wxzhongwang.github.io/2019/01/25/Git%20%E7%A7%BB%E9%99%A4%E6%96%87%E4%BB%B6/</loc>
+    <lastmod>2019-01-25</lastmod>
+  </url>  <url>
+    <loc>https://wxzhongwang.github.io/2019/01/25/Git%20Commit/</loc>
+    <lastmod>2019-01-25</lastmod>
+  </url>  <url>
+    <loc>https://wxzhongwang.github.io/2019/01/24/Git%E8%B5%B7%E6%AD%A5/</loc>
     <lastmod>2019-01-24</lastmod>
   </url>  <url>
     <loc>https://wxzhongwang.github.io/2019/01/24/Git%20gitignore/</loc>
