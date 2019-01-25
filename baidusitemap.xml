@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://wxzhongwang.github.io/2019/01/24/Git%20Diff/</loc>
-    <lastmod>2019-01-25</lastmod>
-  </url>  <url>
-    <loc>https://wxzhongwang.github.io/2019/01/25/Git%20%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2/</loc>
-    <lastmod>2019-01-25</lastmod>
-  </url>  <url>
-    <loc>https://wxzhongwang.github.io/2019/01/25/Git%20%E7%A7%BB%E5%8A%A8%E6%96%87%E4%BB%B6/</loc>
+    <loc>https://wxzhongwang.github.io/2018/01/08/Git%E4%BD%BF%E7%94%A8%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
     <lastmod>2019-01-25</lastmod>
   </url>  <url>
     <loc>https://wxzhongwang.github.io/2019/01/25/Git%20%E7%A7%BB%E9%99%A4%E6%96%87%E4%BB%B6/</loc>
     <lastmod>2019-01-25</lastmod>
   </url>  <url>
+    <loc>https://wxzhongwang.github.io/2019/01/25/Git%20%E7%A7%BB%E5%8A%A8%E6%96%87%E4%BB%B6/</loc>
+    <lastmod>2019-01-25</lastmod>
+  </url>  <url>
+    <loc>https://wxzhongwang.github.io/2019/01/25/Git%20%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2/</loc>
+    <lastmod>2019-01-25</lastmod>
+  </url>  <url>
     <loc>https://wxzhongwang.github.io/2019/01/25/Git%20Commit/</loc>
+    <lastmod>2019-01-25</lastmod>
+  </url>  <url>
+    <loc>https://wxzhongwang.github.io/2019/01/24/Git%20Diff/</loc>
     <lastmod>2019-01-25</lastmod>
   </url>  <url>
     <loc>https://wxzhongwang.github.io/2019/01/24/Git%E8%B5%B7%E6%AD%A5/</loc>
@@ -56,9 +59,6 @@
     <lastmod>2019-01-13</lastmod>
   </url>  <url>
     <loc>https://wxzhongwang.github.io/2018/02/08/HttpStatusCode/</loc>
-    <lastmod>2019-01-13</lastmod>
-  </url>  <url>
-    <loc>https://wxzhongwang.github.io/2018/01/08/Git%E4%BD%BF%E7%94%A8%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
     <lastmod>2019-01-13</lastmod>
   </url>  <url>
     <loc>https://wxzhongwang.github.io/2019/01/08/%E6%B5%81%E5%A4%84%E7%90%86%E3%80%81%E6%89%B9%E5%A4%84%E7%90%86%E3%80%81%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%9F%A5%E8%AF%A2/</loc>
