@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wxzhongwang.github.io/"/>
-  <updated>2019-01-30T08:43:25.593Z</updated>
+  <updated>2019-01-30T08:55:20.385Z</updated>
   <id>https://wxzhongwang.github.io/</id>
   
   <author>
@@ -15,6 +15,131 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="https://wxzhongwang.github.io/2019/01/30/1.0%20Java%E7%A8%8B%E5%BA%8F%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B/"/>
+    <id>https://wxzhongwang.github.io/2019/01/30/1.0 Java程序执行流程/</id>
+    <published>2019-01-30T08:55:20.159Z</published>
+    <updated>2019-01-30T08:55:20.385Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.Java程序执行流程</p><p>Java技术的核心就是Java虚拟机，因为所有的Java程序都在虚拟机上运行。Java程序的运行需要Java虚拟机、Java API和Java Class文件的配合。Java虚拟机实例负责运行一个Java程序。当启动一个Java程序时，一个虚拟机实例就诞生了。当程序结束，这个虚拟机实例也就消亡。</p><p><img src="https://www.javazhiyin.com/wp-content/uploads/2019/01/java3-1547432465.jpg" alt="image"></p><p>分为编译时环境和运行时环境，很基础很重要。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;1.Java程序执行流程&lt;/p&gt;
+&lt;p&gt;Java技术的核心就是Java虚拟机，因为所有的Java程序都在虚拟机上运行。Java程序的运行需要Java虚拟机、Java API和Java Class文件的配合。Java虚拟机实例负责运行一个Java程序。当启动一个Java程序时
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Java VM 2.0</title>
+    <link href="https://wxzhongwang.github.io/2019/01/30/2.0%20Java%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    <id>https://wxzhongwang.github.io/2019/01/30/2.0 Java虚拟机/</id>
+    <published>2019-01-30T08:55:16.884Z</published>
+    <updated>2019-01-30T08:56:21.467Z</updated>
+    
+    <content type="html"><![CDATA[<p>#Java虚拟机</p><p>作用：</p><blockquote><p>Java虚拟机的主要任务是装载class文件并且执行其中的字节码。Java虚拟机包含一个类装载器（class loader），它可以从程序和API中装载class文件，Java API中只有程序执行时需要的类才会被装载，字节码由执行引擎来执行。</p></blockquote><p>当Java虚拟机由主机操作系统上的软件实现时，Java程序通过调用本地方法和主机进行交互。Java方法由Java语言编写，编译成字节码，存储在class文件中。本地方法由C/C++/汇编语言编写，编译成和处理器相关的机器代码，存储在动态链接库中，格式是各个平台专有。所以本地方法是联系Java程序和底层主机操作系统的连接方式。（跨平台）</p><p><img src="https://www.javazhiyin.com/wp-content/uploads/2019/01/java8-1547432465.png" alt="image"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;#Java虚拟机&lt;/p&gt;
+&lt;p&gt;作用：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Java虚拟机的主要任务是装载class文件并且执行其中的字节码。Java虚拟机包含一个类装载器（class loader），它可以从程序和API中装载class文件，Java API中只有程序
+      
+    
+    </summary>
+    
+      <category term="Java" scheme="https://wxzhongwang.github.io/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="https://wxzhongwang.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java VM 4.0</title>
+    <link href="https://wxzhongwang.github.io/2019/01/30/4.0%20Class%E6%96%87%E4%BB%B6/"/>
+    <id>https://wxzhongwang.github.io/2019/01/30/4.0 Class文件/</id>
+    <published>2019-01-30T08:55:14.146Z</published>
+    <updated>2019-01-30T08:56:51.718Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Class文件"><a href="#Class文件" class="headerlink" title="Class文件"></a>Class文件</h1><p>Class文件是一组以8位字节为基础单位的二进制流，各个数据项目严格按照顺序紧凑地排列在Class文件中，中间没有添加任何分隔符号。Class文件采用一种类似于C语言结构体的伪结构来存储数据，这种伪结构中只包含两种数据类型，无符号数和表。无符号数属于基本的数据类型，以u1,u2,u4,u8分别代表1个字节，2个字节，4个字节和8个字节的无符号数，可以用来描述数字、索引引用、数量值或者按照utf-8编码构成字符串值。表是由多个无符号数或者其他表作为数据项构成的复合数据类型，所有表都习惯性地以“_info”结尾，用来描述有层次关系的复合结构数据。</p><p>Class文件的内容包括：</p><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ClassFile</span> &#123;</span><br><span class="line"></span><br><span class="line">   <span class="selector-tag">u4</span> <span class="selector-tag">magic</span>;                                     <span class="comment">//魔数：0xCAFEBABE，用来判断是否是Java class文件</span></span><br><span class="line">   <span class="selector-tag">u2</span> <span class="selector-tag">minor_version</span>;                             <span class="comment">//次版本号</span></span><br><span class="line">   <span class="selector-tag">u2</span> <span class="selector-tag">major_version</span>;                             <span class="comment">//主版本号</span></span><br><span class="line">   <span class="selector-tag">u2</span> <span class="selector-tag">constant_pool_count</span>;                       <span class="comment">//常量池大小</span></span><br><span class="line">   <span class="selector-tag">cp_info</span> <span class="selector-tag">constant_pool</span><span class="selector-attr">[constant_pool_count-1]</span>; <span class="comment">//常量池</span></span><br><span class="line">   <span class="selector-tag">u2</span> <span class="selector-tag">access_flags</span>;                              <span class="comment">//类和接口层次的访问标志（通过|运算得到）</span></span><br><span class="line">   <span class="selector-tag">u2</span> <span class="selector-tag">this_class</span>;                                <span class="comment">//类索引（指向常量池中的类常量）</span></span><br><span class="line">   <span class="selector-tag">u2</span> <span class="selector-tag">super_class</span>;                               <span class="comment">//父类索引（指向常量池中的类常量）</span></span><br><span class="line">   <span class="selector-tag">u2</span> <span class="selector-tag">interfaces_count</span>;                          <span class="comment">//接口索引计数器</span></span><br><span class="line">   <span class="selector-tag">u2</span> <span class="selector-tag">interfaces</span><span class="selector-attr">[interfaces_count]</span>;              <span class="comment">//接口索引集合</span></span><br><span class="line">   <span class="selector-tag">u2</span> <span class="selector-tag">fields_count</span>;                              <span class="comment">//字段数量计数器</span></span><br><span class="line">   <span class="selector-tag">field_info</span> <span class="selector-tag">fields</span><span class="selector-attr">[fields_count]</span>;              <span class="comment">//字段表集合</span></span><br><span class="line">   <span class="selector-tag">u2</span> <span class="selector-tag">methods_count</span>;                             <span class="comment">//方法数量计数器</span></span><br><span class="line">   <span class="selector-tag">method_info</span> <span class="selector-tag">methods</span><span class="selector-attr">[methods_count]</span>;           <span class="comment">//方法表集合</span></span><br><span class="line">   <span class="selector-tag">u2</span> <span class="selector-tag">attributes_count</span>;                          <span class="comment">//属性个数</span></span><br><span class="line">   <span class="selector-tag">attribute_info</span> <span class="selector-tag">attributes</span><span class="selector-attr">[attributes_count]</span>;  <span class="comment">//属性表</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>访问标志：类还是接口；是否定义为public类型，abstract类型；若为类，是否声明为final。</li><li>字段：用来描述接口或类中的变量，但不包括在方法内部的变量。</li><li>字面量：文本字符串，声明为final的常量值等。</li><li>符号引用：类和接口的全限定名；字段的名称和描述符；方法的名称和描述符。</li><li>类索引，父类索引，接口索引：用来确定类的继承关系。</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Class文件&quot;&gt;&lt;a href=&quot;#Class文件&quot; class=&quot;headerlink&quot; title=&quot;Class文件&quot;&gt;&lt;/a&gt;Class文件&lt;/h1&gt;&lt;p&gt;Class文件是一组以8位字节为基础单位的二进制流，各个数据项目严格按照顺序紧凑地排列在Class文
+      
+    
+    </summary>
+    
+      <category term="Java" scheme="https://wxzhongwang.github.io/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="https://wxzhongwang.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java VM 3.0</title>
+    <link href="https://wxzhongwang.github.io/2019/01/30/3.0%20Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E5%86%85%E9%83%A8%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/"/>
+    <id>https://wxzhongwang.github.io/2019/01/30/3.0 Java虚拟机的内部体系结构/</id>
+    <published>2019-01-30T08:55:10.612Z</published>
+    <updated>2019-01-30T08:56:33.973Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Java虚拟机的内部体系结构"><a href="#Java虚拟机的内部体系结构" class="headerlink" title="Java虚拟机的内部体系结构"></a>Java虚拟机的内部体系结构</h1><p>在 Java虚拟机规范中，一个虚拟机实例的行为是分别按照子系统、内存区、数据类型和指令来描述的，这些组成部分一起展示了抽象的虚拟机内部体系结构。</p><p><img src="https://www.javazhiyin.com/wp-content/uploads/2019/01/java3-1547432465-1.jpg" alt="image"></p><h2 id="运行时数据区"><a href="#运行时数据区" class="headerlink" title="运行时数据区"></a>运行时数据区</h2><p>Java虚拟机在执行Java程序的时候会把它管理的内存划分为若干个不同的数据区域，这些区域有各自的用途以及创建和销毁的时机，有的区域随着虚拟机进程的启动而存在（线程共享），有的区域则随着用户线程的启动和结束而建立和销毁（线程私有）。Java虚拟机所管理的内存包括以下几个运行时数据区域。</p><h3 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h3><p>对于一个运行中的Java程序而言，每一个线程都有它的程序计数器，也叫PC寄存器，可以看做当前线程所执行的字节码的行号指示器。在虚拟机的概念模型里，字节码解释器就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支，循环，跳转，异常处理，线程恢复等都需要依赖这个计数器。</p><p>程序计数器既能持有一个本地指针，也能持有一个returnAddress。当线程执行某个Java方法时，程序计数器的值总是下一条被执行指令的地址。这里的地址可以是一个本地指针，也可以是方法字节码中相对该方法起始指令的偏移量。如果该线程正在执行一个本地方法，那么此时程序计数器的值是“undefined”。</p><p>程序计数器属于线程私有的内存，也就是说，每当创建一个线程，都将得到该线程自己的一个程序计数器。Java虚拟机的多线程是通过线程的轮换并且分配处理器的执行时间来实现的，在一个确定的时刻，一个处理器都只会执行一条线程中的指令，为了线程切换后能恢复到正确的执行位置，每条线程都需要有一个独立的程序计数器。</p><h3 id="Java虚拟机栈（Java栈）"><a href="#Java虚拟机栈（Java栈）" class="headerlink" title="Java虚拟机栈（Java栈）"></a>Java虚拟机栈（Java栈）</h3><p>Java虚拟机栈也是线程私有的，它的生命周期和线程相同。Java虚拟机栈描述的是Java方法执行的内存模型，每个方法在执行时会创建一个栈帧，用于存放局部变量表，操作数栈，动态链接，方法出口等信息。一个Java方法从调用到执行结束的过程，相当于一个栈帧在Java虚拟机栈中从入栈到出栈的过程。<br>（1）局部变量表<br>局部变量表用于存放编译时期可知的各种基本数据类型，对象的引用（不等同于对象，可能是指向对象的起始地址的指针，也可能是指向一个代表对象的句柄）以及returnAddress类型（指向了一条字节码地址）。局部变量在方法执行时被创建，在方法执行结束时销毁。</p><p>字节码指令通过从0开始的索引使用其中的数据。类型为int, float, reference和returnAddress的值在数组中占据一项，而类型为byte, short和char的值在存入数组前都被转换为int值，也占据一项。但类型为long和double的值在数组中却占据连续的两项。</p><h3 id="操作数栈"><a href="#操作数栈" class="headerlink" title="操作数栈"></a>操作数栈</h3><p>和局部变量区一样，操作数栈也是被组织成一个以字长为单位的数组。它通过标准的栈操作访问–压栈和出栈。由于程序计数器无法被程序指令直接访问，Java虚拟机的指令是从操作数栈中取得操作数，所以它的运行方式是基于栈而不是基于寄存器。虚拟机把操作数栈作为它的工作区，因为大多数指令都要从这里弹出数据，执行运算，然后把结果压回操作数栈。</p><h3 id="帧数据区"><a href="#帧数据区" class="headerlink" title="帧数据区"></a>帧数据区</h3><p>除了局部变量区和操作数栈，Java栈帧还需要帧数据区来支持常量池解析、正常方法返回以及异常派发机制。每当虚拟机要执行某个需要用到常量池数据的指令时，它会通过帧数据区中指向常量池的指针来访问它。除了常量池的解析外，帧数据区还要帮助虚拟机处理Java方法的正常结束或异常中止。如果通过return正常结束，虚拟机必须恢复发起调用的方法的栈帧，包括设置程序计数器指向发起调用方法的下一个指令；如果方法有返回值，虚拟机需要将它压入到发起调用的方法的操作数栈。为了处理Java方法执行期间的异常退出情况，帧数据区还保存一个对此方法异常表的引用。</p><h2 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h2><p>任何本地方法接口都会使用某种本地方法栈，本地方法栈与Java虚拟机栈发挥的作用类似。当线程调用Java方法时，虚拟机会创建一个新的栈帧并压入Java栈。当它调用的是本地方法时，虚拟机会保持Java栈不变，不再在线程的Java栈中压入新的栈，虚拟机只是简单地动态连接并直接调用指定的本地方法。</p><h2 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h2><p>Java程序在运行时创建的所有类实例或数组（数组在Java虚拟机中是一个真正的对象）都放在同一个堆中，堆是虚拟机管理的内存最大的一块，被所有线程所共享，在虚拟机启动的时候创建。堆内存的唯一目的就是存放对象实例，几乎所有的对象实例都在堆中分配内存。</p><h2 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h2><p>方法区同Java堆一样，是各个线程共享的内存区域，用于存储已经被虚拟机加载的类信息，常量，静态变量以及及时编译器编译后的代码等信息。当虚拟机装载某个类型时，它使用类装载器定位相应的class文件，然后读入这个class文件并将它传输到虚拟机中，接着虚拟机提取其中的类型信息，并将这些信息存储到方法区。方法区也可以被垃圾回收器收集，因为虚拟机允许通过用户定义的类装载器来动态扩展Java程序。</p><p>方法区中存放了以下信息：</p><pre><code>• 这个类型的全限定名（如全限定名java.lang.Object）• 这个类型的直接超类的全限定名• 这个类型是类类型还是接口类型• 这个类型的访问修饰符（public, abstract, final的某个子集）• 任何直接超接口的全限定名的有序列表• 该类型的常量池，Class文件中除了有类的版本，字段，方法，接口等描述信息外，还有一项是常量池，用于存放编译时生成的各种字面量和符号引用，这部分内容将在类加载后进入方法区的运行时常量池中存放• 字段信息（字段名、类型、修饰符）• 方法信息（方法名、返回类型、参数数量和类型、修饰符）• 除了常量以外的所有类（静态）变量• 指向ClassLoader类的引用（每个类型被装载时，虚拟机必须跟踪它是由启动类装载器还是由用户自定义类装载器装载的）• 指向Class类的引用（对于每一个被装载的类型，虚拟机相应地为它创建一个java.lang.Class类的实例存于堆中。比如你有一个到java.lang.Integer类的对象的引用，那么只需要调用Integer对象引用的getClass()方法，就可以得到表示java.lang.Integer类的Class对象）</code></pre><h2 id="类加载子系统"><a href="#类加载子系统" class="headerlink" title="类加载子系统"></a>类加载子系统</h2><p>虚拟机把Java描述类的信息加载到内存，并对数据进行校验，转换解析和初始化，形成可以被Java虚拟机直接使用的Java类型，这就是Java虚拟机的类加载机制。类从加载到虚拟机开始，到卸载出内存为止，它的整个生命周期包括：</p><blockquote><p>加载，验证，准备，解析，初始化，使用和卸载7个阶段。</p></blockquote><p><img src="https://www.javazhiyin.com/wp-content/uploads/2019/01/java2-1547432466.png" alt="image"></p><h3 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h3><p>加载是类加载的一个阶段，在该阶段，Java虚拟机主要完成以下三件事情：</p><pre><code>• 根据此类的全限定名来确定该类的二进制字节流；• 将这个字节流所代表的静态数据存储结构转换为方法区的运行时数据结构；• 在堆内存中生成一个代表这个类的java.lang.Class对象，作为方法区这个类的各种数据的访问入口。</code></pre><h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>验证是连接的第一步，这一阶段的目的是为了确保Class文件的字节流中包含的信息是否符合该虚拟机的要求。</p><h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>准备阶段正式为类变量在方法区中分配内存并且赋初始值，初始值一般为该类变量类型的零值。</p><h3 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h3><p>解析阶段虚拟机将常量池内的符号引用替换为直接引用。<br>符号引用：以一组符号来描述所引用的目标，符号可以是任何形式的字面量，只要使用时能无歧义的定位到目标即可。<br>直接引用：是指能直接指向目标的指针，相对偏移量或是一个能间接定位到目标的句柄。</p><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>初始化是类加载过程的最后一个阶段，在前面的类加载过程中，除了在加载阶段用户可以自定义类加载器参与之外，其余动作完全由虚拟机主导和控制，到了初始化阶段，才真正开始执行类中定义的Java代码（字节码）。准备阶段为类变量分配内存并且赋初始值，赋值操作在初始化阶段执行。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Java虚拟机的内部体系结构&quot;&gt;&lt;a href=&quot;#Java虚拟机的内部体系结构&quot; class=&quot;headerlink&quot; title=&quot;Java虚拟机的内部体系结构&quot;&gt;&lt;/a&gt;Java虚拟机的内部体系结构&lt;/h1&gt;&lt;p&gt;在 Java虚拟机规范中，一个虚拟机实例的行
+      
+    
+    </summary>
+    
+      <category term="Java" scheme="https://wxzhongwang.github.io/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="https://wxzhongwang.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker初探1.0</title>
+    <link href="https://wxzhongwang.github.io/2019/01/30/Docker%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/"/>
+    <id>https://wxzhongwang.github.io/2019/01/30/Docker基本命令/</id>
+    <published>2019-01-30T08:54:02.318Z</published>
+    <updated>2019-01-30T08:54:40.906Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Docker命令"><a href="#Docker命令" class="headerlink" title="Docker命令"></a>Docker命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">从公网拉取一个镜像</span><br><span class="line">docker pull images_name</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">查看已有的docker镜像</span><br><span class="line">docker images</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">查看帮助</span><br><span class="line">docker <span class="built_in">command</span> --<span class="built_in">help</span></span><br></pre></td></tr></table></figure><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">看容器的端口映射情况</span><br><span class="line">docker<span class="built_in"> port </span>con_id</span><br></pre></td></tr></table></figure><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">查看正在运行的容器</span><br><span class="line">docker <span class="keyword">ps</span></span><br></pre></td></tr></table></figure><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">查看所有的容器</span><br><span class="line">docker ps -<span class="keyword">a</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Docker命令&quot;&gt;&lt;a href=&quot;#Docker命令&quot; class=&quot;headerlink&quot; title=&quot;Docker命令&quot;&gt;&lt;/a&gt;Docker命令&lt;/h1&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td cl
+      
+    
+    </summary>
+    
+      <category term="Docker" scheme="https://wxzhongwang.github.io/categories/Docker/"/>
+    
+    
+      <category term="Docker" scheme="https://wxzhongwang.github.io/tags/Docker/"/>
+    
+  </entry>
   
   <entry>
     <title>Git 远程仓库</title>
@@ -395,139 +520,6 @@
     
     
       <category term="数据仓库" scheme="https://wxzhongwang.github.io/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SparkStreaming和Storm</title>
-    <link href="https://wxzhongwang.github.io/2019/01/13/SparkStreaming%E5%92%8CStorm%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
-    <id>https://wxzhongwang.github.io/2019/01/13/SparkStreaming和Storm的区别/</id>
-    <published>2019-01-13T03:33:19.819Z</published>
-    <updated>2019-01-13T03:35:11.776Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="SparkStreaming和Storm"><a href="#SparkStreaming和Storm" class="headerlink" title="SparkStreaming和Storm"></a>SparkStreaming和Storm</h1><p>Storm和Spark Streaming都是分布式流处理的开源框架，但是它们之间还是有一些区别的，这里将进行比较并指出它们的重要的区别。</p><h2 id="处理模型以及延迟"><a href="#处理模型以及延迟" class="headerlink" title="处理模型以及延迟"></a>处理模型以及延迟</h2><p>虽然这两个框架都提供可扩展性(Scalability)和可容错性(Fault Tolerance),但是它们的处理模型从根本上说是不一样的。Storm处理的是每次传入的一个事件，而Spark Streaming是处理某个时间段窗口内的事件流。因此，Storm处理一个事件可以达到亚秒级的延迟，而Spark Streaming则有秒级的延迟。</p><h2 id="容错和数据保证"><a href="#容错和数据保证" class="headerlink" title="容错和数据保证"></a>容错和数据保证</h2><p>在容错数据保证方面的权衡方面，Spark Streaming提供了更好的支持容错状态计算。在Storm中，当每条单独的记录通过系统时必须被跟踪，所以Storm能够至少保证每条记录将被处理一次，但是在从错误中恢复过来时候允许出现重复记录，这意味着可变状态可能不正确地被更新两次。而Spark Streaming只需要在批处理级别对记录进行跟踪处理，因此可以有效地保证每条记录将完全被处理一次，即便一个节点发生故障。虽然Storm的 Trident library库也提供了完全一次处理的功能。但是它依赖于事务更新状态，而这个过程是很慢的，并且通常必须由用户实现。</p><p>简而言之,如果你需要亚秒级的延迟，Storm是一个不错的选择，而且没有数据丢失。如果你需要有状态的计算，而且要完全保证每个事件只被处理一次，Spark Streaming则更好。Spark Streaming编程逻辑也可能更容易，因为它类似于批处理程序，特别是在你使用批次(尽管是很小的)时。</p><h2 id="实现和编程API"><a href="#实现和编程API" class="headerlink" title="实现和编程API"></a>实现和编程API</h2><p>Storm主要是由Clojure语言实现，SparkStreaming是由Scala实现。如果你想看看这两个框架是如何实现的或者你想自定义一些东西你就得记住这一点。Storm是由BackType和Twitter开发，而Spark Streaming是在UC Berkeley开发的。</p><p>Storm提供了Java API，同时也支持其他语言的API。SparkStreaming支持Scala和Java语言(其实也支持Python)。另外SparkStreaming的一个很棒的特性就是它是在Spark框架上运行的。这样你就可以想使用其他批处理代码一样来写SparkStreaming程序，或者是在Spark中交互查询。这就减少了单独编写流批量处理程序和历史数据处理程序。</p><h2 id="生产支持"><a href="#生产支持" class="headerlink" title="生产支持"></a>生产支持</h2><p>Storm已经出现好多年了，而且自从2011年开始就在Twitter内部生产环境中使用，还有其他一些公司。而Spark Streaming是一个新的项目，并且在2013年仅仅被Sharethrough使用(据作者了解)。</p><p>Storm是 Hortonworks Hadoop数据平台中流处理的解决方案，而Spark Streaming出现在 MapR的分布式平台和Cloudera的企业数据平台中。除此之外，Databricks是为Spark提供技术支持的公司，包括了Spark Streaming。</p><h2 id="集群管理集成"><a href="#集群管理集成" class="headerlink" title="集群管理集成"></a>集群管理集成</h2><p>尽管两个系统都运行在它们自己的集群上，Storm也能运行在Mesos，而SparkStreaming能运行在YARN 和 Mesos上。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;SparkStreaming和Storm&quot;&gt;&lt;a href=&quot;#SparkStreaming和Storm&quot; class=&quot;headerlink&quot; title=&quot;SparkStreaming和Storm&quot;&gt;&lt;/a&gt;SparkStreaming和Storm&lt;/h1&gt;&lt;
-      
-    
-    </summary>
-    
-      <category term="大数据" scheme="https://wxzhongwang.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-    
-      <category term="Hadoop" scheme="https://wxzhongwang.github.io/tags/Hadoop/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hadoop Hive Hbase 简单区别及应用场景</title>
-    <link href="https://wxzhongwang.github.io/2019/01/13/Hadoop%20Hive%20Hbase%20%E7%AE%80%E5%8D%95%E5%8C%BA%E5%88%AB%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/"/>
-    <id>https://wxzhongwang.github.io/2019/01/13/Hadoop Hive Hbase 简单区别及应用场景/</id>
-    <published>2019-01-13T03:30:12.445Z</published>
-    <updated>2019-01-13T03:35:18.907Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Hadoop-Hive-Hbase-简单区别及应用场景"><a href="#Hadoop-Hive-Hbase-简单区别及应用场景" class="headerlink" title="Hadoop Hive Hbase 简单区别及应用场景"></a>Hadoop Hive Hbase 简单区别及应用场景</h1><h2 id="Hadoop"><a href="#Hadoop" class="headerlink" title="Hadoop"></a>Hadoop</h2><p>它是一个分布式计算+分布式文件系统，前者其实就是MapReduce，后者是HDFS。后者可以独立运行，前者可以选择性使用，也可以不使用。</p><h2 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h2><p>通俗的说是一个数据仓库，仓库中的数据是被HDFS管理的数据文件，它支持类似sql语句的功能，你可以通过该语句完成分布式环境下的计算功能，Hive会把语句转换成MapReduce，然后交给Hadoop执行。这里的计算，仅限于查找和分析，而不是更新、增加和删除。它的优势是对历史数据进行处理，用时下流行的说法是离线计算，因为它的底层是MapReduce，MapReduce在实时计算上性能很差。它的做法是把数据文件加载进来作为一个Hive表（或者外部表），让你觉得你的sql操作的是传统的表。</p><h2 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h2><p>通俗的说，HBase的作用类似于数据库，传统数据库管理的是集中的本地数据文件，而HBase基于Hdfs实现对分布式数据文件的管理，比如增删改查。也就是说，HBase只是利用Hadoop的Hdfs帮助其管理数据的持久化文件（HFile），它跟MapReduce没任何关系。HBase的优势在于实时计算，所有实时数据都直接存入Hbase中，客户端通过API直接访问Hbase，实现实时计算。由于它使用的是nosql，或者说是列式结构，从而提高了查找性能，使其能运用于大数据场景，这是它跟MapReduce的区别。</p><h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><ol><li>Hadoop是Hive和HBase的基础，Hive依赖Hadoop</li><li>HBase仅依赖Hadoop的Hdfs模块。</li><li>Hive适用于离线数据的分析，操作的是通用格式的（如通用的日志文件）、被Hadoop管理的数据文件，它支持类sql，比编写MapReduce的java代码来的更加方便，它的定位是数据仓库，存储和分析历史数据</li><li>Hbase适用于实时计算，采用列式结构的nosql，操作的是自己生成的特殊格式的HFile、被hadoop管理的数据文件，它的定位是数据库，或者叫DBMS</li></ol><blockquote><p>最后补充一下：Hive可以直接操作Hdfs中的文件作为它的表的数据，也可以使HBase数据库作为它的表</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;Hadoop-Hive-Hbase-简单区别及应用场景&quot;&gt;&lt;a href=&quot;#Hadoop-Hive-Hbase-简单区别及应用场景&quot; class=&quot;headerlink&quot; title=&quot;Hadoop Hive Hbase 简单区别及应用场景&quot;&gt;&lt;/a&gt;Hadoo
-      
-    
-    </summary>
-    
-      <category term="大数据" scheme="https://wxzhongwang.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-    
-      <category term="Hadoop" scheme="https://wxzhongwang.github.io/tags/Hadoop/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hadoop概念</title>
-    <link href="https://wxzhongwang.github.io/2019/01/08/Hadoop/"/>
-    <id>https://wxzhongwang.github.io/2019/01/08/Hadoop/</id>
-    <published>2019-01-08T06:18:02.000Z</published>
-    <updated>2019-01-09T01:59:09.755Z</updated>
-    
-    <content type="html"><![CDATA[<p>Hadoop是一个开源的框架，可编写和运行分布式应用处理大规模数据，是专为离线和大规模数据分析而设计的，并不适合那种对几个记录随机读写的在线事务处理模式。</p><h1 id="Hadoop"><a href="#Hadoop" class="headerlink" title="Hadoop"></a>Hadoop</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ul><li>Hadoop是一个开源的框架，可编写和运行分布式应用处理大规模数据，是专为离线和大规模数据分析而设计的，并不适合那种对几个记录随机读写的在线事务处理模式。 ==不是为了大数据而大数据==</li><li>Hadoop 是以一种可靠、高效、可伸缩的方式进行处理的。Hadoop 是可靠的，因为它假设计算元素和存储会失败，因此它维护多个工作数据副本，确保能够针对失败的节点重新分布处理。Hadoop 是高效的，因为它以并行的方式工作，通过并行处理加快处理速度。Hadoop 还是可伸缩的，能够处理 PB 级数据。<h2 id="核心"><a href="#核心" class="headerlink" title="核心"></a>核心</h2>Hadoop的核心就是==HDFS==和==MapReduce===，Hadoop旗下有很多经典子项目，比如HBase、Hive等，这些都是基于HDFS和MapReduce发展出来的。要想了解Hadoop，就必须知道HDFS和MapReduce是什么。<h3 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h3>Hadoop Distributed File System，Hadoop 分布式文件系统<br>高度容错性的系统，适合部署在廉价的机器上，HDFS能提供高吞吐量的数据访问，适合那些有着超大数据集（large data set）的应用程序。<h3 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h3>Mapreduce是一个计算框架，一个处理分布式海量数据的软件框架及计算集群。</li></ul><h2 id="用处"><a href="#用处" class="headerlink" title="用处"></a>用处</h2><ul><li>搜索引擎 - 设计Hadoop的初衷，为了针对大规模的网页快速建立索引）</li><li>大数据存储 - 利用Hadoop的分布式存储能力，例如数据备份、数据仓库等。</li><li>大数据处理 - 利用Hadoop的分布式处理能力，例如数据挖掘、数据分析等。</li><li>科学研究 - Hadoop是一种分布式的开源框架，对于分布式计算有很大程度地参考价值。</li></ul><h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>==高可靠性==<br>Hadoop按位存储和处理数据的能力值得信赖。</p><p>==高扩展性==<br>Hadoop是在可用的计算机集簇间分配数据并完成计算任务的，这些集簇可以方便地扩展到数以千计的节点中。</p><p>==高效性==<br>Hadoop能够在节点之间动态地移动数据，并保证各个节点的动态平衡，因此处理速度非常快。</p><p>==高容错性==<br>Hadoop能够自动保存数据的多个副本，并且能够自动将失败的任务重新分配。</p><p>==低成本==<br>与一体机、商用数据仓库以及QlikView、Yonghong Z-Suite等数据集市相比，hadoop是开源的，项目的软件成本因此会大大降低。</p><blockquote><p>Hadoop设计对硬件需求比较低，只须运行在低廉的商用硬件集群上，而无需昂贵的高可用性机器上。廉价的商用机也就意味着大型集群中出现节点故障情况的概率非常高。这就要求设计HDFS时要充分考虑数据的可靠性，安全性及高可用性。</p></blockquote><h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>==不适合低延迟数据访问==</p><blockquote><p>如果要处理一些用户要求时间比较短的低延迟应用请求，则HDFS不适合。HDFS是为了处理大型数据集分析任务的，主要是为达到高的数据吞吐量而设计的，这就可能要求以高延迟作为代价。</p></blockquote><blockquote><p>改进策略：对于那些有低延时要求的应用程序，HBase是一个更好的选择。通过上层数据管理项目来尽可能地弥补这个不足。在性能上有了很大的提升，它的口号就是goes real time。使用缓存或多master设计可以降低client的数据请求压力，以减少延时。还有就是对HDFS系统内部的修改，这就得权衡大吞吐量与低延时了，HDFS不是万能的银弹。</p></blockquote><p>==无法高效存储大量小文件==</p><blockquote><p>因为Namenode把文件系统的元数据放置在内存中，所以文件系统所能容纳的文件数目是由Namenode的内存大小来决定。一般来说，每一个文件、文件夹和Block需要占据150字节左右的空间，所以，如果你有100万个文件，每一个占据一个Block，你就至少需要300MB内存。当前来说，数百万的文件还是可行的，当扩展到数十亿时，对于当前的硬件水平来说就没法实现了。还有一个问题就是，因为Maptask的数量是由splits来决定的，所以用MR处理大量的小文件时，就会产生过多的Maptask，线程管理开销将会增加作业时间。举个例子，处理10000M的文件，若每个split为1M，那就会有10000个Maptasks，会有很大的线程开销；若每个split为100M，则只有100个Maptasks，每个Maptask将会有更多的事情做，而线程的管理开销将减小很多。</p></blockquote><p>==不支持多用户写入及任意修改文件==  </p><blockquote><p>在HDFS的一个文件中只有一个写入者，而且写操作只能在文件末尾完成，即只能执行追加操作。目前HDFS还不支持多个用户对同一文件的写操作，以及在文件任意位置进行修改。</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;Hadoop是一个开源的框架，可编写和运行分布式应用处理大规模数据，是专为离线和大规模数据分析而设计的，并不适合那种对几个记录随机读写的在线事务处理模式。&lt;/p&gt;
-&lt;h1 id=&quot;Hadoop&quot;&gt;&lt;a href=&quot;#Hadoop&quot; class=&quot;headerlink&quot; ti
-      
-    
-    </summary>
-    
-      <category term="大数据" scheme="https://wxzhongwang.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-    
-      <category term="Hadoop" scheme="https://wxzhongwang.github.io/tags/Hadoop/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>流处理、批处理、交互式查询</title>
-    <link href="https://wxzhongwang.github.io/2019/01/08/%E6%B5%81%E5%A4%84%E7%90%86%E3%80%81%E6%89%B9%E5%A4%84%E7%90%86%E3%80%81%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%9F%A5%E8%AF%A2/"/>
-    <id>https://wxzhongwang.github.io/2019/01/08/流处理、批处理、交互式查询/</id>
-    <published>2019-01-08T06:18:02.000Z</published>
-    <updated>2019-01-13T03:36:07.439Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>我们将大数据处理按处理时间的跨度要求分为以下几类基于实时数据流的处理，通常的时间跨度在数百毫秒到数秒之间基于历史数据的交互式查询，通常时间跨度在数十秒到数分钟之间复杂的批量数据处理，通常的时间跨度在几分钟到数小时之间</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;pre&gt;&lt;code&gt;我们将大数据处理按处理时间的跨度要求分为以下几类
-
-基于实时数据流的处理，通常的时间跨度在数百毫秒到数秒之间
-
-基于历史数据的交互式查询，通常时间跨度在数十秒到数分钟之间
-
-复杂的批量数据处理，通常的时间跨度在几分钟到数小时之间
-&lt;/code&gt;&lt;/pre&gt;
-      
-    
-    </summary>
-    
-      <category term="大数据" scheme="https://wxzhongwang.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-    
-      <category term="Hadoop" scheme="https://wxzhongwang.github.io/tags/Hadoop/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hadoop技术体系</title>
-    <link href="https://wxzhongwang.github.io/2019/01/08/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF%EF%BC%88Hadoop%E4%BD%93%E7%B3%BB%EF%BC%89/"/>
-    <id>https://wxzhongwang.github.io/2019/01/08/大数据相关技术（Hadoop体系）/</id>
-    <published>2019-01-08T06:18:02.000Z</published>
-    <updated>2019-01-09T02:02:32.943Z</updated>
-    
-    <content type="html"><![CDATA[<p>Hadoop 里面包括几个组件<strong>HDFS</strong>、<strong>MapReduce</strong>、<strong>YARN</strong>和<strong>ZooKeeper</strong>等一系列技术，HDFS是存储数据的地方就像我们电脑的硬盘一样文件都存储在这个上面，MapReduce是对数据进行处理计算的，YARN是体现Hadoop平台概念的重要组件，有了它大数据生态体系的其它软件就能在hadoop上运行了，这样能更好的利用HDFS大存储的优势和节省更多的资源比如我们就不用再单独建一个spark的集群了，让它直接跑在现有的hadoop yarn上面就可以了。ZooKeeper本身是一个非常牢靠的记事本，用于记录一些概要信息。Hadoop依靠这个记事本来记录当前哪些节点正在用，哪些已掉线，哪些是备用等，以此来管理机群。</p><h1 id="Hadoop技术体系"><a href="#Hadoop技术体系" class="headerlink" title="Hadoop技术体系"></a>Hadoop技术体系</h1><h2 id="Hadoop"><a href="#Hadoop" class="headerlink" title="Hadoop"></a>Hadoop</h2><p>Hadoop 里面包括几个组件<strong>HDFS</strong>、<strong>MapReduce</strong>、<strong>YARN</strong>和<strong>ZooKeeper</strong>等一系列技术，HDFS是存储数据的地方就像我们电脑的硬盘一样文件都存储在这个上面，MapReduce是对数据进行处理计算的，YARN是体现Hadoop平台概念的重要组件，有了它大数据生态体系的其它软件就能在hadoop上运行了，这样能更好的利用HDFS大存储的优势和节省更多的资源比如我们就不用再单独建一个spark的集群了，让它直接跑在现有的hadoop yarn上面就可以了。ZooKeeper本身是一个非常牢靠的记事本，用于记录一些概要信息。Hadoop依靠这个记事本来记录当前哪些节点正在用，哪些已掉线，哪些是备用等，以此来管理机群。</p><h2 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h2><p>Hadoop Distributed File System，Hadoop 分布式文件系统<br>高度容错性的系统，适合部署在廉价的机器上，HDFS能提供高吞吐量的数据访问，适合那些有着超大数据集（large data set）的应用程序。</p><h2 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h2><p>Mapreduce是一个计算框架，一个处理分布式海量数据的软件框架及计算集群。</p><p>Map （映射） Reduce (简化)<br>举个例子：假设你的手机通话信息保存在一个HDFS的文件callList.txt中，你想找到你与同事A的所有通话记录并排序。因为HDFS会把callLst.txt分成几块分别存，比如说5块，那么对应的Map过程就是找到这5块所在的5个节点，让它们分别找自己存的那块中关于同事A的通话记录，对应的Reduce过程就是把5个节点过滤后的通话记录合并在一块并按时间排序。MapReduce的计算模型通常把HDFS作为数据来源，很少会用到其它数据来源比如HBase。</p><h2 id="Hbase"><a href="#Hbase" class="headerlink" title="Hbase"></a>Hbase</h2><p>这是Hadoop生态体系中的NOSQL数据库，他的数据是按照key和value的形式存储的并且key是唯一的，所以它能用来做数据的排重，它与MYSQL相比能存储的数据量大很多。所以他常被用于大数据处理完成之后的存储目的地。</p><blockquote><p>HDFS和HBase是依靠外存（即硬盘）的分布式文件存储实现和分布式表存储实现。HDFS是一个分布式的“云存储”文件系统，它会把一个文件分块并分别保存，取用时分别再取出、合并。重要的是，这些分块通常会在3个节点（即集群内的服务器）上各有1个备份，因此即使出现少数节点的失效（如硬盘损坏、掉电等），文件也不会失效。如果说HDFS是文件级别的存储，那HBase则是表级别的存储。HBase是表模型，但比SQL数据库的表要简单的多，没有连接、聚集等功能。HBase的表是物理存储到HDFS的，比如把一个表分成4个HDFS文件并存储。由于HDFS级会做备份，所以HBase级不再备份。MapReduce则是一个计算模型，而不是存储模型；MapReduce通常与HDFS紧密配合。</p></blockquote><h2 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h2><p>Hive 是一种底层封装了Hadoop 的数据仓库处理工具，使用类SQL的HiveQL语言实现数据查询，所有Hive 的数据都存储在Hadoop 兼容的文件系统（如HDFS）中。Hive在加载数据过程中不会对数据进行任何的修改，只是将数据移动到HDFS中Hive设定的目录下，++因此，Hive不支持对数据的改写和添加，所有的数据都是在加载的时候确定的++。对于会SQL语法的来说就是神器，它能让你处理大数据变的很简单，不会再费劲的编写MapReduce程序。</p><h2 id="Spark"><a href="#Spark" class="headerlink" title="Spark"></a>Spark</h2><p>它是用来弥补基于MapReduce处理数据速度上的缺点，它的特点是把数据装载到内存中计算而不是去读慢的要死进化还特别慢的硬盘。特别适合做迭代运算，所以算法流们特别稀饭它。它是用scala编写的。Java语言或者Scala都可以操作它，因为它们都是用JVM的。</p><h1 id="其他相关技术"><a href="#其他相关技术" class="headerlink" title="其他相关技术"></a>其他相关技术</h1><h2 id="Sqoop"><a href="#Sqoop" class="headerlink" title="Sqoop"></a>Sqoop</h2><p>这个是用于把Mysql里的数据导入到Hadoop里的。当然你也可以不用这个，直接把Mysql数据表导出成文件再放到HDFS上也是一样的，当然生产环境中使用要注意Mysql的压力。</p><h2 id="Flume"><a href="#Flume" class="headerlink" title="Flume"></a>Flume</h2><p> apache Flume 是一个从可以收集例如日志，事件等数据资源，并将这些数量庞大的数据从各项数据资源中集中起来存储的工具/服务，或者数集中机制。flume具有高可用，分布式，配置工具，其设计的原理也是基于数据流，如日志数据从各种网站服务器上汇集起来存储到HDFS，HBase等集中存储器中。</p><h3 id="一般实时系统，所选用组件如下"><a href="#一般实时系统，所选用组件如下" class="headerlink" title="一般实时系统，所选用组件如下"></a>一般实时系统，所选用组件如下</h3><ul><li>数据采集 ：负责从各节点上实时采集数据，选用Flume来实现  </li><li>数据接入 ：由于采集数据的速度和数据处理的速度不一定同步，因此添加一个消息中间件来作为缓冲，选用apache的kafka  </li><li>流式计算 ：对采集到的数据进行实时分析，选用apache的storm  </li><li>数据输出 ：对分析后的结果持久化，暂定用mysql，另一方面是模块化之后，假如当Storm挂掉了之后，数据采集和数据接入还是继续在跑着，数据不会丢失，storm起来之后可以继续进行流式计算； </li></ul><h2 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h2><p>Kafka的整体架构非常简单，是显式分布式架构，producer、broker（kafka）和consumer都可以有多个。Producer，consumer实现Kafka注册的接口，数据从producer发送到broker，broker承担一个中间缓存和分发的作用。broker分发注册到系统中的consumer。broker的作用类似于缓存，即活跃的数据和离线处理系统之间的缓存。客户端和服务器端的通信，是基于简单，高性能，且与编程语言无关的TCP协议。</p><p>Kafka是一种分布式的、基于发布/订阅的消息系统。在流式计算中，Kafka一般用来缓存数据，Storm通过消费Kafka的数据进行计算（KAFKA+STORM+REDIS）。</p><p>特点：</p><ul><li>消息持久化：通过O(1)的磁盘数据结构提供数据的持久化</li><li>高吞吐量：每秒百万级的消息读写</li><li>分布式：扩展能力强</li><li>多客户端支持：java、php、python、c++ ……</li><li>实时性：生产者生产的message立即被消费者可见</li><li>Kafka是一个分布式消息队列：生产者、消费者的功能。它提供了类似于JMS的特性，但是在设计实   现上完全不同，此外它并不是JMS规范的实现。</li><li>Kafka对消息保存时根据Topic进行归类，发送消息者称为Producer,消息接受者称为Consumer</li><li>无论是kafka集群，还是producer和consumer都依赖于zookeeper集群保存一些meta信息，来保证系统可用性</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;Hadoop 里面包括几个组件&lt;strong&gt;HDFS&lt;/strong&gt;、&lt;strong&gt;MapReduce&lt;/strong&gt;、&lt;strong&gt;YARN&lt;/strong&gt;和&lt;strong&gt;ZooKeeper&lt;/strong&gt;等一系列技术，HDFS是存储数据的地方就像我们电脑
-      
-    
-    </summary>
-    
-      <category term="大数据" scheme="https://wxzhongwang.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-    
-      <category term="Hadoop" scheme="https://wxzhongwang.github.io/tags/Hadoop/"/>
     
   </entry>
   
