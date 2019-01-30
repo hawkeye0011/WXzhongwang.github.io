@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wxzhongwang.github.io/"/>
-  <updated>2019-01-25T04:06:07.284Z</updated>
+  <updated>2019-01-30T08:43:25.593Z</updated>
   <id>https://wxzhongwang.github.io/</id>
   
   <author>
@@ -15,6 +15,84 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Git 远程仓库</title>
+    <link href="https://wxzhongwang.github.io/2019/01/30/Git%20%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/"/>
+    <id>https://wxzhongwang.github.io/2019/01/30/Git 远程仓库/</id>
+    <published>2019-01-30T08:42:39.563Z</published>
+    <updated>2019-01-30T08:43:25.593Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Git-远程仓库"><a href="#Git-远程仓库" class="headerlink" title="Git 远程仓库"></a>Git 远程仓库</h1><p>为了能在任意 Git 项目上协作，你需要知道如何管理自己的远程仓库。远程仓库是指托管在因特网或其他网络中的你的项目的版本库。你可以有好几个远程仓库，通常有些仓库对你只读，有些则可以读写。 与他人协作涉及管理远程仓库以及根据需要推送或拉取数据。管理远程仓库包括了解如何添加远程仓库、移除无效的远程仓库、管理不同的远程分支并定义它们是否被跟踪等等。</p><h2 id="查看远程仓库"><a href="#查看远程仓库" class="headerlink" title="查看远程仓库"></a>查看远程仓库</h2><p>如果想查看你已经配置的远程仓库服务器，可以运行 <strong>git remote</strong> 命令。 它会列出你指定的每一个远程服务器的简写。 如果你已经克隆了自己的仓库，那么至少应该能看到 origin - 这是 Git 给你克隆的仓库服务器的默认名字：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>git clone git<span class="variable">@172</span>.<span class="number">16.5</span>.<span class="number">77</span><span class="symbol">:shengwangzhong/storelcoator</span>.git</span><br><span class="line">Cloning into <span class="string">'storelcoator'</span>...</span><br><span class="line"><span class="symbol">remote:</span> Reusing existing <span class="symbol">pack:</span> <span class="number">1857</span>, done.</span><br><span class="line"><span class="symbol">remote:</span> Total <span class="number">1857</span> (delta <span class="number">0</span>), reused <span class="number">0</span> (delta <span class="number">0</span>)</span><br><span class="line">Receiving <span class="symbol">objects:</span> <span class="number">100</span>% (<span class="number">1857</span>/<span class="number">1857</span>), <span class="number">374.35</span> KiB | <span class="number">268.00</span> KiB/s, done.</span><br><span class="line">Resolving <span class="symbol">deltas:</span> <span class="number">100</span>% (<span class="number">772</span>/<span class="number">772</span>), done.</span><br><span class="line">Checking connectivity... done.</span><br><span class="line"><span class="variable">$ </span>cd storelcoator</span><br><span class="line"><span class="variable">$ </span>git remote</span><br><span class="line">origin</span><br></pre></td></tr></table></figure></p><p>你也可以指定选项 -v，会显示需要读写远程仓库使用的 Git 保存的简写与其对应的 URL。<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>git remote -v</span><br><span class="line">origin  git<span class="variable">@172</span>.<span class="number">16.5</span>.<span class="number">77</span><span class="symbol">:shengwangzhong/vue-myblog</span>.git (fetch)</span><br><span class="line">origin  git<span class="variable">@172</span>.<span class="number">16.5</span>.<span class="number">77</span><span class="symbol">:shengwangzhong/vue-myblog</span>.git (push)</span><br></pre></td></tr></table></figure></p><p>如果你的远程仓库不止一个，该命令会将它们全部列出。 例如，与几个协作者合作的，拥有多个远程仓库的仓库看起来像下面这样：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ cd grit</span><br><span class="line">$ git remote -v</span><br><span class="line">bakkdoor  <span class="string">https:</span><span class="comment">//github.com/bakkdoor/grit (fetch)</span></span><br><span class="line">bakkdoor  <span class="string">https:</span><span class="comment">//github.com/bakkdoor/grit (push)</span></span><br><span class="line">cho45     <span class="string">https:</span><span class="comment">//github.com/cho45/grit (fetch)</span></span><br><span class="line">cho45     <span class="string">https:</span><span class="comment">//github.com/cho45/grit (push)</span></span><br><span class="line">defunkt   <span class="string">https:</span><span class="comment">//github.com/defunkt/grit (fetch)</span></span><br><span class="line">defunkt   <span class="string">https:</span><span class="comment">//github.com/defunkt/grit (push)</span></span><br><span class="line">koke      <span class="string">git:</span><span class="comment">//github.com/koke/grit.git (fetch)</span></span><br><span class="line">koke      <span class="string">git:</span><span class="comment">//github.com/koke/grit.git (push)</span></span><br><span class="line">origin    git<span class="meta">@github</span>.<span class="string">com:</span>mojombo/grit.git (fetch)</span><br><span class="line">origin    git<span class="meta">@github</span>.<span class="string">com:</span>mojombo/grit.git (push)</span><br></pre></td></tr></table></figure></p><h2 id="添加远程仓库"><a href="#添加远程仓库" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h2><p>运行 git remote add <shortname> <url> 添加一个新的远程 Git 仓库，同时指定一个你可以轻松引用的简写：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git remote</span><br><span class="line">origin</span><br><span class="line">$ git remote <span class="built_in">add</span> pb http<span class="variable">s:</span>//github.<span class="keyword">com</span>/paulboone/ticgit</span><br><span class="line">$ git remote -v</span><br><span class="line">originhttp<span class="variable">s:</span>//github.<span class="keyword">com</span>/schacon/ticgit (fetch)</span><br><span class="line">originhttp<span class="variable">s:</span>//github.<span class="keyword">com</span>/schacon/ticgit (push)</span><br><span class="line">pbhttp<span class="variable">s:</span>//github.<span class="keyword">com</span>/paulboone/ticgit (fetch)</span><br><span class="line">pbhttp<span class="variable">s:</span>//github.<span class="keyword">com</span>/paulboone/ticgit (push)</span><br></pre></td></tr></table></figure></url></shortname></p><p>现在你可以在命令行中使用字符串 pb 来代替整个 URL。 例如，如果你想拉取 Paul 的仓库中有但你没有的信息，可以运行 git fetch pb：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git fetch pb</span><br><span class="line"><span class="string">remote:</span> Counting <span class="string">objects:</span> <span class="number">43</span>, done.</span><br><span class="line"><span class="string">remote:</span> Compressing <span class="string">objects:</span> <span class="number">100</span>% (<span class="number">36</span>/<span class="number">36</span>), done.</span><br><span class="line"><span class="string">remote:</span> Total <span class="number">43</span> (delta <span class="number">10</span>), reused <span class="number">31</span> (delta <span class="number">5</span>)</span><br><span class="line">Unpacking <span class="string">objects:</span> <span class="number">100</span>% (<span class="number">43</span>/<span class="number">43</span>), done.</span><br><span class="line">From <span class="string">https:</span><span class="comment">//github.com/paulboone/ticgit</span></span><br><span class="line"> * [<span class="keyword">new</span> branch]      master     -&gt; pb/master</span><br><span class="line"> * [<span class="keyword">new</span> branch]      ticgit     -&gt; pb/ticgit</span><br></pre></td></tr></table></figure></p><p>现在 Paul 的 master 分支可以在本地通过 pb/master 访问到 - 你可以将它合并到自己的某个分支中，或者如果你想要查看它的话，可以检出一个指向该点的本地分支。 </p><h2 id="从远程仓库中抓取与拉取"><a href="#从远程仓库中抓取与拉取" class="headerlink" title="从远程仓库中抓取与拉取"></a>从远程仓库中抓取与拉取</h2><p>就如刚才所见，从远程仓库中获得数据，可以执行：<br><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git fetch <span class="string">[remote-name]</span></span><br></pre></td></tr></table></figure></p><p>这个命令会访问远程仓库，从中拉取所有你还没有的数据。 执行完成后，你将会拥有那个远程仓库中所有分支的引用，可以随时合并或查看。</p><blockquote><p>如果你使用 clone 命令克隆了一个仓库，命令会自动将其添加为远程仓库并默认以 “origin” 为简写。 所以，git fetch origin 会抓取克隆（或上一次抓取）后新推送的所有工作。 必须注意 git fetch 命令会将数据拉取到你的本地仓库 - 它并不会自动合并或修改你当前的工作。 当准备好时你必须手动将其合并入你的工作。</p></blockquote><blockquote><p>如果你有一个分支设置为跟踪一个远程分支，可以使用 <strong>git pull</strong> 命令来自动的抓取然后合并远程分支到当前分支。这对你来说可能是一个更简单或更舒服的工作流程；==默认情况下，git clone 命令会自动设置本地 master 分支跟踪克隆的远程仓库的 master 分支（或不管是什么名字的默认分支）。== 运行 git pull 通常会从最初克隆的服务器上抓取数据并自动尝试合并到当前所在的分支。</p></blockquote><h2 id="推送到远程仓库"><a href="#推送到远程仓库" class="headerlink" title="推送到远程仓库"></a>推送到远程仓库</h2><p>当你想分享你的项目时，必须将其推送到上游。 这个命令很简单：git push [remote-name] [branch-name]。 当你想要将 master 分支推送到 origin 服务器时（再次说明，克隆时通常会自动帮你设置好那两个名字），那么运行这个命令就可以将你所做的备份到服务器：<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">push</span> <span class="built_in">origin</span> master</span><br></pre></td></tr></table></figure></p><blockquote><p>只有当你有所克隆服务器的写入权限，并且之前没有人推送过时，这条命令才能生效。 当你和其他人在同一时间克隆，他们先推送到上游然后你再推送到上游，你的推送就会毫无疑问地被拒绝。 你必须先将他们的工作拉取下来并将其合并进你的工作后才能推送。 </p></blockquote><h2 id="查看远程仓库-详细"><a href="#查看远程仓库-详细" class="headerlink" title="查看远程仓库(详细)"></a>查看远程仓库(详细)</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ git remote <span class="keyword">show</span> origin</span><br><span class="line">* remote origin</span><br><span class="line">  <span class="keyword">Fetch</span> <span class="keyword">URL</span>: git@<span class="number">172.16</span><span class="number">.5</span><span class="number">.77</span>:shengwangzhong/vue-myblog.git</span><br><span class="line">  Push  <span class="keyword">URL</span>: git@<span class="number">172.16</span><span class="number">.5</span><span class="number">.77</span>:shengwangzhong/vue-myblog.git</span><br><span class="line">  <span class="keyword">HEAD</span> branch: <span class="keyword">master</span></span><br><span class="line">  Remote branch:</span><br><span class="line">    <span class="keyword">master</span> tracked</span><br><span class="line">  <span class="keyword">Local</span> branch configured <span class="keyword">for</span> <span class="string">'git pull'</span>:</span><br><span class="line">    <span class="keyword">master</span> merges <span class="keyword">with</span> remote <span class="keyword">master</span></span><br><span class="line">  <span class="keyword">Local</span> <span class="keyword">ref</span> configured <span class="keyword">for</span> <span class="string">'git push'</span>:</span><br><span class="line">    <span class="keyword">master</span> pushes <span class="keyword">to</span> <span class="keyword">master</span> (up <span class="keyword">to</span> <span class="built_in">date</span>)</span><br></pre></td></tr></table></figure><p>这个命令列出了当你在特定的分支上执行 git push 会自动地推送到哪一个远程分支。 它也同样地列出了哪些远程分支不在你的本地，哪些远程分支已经从服务器上移除了，还有当你执行 git pull 时哪些分支会自动合并。</p><h2 id="远程仓库的移除与重命名"><a href="#远程仓库的移除与重命名" class="headerlink" title="远程仓库的移除与重命名"></a>远程仓库的移除与重命名</h2><p>如果想要重命名引用的名字可以运行 git remote rename 去修改一个远程仓库的简写名。 例如，想要将 pb 重命名为 paul，可以用 git remote rename 这样做：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>git remote rename pb paul</span><br><span class="line"><span class="variable">$ </span>git remote</span><br><span class="line">origin</span><br><span class="line">paul</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Git-远程仓库&quot;&gt;&lt;a href=&quot;#Git-远程仓库&quot; class=&quot;headerlink&quot; title=&quot;Git 远程仓库&quot;&gt;&lt;/a&gt;Git 远程仓库&lt;/h1&gt;&lt;p&gt;为了能在任意 Git 项目上协作，你需要知道如何管理自己的远程仓库。远程仓库是指托管在因特网
+      
+    
+    </summary>
+    
+      <category term="Git" scheme="https://wxzhongwang.github.io/categories/Git/"/>
+    
+    
+      <category term="Git" scheme="https://wxzhongwang.github.io/tags/Git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git 撤销操作</title>
+    <link href="https://wxzhongwang.github.io/2019/01/30/Git%20%E6%92%A4%E9%94%80%E6%93%8D%E4%BD%9C/"/>
+    <id>https://wxzhongwang.github.io/2019/01/30/Git 撤销操作/</id>
+    <published>2019-01-30T08:42:35.376Z</published>
+    <updated>2019-01-30T08:43:03.070Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Git-撤销操作"><a href="#Git-撤销操作" class="headerlink" title="Git 撤销操作"></a>Git 撤销操作</h1><p>在任何一个阶段，你都有可能想要撤消某些操作。 注意，有些撤消操作是不可逆的。 这是在使用 Git 的过程中，会因为操作失误而导致之前的工作丢失的少有的几个地方之一。</p><h2 id="撤销操作"><a href="#撤销操作" class="headerlink" title="撤销操作"></a>撤销操作</h2><p>有时候我们提交完了才发现漏掉了几个文件没有添加，或者提交信息写错了。 此时，可以运行带有 –amend 选项的提交命令尝试重新提交：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="keyword">commit</span> <span class="comment">--amend</span></span><br></pre></td></tr></table></figure></p><p>这个命令会将暂存区中的文件提交。如果自上次提交以来你还未做任何修改（例如，在上次提交后马上执行了此命令），那么快照会保持不变，而你所修改的只是提交信息。</p><p>例如，你提交后发现忘记了暂存某些需要的修改，可以像下面这样操作：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="keyword">commit</span> -m <span class="string">'initial commit'</span></span><br><span class="line">$ git <span class="keyword">add</span> forgotten_file</span><br><span class="line">$ git <span class="keyword">commit</span> <span class="comment">--amend</span></span><br></pre></td></tr></table></figure></p><p>最终你只会有一个提交 - 第二次提交将代替第一次提交的结果。</p><h2 id="取消暂存的文件"><a href="#取消暂存的文件" class="headerlink" title="取消暂存的文件"></a>取消暂存的文件</h2><p>接下来的两个小节演示如何操作暂存区域与工作目录中已修改的文件。 这些命令在修改文件状态的同时，也会提示如何撤消操作。 例如，你已经修改了两个文件并且想要将它们作为两次独立的修改提交，但是却意外地输入了 git add * 暂存了它们两个。 如何只取消暂存两个中的一个呢？ git status 命令提示了你：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>git add *</span><br><span class="line"><span class="variable">$ </span>git status</span><br><span class="line">On branch master</span><br><span class="line">Changes to be <span class="symbol">committed:</span></span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git reset HEAD &lt;file&gt;..."</span> to unstage)</span><br><span class="line"></span><br><span class="line">    <span class="symbol">renamed:</span>    README.md -&gt; README</span><br><span class="line">    <span class="symbol">modified:</span>   CONTRIBUTING.md</span><br></pre></td></tr></table></figure></p><p>在 “Changes to be committed” 文字正下方，提示使用 git reset HEAD <file>… 来取消暂存。 所以，我们可以这样来取消暂存 CONTRIBUTING.md 文件：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="keyword">reset</span> <span class="keyword">HEAD</span> CONTRIBUTING.md</span><br><span class="line">Unstaged changes <span class="keyword">after</span> <span class="keyword">reset</span>:</span><br><span class="line">MCONTRIBUTING.md</span><br><span class="line">$ git <span class="keyword">status</span></span><br><span class="line"><span class="keyword">On</span> branch <span class="keyword">master</span></span><br><span class="line">Changes <span class="keyword">to</span> be committed:</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git reset HEAD &lt;file&gt;..."</span> <span class="keyword">to</span> unstage)</span><br><span class="line"></span><br><span class="line">    renamed:    README.md -&gt; README</span><br><span class="line"></span><br><span class="line">Changes <span class="keyword">not</span> staged <span class="keyword">for</span> <span class="keyword">commit</span>:</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git add &lt;file&gt;..."</span> <span class="keyword">to</span> <span class="keyword">update</span> what will be committed)</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git checkout -- &lt;file&gt;..."</span> <span class="keyword">to</span> discard changes <span class="keyword">in</span> working <span class="keyword">directory</span>)</span><br><span class="line"></span><br><span class="line">    modified:   CONTRIBUTING.md</span><br></pre></td></tr></table></figure></file></p><p>这个命令有点儿奇怪，但是起作用了。 CONTRIBUTING.md 文件已经是修改未暂存的状态了。</p><blockquote><p>Note：虽然在调用时加上 –hard 选项可以令 git reset 成为一个危险的命令（译注：可能导致工作目录中所有当前进度丢失！）不加选项地调用 git reset 并不危险 — 它只会修改暂存区域。</p></blockquote><h2 id="撤消对文件的修改"><a href="#撤消对文件的修改" class="headerlink" title="撤消对文件的修改"></a>撤消对文件的修改</h2><p>如果你并不想保留对 CONTRIBUTING.md 文件的修改怎么办？ 你该如何方便地撤消修改 - 将它还原成上次提交时的样子（或者刚克隆完的样子，或者刚把它放入工作目录时的样子）？ 幸运的是，git status 也告诉了你应该如何做。 在最后一个例子中，未暂存区域是这样：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Changes not staged for <span class="keyword">commit</span>:</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git add &lt;file&gt;..."</span> <span class="keyword">to</span> <span class="keyword">update</span> what will be committed)</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git checkout -- &lt;file&gt;..."</span> <span class="keyword">to</span> discard changes <span class="keyword">in</span> working <span class="keyword">directory</span>)</span><br><span class="line"></span><br><span class="line">    modified:   CONTRIBUTING.md</span><br></pre></td></tr></table></figure></p><p>它非常清楚地告诉了你如何撤消之前所做的修改。 让我们来按照提示执行：<br><figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout <span class="comment">-- CONTRIBUTING.md</span></span><br><span class="line">$ git status</span><br><span class="line"><span class="keyword">On</span> branch master</span><br><span class="line">Changes <span class="keyword">to</span> be committed:</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git reset HEAD &lt;file&gt;..."</span> <span class="keyword">to</span> unstage)</span><br><span class="line"></span><br><span class="line">    renamed:    README.md -&gt; README</span><br></pre></td></tr></table></figure></p><p>可以看到那些修改已经被撤消了。</p><blockquote><p>Important: 你需要知道 git checkout – [file] 是一个危险的命令，这很重要。 你对那个文件做的任何修改都会消失 - 你只是拷贝了另一个文件来覆盖它。 除非你确实清楚不想要那个文件了，否则不要使用这个命令。</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Git-撤销操作&quot;&gt;&lt;a href=&quot;#Git-撤销操作&quot; class=&quot;headerlink&quot; title=&quot;Git 撤销操作&quot;&gt;&lt;/a&gt;Git 撤销操作&lt;/h1&gt;&lt;p&gt;在任何一个阶段，你都有可能想要撤消某些操作。 注意，有些撤消操作是不可逆的。 这是在使用 G
+      
+    
+    </summary>
+    
+      <category term="Git" scheme="https://wxzhongwang.github.io/categories/Git/"/>
+    
+    
+      <category term="Git" scheme="https://wxzhongwang.github.io/tags/Git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>世界以痛吻我 我却报之以歌</title>
+    <link href="https://wxzhongwang.github.io/2019/01/29/%E4%B8%96%E7%95%8C%E4%BB%A5%E7%97%9B%E5%90%BB%E6%88%91%EF%BC%8C%E6%88%91%E5%8D%B4%E6%8A%A5%E4%B9%8B%E4%BB%A5%E6%AD%8C/"/>
+    <id>https://wxzhongwang.github.io/2019/01/29/世界以痛吻我，我却报之以歌/</id>
+    <published>2019-01-29T09:10:10.000Z</published>
+    <updated>2019-01-30T04:48:00.146Z</updated>
+    
+    <content type="html"><![CDATA[<p>今年发生不好的事，一切都显得不那么美好，就很多事情都不按大家的预想在发展。就一起都感觉不顺利，2018已经不够友好了，还记得刚刚过去的23岁生日，记得自己的愿望是希望，真挚希望所有的亲朋好友能够健康，健康就够了，钱多钱少不重要，就是健康就够了。。。</p><p>但是偏偏还是发生了。</p><h1 id="世界以痛吻我-我却报之以歌"><a href="#世界以痛吻我-我却报之以歌" class="headerlink" title="世界以痛吻我 我却报之以歌"></a>世界以痛吻我 我却报之以歌</h1><p>亲人已仙游，未呈儿孙福，幽魂于千里，如何度思量。</p><p>2018年06月14日早9：00点，在杭州，还在床上的我猛的收到了家人群的消息，早已患糖尿病多年的舅舅病逝。尽管心里有多不愿意接受，但是心里也算是做好了准备。在五一回家时间便已经被告知舅舅身体日渐消瘦，骨瘦如柴。我还趁着工作之余，抽空去看望了。当看到那一瞬间，我感觉我整个人就不好了，眼泪一下就出来了，整个人像楞住了一般，久久说不出话，手也不知道往哪里放。当舅舅看到我，一把把我拽住，死死捏着，</p><p>又是在杭州，2019年01月29日早8: 00点，同样的戏码，姨夫病逝，癌症晚期，距离收到通知，也就短短三个多月时间，大概一百多天，原本一个看上去健健康康的人，就突然离开，就像上帝给你的人生突然上了锁，然后把钥匙给扔掉了的感觉。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;今年发生不好的事，一切都显得不那么美好，就很多事情都不按大家的预想在发展。就一起都感觉不顺利，2018已经不够友好了，还记得刚刚过去的23岁生日，记得自己的愿望是希望，真挚希望所有的亲朋好友能够健康，健康就够了，钱多钱少不重要，就是健康就够了。。。&lt;/p&gt;
+&lt;p&gt;但是偏偏还
+      
+    
+    </summary>
+    
+      <category term="博客搭建" scheme="https://wxzhongwang.github.io/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
+    
+    
+      <category term="前端" scheme="https://wxzhongwang.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="博客系统" scheme="https://wxzhongwang.github.io/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>Git查看历史提交</title>
@@ -373,6 +451,31 @@
   </entry>
   
   <entry>
+    <title>Hadoop技术体系</title>
+    <link href="https://wxzhongwang.github.io/2019/01/08/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF%EF%BC%88Hadoop%E4%BD%93%E7%B3%BB%EF%BC%89/"/>
+    <id>https://wxzhongwang.github.io/2019/01/08/大数据相关技术（Hadoop体系）/</id>
+    <published>2019-01-08T06:18:02.000Z</published>
+    <updated>2019-01-09T02:02:32.943Z</updated>
+    
+    <content type="html"><![CDATA[<p>Hadoop 里面包括几个组件<strong>HDFS</strong>、<strong>MapReduce</strong>、<strong>YARN</strong>和<strong>ZooKeeper</strong>等一系列技术，HDFS是存储数据的地方就像我们电脑的硬盘一样文件都存储在这个上面，MapReduce是对数据进行处理计算的，YARN是体现Hadoop平台概念的重要组件，有了它大数据生态体系的其它软件就能在hadoop上运行了，这样能更好的利用HDFS大存储的优势和节省更多的资源比如我们就不用再单独建一个spark的集群了，让它直接跑在现有的hadoop yarn上面就可以了。ZooKeeper本身是一个非常牢靠的记事本，用于记录一些概要信息。Hadoop依靠这个记事本来记录当前哪些节点正在用，哪些已掉线，哪些是备用等，以此来管理机群。</p><h1 id="Hadoop技术体系"><a href="#Hadoop技术体系" class="headerlink" title="Hadoop技术体系"></a>Hadoop技术体系</h1><h2 id="Hadoop"><a href="#Hadoop" class="headerlink" title="Hadoop"></a>Hadoop</h2><p>Hadoop 里面包括几个组件<strong>HDFS</strong>、<strong>MapReduce</strong>、<strong>YARN</strong>和<strong>ZooKeeper</strong>等一系列技术，HDFS是存储数据的地方就像我们电脑的硬盘一样文件都存储在这个上面，MapReduce是对数据进行处理计算的，YARN是体现Hadoop平台概念的重要组件，有了它大数据生态体系的其它软件就能在hadoop上运行了，这样能更好的利用HDFS大存储的优势和节省更多的资源比如我们就不用再单独建一个spark的集群了，让它直接跑在现有的hadoop yarn上面就可以了。ZooKeeper本身是一个非常牢靠的记事本，用于记录一些概要信息。Hadoop依靠这个记事本来记录当前哪些节点正在用，哪些已掉线，哪些是备用等，以此来管理机群。</p><h2 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h2><p>Hadoop Distributed File System，Hadoop 分布式文件系统<br>高度容错性的系统，适合部署在廉价的机器上，HDFS能提供高吞吐量的数据访问，适合那些有着超大数据集（large data set）的应用程序。</p><h2 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h2><p>Mapreduce是一个计算框架，一个处理分布式海量数据的软件框架及计算集群。</p><p>Map （映射） Reduce (简化)<br>举个例子：假设你的手机通话信息保存在一个HDFS的文件callList.txt中，你想找到你与同事A的所有通话记录并排序。因为HDFS会把callLst.txt分成几块分别存，比如说5块，那么对应的Map过程就是找到这5块所在的5个节点，让它们分别找自己存的那块中关于同事A的通话记录，对应的Reduce过程就是把5个节点过滤后的通话记录合并在一块并按时间排序。MapReduce的计算模型通常把HDFS作为数据来源，很少会用到其它数据来源比如HBase。</p><h2 id="Hbase"><a href="#Hbase" class="headerlink" title="Hbase"></a>Hbase</h2><p>这是Hadoop生态体系中的NOSQL数据库，他的数据是按照key和value的形式存储的并且key是唯一的，所以它能用来做数据的排重，它与MYSQL相比能存储的数据量大很多。所以他常被用于大数据处理完成之后的存储目的地。</p><blockquote><p>HDFS和HBase是依靠外存（即硬盘）的分布式文件存储实现和分布式表存储实现。HDFS是一个分布式的“云存储”文件系统，它会把一个文件分块并分别保存，取用时分别再取出、合并。重要的是，这些分块通常会在3个节点（即集群内的服务器）上各有1个备份，因此即使出现少数节点的失效（如硬盘损坏、掉电等），文件也不会失效。如果说HDFS是文件级别的存储，那HBase则是表级别的存储。HBase是表模型，但比SQL数据库的表要简单的多，没有连接、聚集等功能。HBase的表是物理存储到HDFS的，比如把一个表分成4个HDFS文件并存储。由于HDFS级会做备份，所以HBase级不再备份。MapReduce则是一个计算模型，而不是存储模型；MapReduce通常与HDFS紧密配合。</p></blockquote><h2 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h2><p>Hive 是一种底层封装了Hadoop 的数据仓库处理工具，使用类SQL的HiveQL语言实现数据查询，所有Hive 的数据都存储在Hadoop 兼容的文件系统（如HDFS）中。Hive在加载数据过程中不会对数据进行任何的修改，只是将数据移动到HDFS中Hive设定的目录下，++因此，Hive不支持对数据的改写和添加，所有的数据都是在加载的时候确定的++。对于会SQL语法的来说就是神器，它能让你处理大数据变的很简单，不会再费劲的编写MapReduce程序。</p><h2 id="Spark"><a href="#Spark" class="headerlink" title="Spark"></a>Spark</h2><p>它是用来弥补基于MapReduce处理数据速度上的缺点，它的特点是把数据装载到内存中计算而不是去读慢的要死进化还特别慢的硬盘。特别适合做迭代运算，所以算法流们特别稀饭它。它是用scala编写的。Java语言或者Scala都可以操作它，因为它们都是用JVM的。</p><h1 id="其他相关技术"><a href="#其他相关技术" class="headerlink" title="其他相关技术"></a>其他相关技术</h1><h2 id="Sqoop"><a href="#Sqoop" class="headerlink" title="Sqoop"></a>Sqoop</h2><p>这个是用于把Mysql里的数据导入到Hadoop里的。当然你也可以不用这个，直接把Mysql数据表导出成文件再放到HDFS上也是一样的，当然生产环境中使用要注意Mysql的压力。</p><h2 id="Flume"><a href="#Flume" class="headerlink" title="Flume"></a>Flume</h2><p> apache Flume 是一个从可以收集例如日志，事件等数据资源，并将这些数量庞大的数据从各项数据资源中集中起来存储的工具/服务，或者数集中机制。flume具有高可用，分布式，配置工具，其设计的原理也是基于数据流，如日志数据从各种网站服务器上汇集起来存储到HDFS，HBase等集中存储器中。</p><h3 id="一般实时系统，所选用组件如下"><a href="#一般实时系统，所选用组件如下" class="headerlink" title="一般实时系统，所选用组件如下"></a>一般实时系统，所选用组件如下</h3><ul><li>数据采集 ：负责从各节点上实时采集数据，选用Flume来实现  </li><li>数据接入 ：由于采集数据的速度和数据处理的速度不一定同步，因此添加一个消息中间件来作为缓冲，选用apache的kafka  </li><li>流式计算 ：对采集到的数据进行实时分析，选用apache的storm  </li><li>数据输出 ：对分析后的结果持久化，暂定用mysql，另一方面是模块化之后，假如当Storm挂掉了之后，数据采集和数据接入还是继续在跑着，数据不会丢失，storm起来之后可以继续进行流式计算； </li></ul><h2 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h2><p>Kafka的整体架构非常简单，是显式分布式架构，producer、broker（kafka）和consumer都可以有多个。Producer，consumer实现Kafka注册的接口，数据从producer发送到broker，broker承担一个中间缓存和分发的作用。broker分发注册到系统中的consumer。broker的作用类似于缓存，即活跃的数据和离线处理系统之间的缓存。客户端和服务器端的通信，是基于简单，高性能，且与编程语言无关的TCP协议。</p><p>Kafka是一种分布式的、基于发布/订阅的消息系统。在流式计算中，Kafka一般用来缓存数据，Storm通过消费Kafka的数据进行计算（KAFKA+STORM+REDIS）。</p><p>特点：</p><ul><li>消息持久化：通过O(1)的磁盘数据结构提供数据的持久化</li><li>高吞吐量：每秒百万级的消息读写</li><li>分布式：扩展能力强</li><li>多客户端支持：java、php、python、c++ ……</li><li>实时性：生产者生产的message立即被消费者可见</li><li>Kafka是一个分布式消息队列：生产者、消费者的功能。它提供了类似于JMS的特性，但是在设计实   现上完全不同，此外它并不是JMS规范的实现。</li><li>Kafka对消息保存时根据Topic进行归类，发送消息者称为Producer,消息接受者称为Consumer</li><li>无论是kafka集群，还是producer和consumer都依赖于zookeeper集群保存一些meta信息，来保证系统可用性</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Hadoop 里面包括几个组件&lt;strong&gt;HDFS&lt;/strong&gt;、&lt;strong&gt;MapReduce&lt;/strong&gt;、&lt;strong&gt;YARN&lt;/strong&gt;和&lt;strong&gt;ZooKeeper&lt;/strong&gt;等一系列技术，HDFS是存储数据的地方就像我们电脑
+      
+    
+    </summary>
+    
+      <category term="大数据" scheme="https://wxzhongwang.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    
+      <category term="Hadoop" scheme="https://wxzhongwang.github.io/tags/Hadoop/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Hadoop概念</title>
     <link href="https://wxzhongwang.github.io/2019/01/08/Hadoop/"/>
     <id>https://wxzhongwang.github.io/2019/01/08/Hadoop/</id>
@@ -427,109 +530,6 @@
     
     
       <category term="Hadoop" scheme="https://wxzhongwang.github.io/tags/Hadoop/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hadoop技术体系</title>
-    <link href="https://wxzhongwang.github.io/2019/01/08/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF%EF%BC%88Hadoop%E4%BD%93%E7%B3%BB%EF%BC%89/"/>
-    <id>https://wxzhongwang.github.io/2019/01/08/大数据相关技术（Hadoop体系）/</id>
-    <published>2019-01-08T06:18:02.000Z</published>
-    <updated>2019-01-09T02:02:32.943Z</updated>
-    
-    <content type="html"><![CDATA[<p>Hadoop 里面包括几个组件<strong>HDFS</strong>、<strong>MapReduce</strong>、<strong>YARN</strong>和<strong>ZooKeeper</strong>等一系列技术，HDFS是存储数据的地方就像我们电脑的硬盘一样文件都存储在这个上面，MapReduce是对数据进行处理计算的，YARN是体现Hadoop平台概念的重要组件，有了它大数据生态体系的其它软件就能在hadoop上运行了，这样能更好的利用HDFS大存储的优势和节省更多的资源比如我们就不用再单独建一个spark的集群了，让它直接跑在现有的hadoop yarn上面就可以了。ZooKeeper本身是一个非常牢靠的记事本，用于记录一些概要信息。Hadoop依靠这个记事本来记录当前哪些节点正在用，哪些已掉线，哪些是备用等，以此来管理机群。</p><h1 id="Hadoop技术体系"><a href="#Hadoop技术体系" class="headerlink" title="Hadoop技术体系"></a>Hadoop技术体系</h1><h2 id="Hadoop"><a href="#Hadoop" class="headerlink" title="Hadoop"></a>Hadoop</h2><p>Hadoop 里面包括几个组件<strong>HDFS</strong>、<strong>MapReduce</strong>、<strong>YARN</strong>和<strong>ZooKeeper</strong>等一系列技术，HDFS是存储数据的地方就像我们电脑的硬盘一样文件都存储在这个上面，MapReduce是对数据进行处理计算的，YARN是体现Hadoop平台概念的重要组件，有了它大数据生态体系的其它软件就能在hadoop上运行了，这样能更好的利用HDFS大存储的优势和节省更多的资源比如我们就不用再单独建一个spark的集群了，让它直接跑在现有的hadoop yarn上面就可以了。ZooKeeper本身是一个非常牢靠的记事本，用于记录一些概要信息。Hadoop依靠这个记事本来记录当前哪些节点正在用，哪些已掉线，哪些是备用等，以此来管理机群。</p><h2 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h2><p>Hadoop Distributed File System，Hadoop 分布式文件系统<br>高度容错性的系统，适合部署在廉价的机器上，HDFS能提供高吞吐量的数据访问，适合那些有着超大数据集（large data set）的应用程序。</p><h2 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h2><p>Mapreduce是一个计算框架，一个处理分布式海量数据的软件框架及计算集群。</p><p>Map （映射） Reduce (简化)<br>举个例子：假设你的手机通话信息保存在一个HDFS的文件callList.txt中，你想找到你与同事A的所有通话记录并排序。因为HDFS会把callLst.txt分成几块分别存，比如说5块，那么对应的Map过程就是找到这5块所在的5个节点，让它们分别找自己存的那块中关于同事A的通话记录，对应的Reduce过程就是把5个节点过滤后的通话记录合并在一块并按时间排序。MapReduce的计算模型通常把HDFS作为数据来源，很少会用到其它数据来源比如HBase。</p><h2 id="Hbase"><a href="#Hbase" class="headerlink" title="Hbase"></a>Hbase</h2><p>这是Hadoop生态体系中的NOSQL数据库，他的数据是按照key和value的形式存储的并且key是唯一的，所以它能用来做数据的排重，它与MYSQL相比能存储的数据量大很多。所以他常被用于大数据处理完成之后的存储目的地。</p><blockquote><p>HDFS和HBase是依靠外存（即硬盘）的分布式文件存储实现和分布式表存储实现。HDFS是一个分布式的“云存储”文件系统，它会把一个文件分块并分别保存，取用时分别再取出、合并。重要的是，这些分块通常会在3个节点（即集群内的服务器）上各有1个备份，因此即使出现少数节点的失效（如硬盘损坏、掉电等），文件也不会失效。如果说HDFS是文件级别的存储，那HBase则是表级别的存储。HBase是表模型，但比SQL数据库的表要简单的多，没有连接、聚集等功能。HBase的表是物理存储到HDFS的，比如把一个表分成4个HDFS文件并存储。由于HDFS级会做备份，所以HBase级不再备份。MapReduce则是一个计算模型，而不是存储模型；MapReduce通常与HDFS紧密配合。</p></blockquote><h2 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h2><p>Hive 是一种底层封装了Hadoop 的数据仓库处理工具，使用类SQL的HiveQL语言实现数据查询，所有Hive 的数据都存储在Hadoop 兼容的文件系统（如HDFS）中。Hive在加载数据过程中不会对数据进行任何的修改，只是将数据移动到HDFS中Hive设定的目录下，++因此，Hive不支持对数据的改写和添加，所有的数据都是在加载的时候确定的++。对于会SQL语法的来说就是神器，它能让你处理大数据变的很简单，不会再费劲的编写MapReduce程序。</p><h2 id="Spark"><a href="#Spark" class="headerlink" title="Spark"></a>Spark</h2><p>它是用来弥补基于MapReduce处理数据速度上的缺点，它的特点是把数据装载到内存中计算而不是去读慢的要死进化还特别慢的硬盘。特别适合做迭代运算，所以算法流们特别稀饭它。它是用scala编写的。Java语言或者Scala都可以操作它，因为它们都是用JVM的。</p><h1 id="其他相关技术"><a href="#其他相关技术" class="headerlink" title="其他相关技术"></a>其他相关技术</h1><h2 id="Sqoop"><a href="#Sqoop" class="headerlink" title="Sqoop"></a>Sqoop</h2><p>这个是用于把Mysql里的数据导入到Hadoop里的。当然你也可以不用这个，直接把Mysql数据表导出成文件再放到HDFS上也是一样的，当然生产环境中使用要注意Mysql的压力。</p><h2 id="Flume"><a href="#Flume" class="headerlink" title="Flume"></a>Flume</h2><p> apache Flume 是一个从可以收集例如日志，事件等数据资源，并将这些数量庞大的数据从各项数据资源中集中起来存储的工具/服务，或者数集中机制。flume具有高可用，分布式，配置工具，其设计的原理也是基于数据流，如日志数据从各种网站服务器上汇集起来存储到HDFS，HBase等集中存储器中。</p><h3 id="一般实时系统，所选用组件如下"><a href="#一般实时系统，所选用组件如下" class="headerlink" title="一般实时系统，所选用组件如下"></a>一般实时系统，所选用组件如下</h3><ul><li>数据采集 ：负责从各节点上实时采集数据，选用Flume来实现  </li><li>数据接入 ：由于采集数据的速度和数据处理的速度不一定同步，因此添加一个消息中间件来作为缓冲，选用apache的kafka  </li><li>流式计算 ：对采集到的数据进行实时分析，选用apache的storm  </li><li>数据输出 ：对分析后的结果持久化，暂定用mysql，另一方面是模块化之后，假如当Storm挂掉了之后，数据采集和数据接入还是继续在跑着，数据不会丢失，storm起来之后可以继续进行流式计算； </li></ul><h2 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h2><p>Kafka的整体架构非常简单，是显式分布式架构，producer、broker（kafka）和consumer都可以有多个。Producer，consumer实现Kafka注册的接口，数据从producer发送到broker，broker承担一个中间缓存和分发的作用。broker分发注册到系统中的consumer。broker的作用类似于缓存，即活跃的数据和离线处理系统之间的缓存。客户端和服务器端的通信，是基于简单，高性能，且与编程语言无关的TCP协议。</p><p>Kafka是一种分布式的、基于发布/订阅的消息系统。在流式计算中，Kafka一般用来缓存数据，Storm通过消费Kafka的数据进行计算（KAFKA+STORM+REDIS）。</p><p>特点：</p><ul><li>消息持久化：通过O(1)的磁盘数据结构提供数据的持久化</li><li>高吞吐量：每秒百万级的消息读写</li><li>分布式：扩展能力强</li><li>多客户端支持：java、php、python、c++ ……</li><li>实时性：生产者生产的message立即被消费者可见</li><li>Kafka是一个分布式消息队列：生产者、消费者的功能。它提供了类似于JMS的特性，但是在设计实   现上完全不同，此外它并不是JMS规范的实现。</li><li>Kafka对消息保存时根据Topic进行归类，发送消息者称为Producer,消息接受者称为Consumer</li><li>无论是kafka集群，还是producer和consumer都依赖于zookeeper集群保存一些meta信息，来保证系统可用性</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;Hadoop 里面包括几个组件&lt;strong&gt;HDFS&lt;/strong&gt;、&lt;strong&gt;MapReduce&lt;/strong&gt;、&lt;strong&gt;YARN&lt;/strong&gt;和&lt;strong&gt;ZooKeeper&lt;/strong&gt;等一系列技术，HDFS是存储数据的地方就像我们电脑
-      
-    
-    </summary>
-    
-      <category term="大数据" scheme="https://wxzhongwang.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-    
-      <category term="Hadoop" scheme="https://wxzhongwang.github.io/tags/Hadoop/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>大数据</title>
-    <link href="https://wxzhongwang.github.io/2019/01/08/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    <id>https://wxzhongwang.github.io/2019/01/08/大数据/</id>
-    <published>2019-01-08T06:18:02.000Z</published>
-    <updated>2019-01-09T02:01:55.333Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="大数据生命周期"><a href="#大数据生命周期" class="headerlink" title="大数据生命周期"></a>大数据生命周期</h1><ul><li>基础设施层，涵盖计算资源、内存与存储和网络互联，具体表现为计算节点、集群、机柜和数据中心。</li><li>数据存储和管理层，包括文件系统、数据库和类似YARN的资源管理系统。</li><li>计算处理层，如hadoop、MapReduce和Spark</li><li>在此之上的各种不同计算范式，如批处理、流处理和图计算等，包括衍生出编程模型的计算模型，如BSP、GAS等</li></ul><blockquote><p>数据分析和可视化基于计算处理层。分析包括简单的查询分析、流分析以及更复杂的分析(如机器学习、图计算等)。查询分析多基于表结构和关系函数，流分析基于数据、事件流以及简单的统计分析，而复杂分析则基于更复杂的数据结构与方法，如图、矩阵、迭代计算和线性代数。一般意义的可视化是对分析结果的展示。但是通过交互式可视化，还可以探索性地提问，使分析获得新的线索，形成迭代的分析和可视化。基于大规模数据的实时交互可视化分析以及在这个过程中引入自动化的因素是目前研究的热点。</p></blockquote><h1 id="大数据技术生态"><a href="#大数据技术生态" class="headerlink" title="大数据技术生态"></a>大数据技术生态</h1><p>大数据的基本处理流程与传统数据处理流程并无太大差异，主要区别在于：由于大数据要处理大量、非结构化的数据，所以在各处理环节中都可以采用并行处理。目前，Hadoop、MapReduce和Spark等分布式处理方式已经成为大数据处理各环节的通用处理方法。</p><h1 id="大数据采集与预处理"><a href="#大数据采集与预处理" class="headerlink" title="大数据采集与预处理"></a>大数据采集与预处理</h1><ul><li>存储层</li><li>预处理层</li><li>采集层</li></ul><p>在大数据的生命周期中，数据采集处于第一个环节。根据MapReduce产生数据的应用系统分类，大数据的采集主要有4种来源：管理信息系统、Web信息系统、物理信息系统、科学实验系统。对于不同的数据集，可能存在不同的结构和模式，如文件、XML树、关系表等，表现为数据的异构性。对多个异构的数据集，需要做进一步集成处理或整合处理，将来自不同数据集的数据收集、整理、清洗、转换后，生成到一个新的数据集，为后续查询和分析处理提供统一的数据视图。针对管理信息系统中异构数据库集成技术、Web信息系统中的实体识别技术和DeepWeb集成技术、传感器网络数据融合技术已经有很多研究工作，取得了较大的进展，已经推出了多种数据清洗和质量控制工具。</p><h1 id="大数据的存储和管理"><a href="#大数据的存储和管理" class="headerlink" title="大数据的存储和管理"></a>大数据的存储和管理</h1><p>按数据类型的不同，大数据的存储和管理采用不同的技术路线，大致可以分为3类。</p><h2 id="第1类"><a href="#第1类" class="headerlink" title="第1类"></a>第1类</h2><p>主要面对的是大规模的结构化数据。针对这类大数据，通常采用新型数据库集群。它们通过列存储或行列混合存储以及粗粒度索引等技术，结合MPP(MassiveParallelProcessing)架构高效的分布式计算模式，实现对PB量级数据的存储和管理。这类集群具有高性能和高扩展性特点，在企业分析类应用领域已获得广泛应用;</p><h2 id="第2类"><a href="#第2类" class="headerlink" title="第2类"></a>第2类</h2><p>主要面对的是半结构化和非结构化数据。应对这类应用场景，基于Hadoop开源体系的系统平台更为擅长。它们通过对Hadoop生态体系的技术扩展和封装，实现对半结构化和非结构化数据的存储和管理;</p><h2 id="第3类"><a href="#第3类" class="headerlink" title="第3类"></a>第3类</h2><p>面对的是结构化和非结构化混合的大数据，因此采用MPP并行数据库集群与Hadoop集群的混合来实现对百PB量级、EB量级数据的存储和管理。一方面，用MPP来管理计算高质量的结构化数据，提供强大的SQL和OLTP型服务;另一方面，用Hadoop实现对半结构化和非结构化数据的处理，以支持诸如内容检索、深度挖掘与综合分析等新型应用。这类混合模式将是大数据存储和管理未来发展的趋势。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;大数据生命周期&quot;&gt;&lt;a href=&quot;#大数据生命周期&quot; class=&quot;headerlink&quot; title=&quot;大数据生命周期&quot;&gt;&lt;/a&gt;大数据生命周期&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;基础设施层，涵盖计算资源、内存与存储和网络互联，具体表现为计算节点、集群、机柜和数据中心
-      
-    
-    </summary>
-    
-      <category term="大数据" scheme="https://wxzhongwang.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-    
-      <category term="大数据" scheme="https://wxzhongwang.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>消息队列</title>
-    <link href="https://wxzhongwang.github.io/2018/12/08/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"/>
-    <id>https://wxzhongwang.github.io/2018/12/08/消息队列/</id>
-    <published>2018-12-08T03:18:02.000Z</published>
-    <updated>2019-01-13T03:39:22.644Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="一、消息队列的基本概念"><a href="#一、消息队列的基本概念" class="headerlink" title="一、消息队列的基本概念"></a>一、消息队列的基本概念</h1><h2 id="1-1-Broker"><a href="#1-1-Broker" class="headerlink" title="1.1 Broker"></a>1.1 Broker</h2><p>==Broker== 的概念来自与Apache ActiveMQ，通俗的讲就是消息队列服务器。</p><h2 id="1-2-消息生产者和消费者"><a href="#1-2-消息生产者和消费者" class="headerlink" title="1.2 消息生产者和消费者"></a>1.2 消息生产者和消费者</h2><ul><li>消息生产者 ==Producer==：发送消息到消息队列。</li><li>消息消费者 ==Consumer==：从消息队列接收消息。</li></ul><h2 id="1-3-消息模型"><a href="#1-3-消息模型" class="headerlink" title="1.3 消息模型"></a>1.3 消息模型</h2><h3 id="点对点消息队列模型"><a href="#点对点消息队列模型" class="headerlink" title="点对点消息队列模型"></a>点对点消息队列模型</h3><p>消息生产者向一个特定的队列发送消息，消息消费者从该队列中接收消息。消息的生产者和消费者可以不同时处于运行状态。每一个成功处理的消息都由消息消费者签收确认（Acknowledge）。</p><h3 id="发布订阅消息模型-Topic"><a href="#发布订阅消息模型-Topic" class="headerlink" title="发布订阅消息模型-Topic"></a>发布订阅消息模型-Topic</h3><p>发布订阅消息模型中，支持向一个特定的主题Topic发布消息，0个或多个订阅者接收来自这个消息主题的消息。在这种模型下，发布者和订阅者彼此不知道对方。实际操作过程中，必须先订阅，再发送消息，而后接收订阅的消息，这个顺序必须保证。 </p><h2 id="1-4-消息顺序性保证"><a href="#1-4-消息顺序性保证" class="headerlink" title="1.4 消息顺序性保证"></a>1.4 消息顺序性保证</h2><p>基于Queue消息模型，利用FIFO先进先出的特性，可以保证消息的顺序性。</p><h2 id="1-5-消息的ACK确认机制"><a href="#1-5-消息的ACK确认机制" class="headerlink" title="1.5 消息的ACK确认机制"></a>1.5 消息的ACK确认机制</h2><p>即消息的Ackownledge确认机制：<br>为了保证消息不丢失，消息队列提供了消息Acknowledge机制，即ACK机制，当Consumer确认消息已经消费处理，发送一个ACK给消息队列，此时消息队列便可以删除这个消息了。如果Consumer宕机/关闭，没有发送ACK，消息队列将认为这个消息没有被处理，会将这个消息重新发送给其他的Consumer重新消费处理。</p><h2 id="1-6-消息的持久化"><a href="#1-6-消息的持久化" class="headerlink" title="1.6 消息的持久化"></a>1.6 消息的持久化</h2><p>消息的持久化，对于一些关键的核心业务来说是非常重要的，启用消息持久化后，消息队列宕机重启后，消息可以从持久化存储恢复，消息不丢失，可以继续消费处理。</p><h2 id="1-7-消息的同步和异步收发"><a href="#1-7-消息的同步和异步收发" class="headerlink" title="1.7 消息的同步和异步收发"></a>1.7 消息的同步和异步收发</h2><h3 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h3><p>消息的收发支持同步收发的方式<br>同步收发场景下，消息生产者和消费者双向应答模式，例如：张三写封信送到邮局中转站，然后李四从中转站获得信，然后在写一份回执信，放到中转站，然后张三去取，当然张三写信的时候就得写明回信地址。<br>消息的接收如果以同步的方式(Pull)进行接收，如果队列中为空，此时接收将处于同步阻塞状态，会一直等待，直到消息的到达。</p><h3 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h3><p>消息的收发同样支持异步方式：异步发送消息，不需要等待消息队列的接收确认。<br>异步接收消息，以Push的方式触发消息消费者接收消息。</p><h2 id="1-8-消息的事务支持"><a href="#1-8-消息的事务支持" class="headerlink" title="1.8 消息的事务支持"></a>1.8 消息的事务支持</h2><p>消息的收发处理支持事务，例如：在任务中心场景中，一次处理可能涉及多个消息的接收、处理，这处于同一个事务范围内，如果一个消息处理失败，事务回滚，消息重新回到队列中。</p><h1 id="二、JMS消费服务"><a href="#二、JMS消费服务" class="headerlink" title="二、JMS消费服务"></a>二、JMS消费服务</h1><p>Java消息服务（Java Message Service，JMS）应用程序接口是一个Java平台中关于面向消息中间件（MOM）的API，用于在两个应用程序之间，或分布式系统中发送消息，进行异步通信。 点对点与发布订阅最初是由JMS定义的。这两种模式主要区别或解决的问题就是发送到队列的消息能否重复消费(多订阅) 。</p><p>JMS规范目前支持两种消息模型：</p><ol><li>点对点（point to point， queue）</li><li>发布/订阅（publish/subscribe，topic）</li></ol><h2 id="2-1-点对点：Queue，不可重复消费"><a href="#2-1-点对点：Queue，不可重复消费" class="headerlink" title="2.1 点对点：Queue，不可重复消费"></a>2.1 点对点：Queue，不可重复消费</h2><p>消息生产者生产消息发送到queue中，然后消息消费者从queue中取出并且消费消息。<br>消息被消费以后，queue中不再有存储，所以消息消费者不可能消费到已经被消费的消息。<br>Queue支持存在多个消费者，但是对一个消息而言，只会有一个消费者可以消费。 </p><p>P2P模式包含三个角色：</p><ul><li>消息队列（Queue）</li><li>发送者(Sender)</li><li>接收者(Receiver)</li></ul><p>每个消息都被发送到一个特定的队列，接收者从队列中获取消息。队列保留着消息，<br>直到他们被消费或超时。</p><h2 id="2-2-发布-订阅：Topic，可以重复消费"><a href="#2-2-发布-订阅：Topic，可以重复消费" class="headerlink" title="2.2 发布/订阅：Topic，可以重复消费"></a>2.2 发布/订阅：Topic，可以重复消费</h2><p>消息生产者（发布）将消息发布到topic中，同时有多个消息消费者（订阅）消费该消息。<br>和点对点方式不同，发布到topic的消息会被所有订阅者消费。 </p><p>支持订阅组的发布订阅模式：<br>发布订阅模式下，当发布者消息量很大时，显然单个订阅者的处理能力是不足的。实际上现实场景中是多个订阅者节点组成一个订阅组负载均衡消费topic消息即分组订阅，这样订阅者很容易实现消费能力线性扩展。可以看成是一个topic下有多个Queue，每个Queue是点对点的方式，Queue之间是发布订阅方式。 </p><h2 id="2-3-区别"><a href="#2-3-区别" class="headerlink" title="2.3 区别"></a>2.3 区别</h2><h3 id="点对点模式"><a href="#点对点模式" class="headerlink" title="点对点模式"></a>点对点模式</h3><p>生产者发送一条消息到queue，一个queue可以有很多消费者，但是一个消息只能被一个消费者接受，当没有消费者可用时，这个消息会被保存直到有一个可用的消费者，所以Queue实现了一个可靠的负载均衡。</p><h3 id="发布订阅模式"><a href="#发布订阅模式" class="headerlink" title="发布订阅模式"></a>发布订阅模式</h3><p>发布者发送到topic的消息，只有订阅了topic的订阅者才会收到消息。topic实现了发布和订阅，当你发布一个消息，所有订阅这个topic的服务都能得到这个消息，所以从1到N个订阅者都能得到这个消息的拷贝。</p><h1 id="三、流行模型对比"><a href="#三、流行模型对比" class="headerlink" title="三、流行模型对比"></a>三、流行模型对比</h1><p>传统企业型消息队列ActiveMQ遵循了JMS规范，实现了点对点和发布订阅模型，但其他流行的消息队列RabbitMQ、Kafka并没有遵循JMS规范。</p><h2 id="3-1-RabbitMQ"><a href="#3-1-RabbitMQ" class="headerlink" title="3.1 RabbitMQ"></a>3.1 RabbitMQ</h2><p>RabbitMQ实现了AQMP协议，AQMP协议定义了消息路由规则和方式。生产端通过路由规则发送消息到不同queue，消费端根据queue名称消费消息。RabbitMQ既支持内存队列也支持持久化队列，消费端为推模型，消费状态和订阅关系由服务端负责维护，消息消费完后立即删除，不保留历史消息。</p><h3 id="点对点"><a href="#点对点" class="headerlink" title="点对点"></a>点对点</h3><p>生产端发送一条消息通过路由投递到Queue，只有一个消费者能消费到。 </p><h3 id="多订阅"><a href="#多订阅" class="headerlink" title="多订阅"></a>多订阅</h3><p>当RabbitMQ需要支持多订阅时，发布者发送的消息通过路由同时写到多个Queue，不同订阅组消费不同的Queue。所以支持多订阅时，消息会多个拷贝。 </p><h2 id="3-2-Kafka"><a href="#3-2-Kafka" class="headerlink" title="3.2 Kafka"></a>3.2 Kafka</h2><p>Kafka只支持消息持久化，消费端为拉模型，消费状态和订阅关系由客户端端负责维护，消息消费完后不会立即删除，会保留历史消息。因此支持多订阅时，消息只会存储一份就可以了。但是可能产生重复消费的情况。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;一、消息队列的基本概念&quot;&gt;&lt;a href=&quot;#一、消息队列的基本概念&quot; class=&quot;headerlink&quot; title=&quot;一、消息队列的基本概念&quot;&gt;&lt;/a&gt;一、消息队列的基本概念&lt;/h1&gt;&lt;h2 id=&quot;1-1-Broker&quot;&gt;&lt;a href=&quot;#1-1-Bro
-      
-    
-    </summary>
-    
-      <category term="消息队列" scheme="https://wxzhongwang.github.io/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"/>
-    
-    
-      <category term="MessageQueue" scheme="https://wxzhongwang.github.io/tags/MessageQueue/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>你好，世界</title>
-    <link href="https://wxzhongwang.github.io/2018/08/31/hello-world/"/>
-    <id>https://wxzhongwang.github.io/2018/08/31/hello-world/</id>
-    <published>2018-08-31T09:54:54.000Z</published>
-    <updated>2019-01-08T06:12:54.428Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
-      
-    
-    </summary>
-    
-      <category term="博客搭建" scheme="https://wxzhongwang.github.io/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
-    
-    
-      <category term="前端" scheme="https://wxzhongwang.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
-    
-      <category term="博客系统" scheme="https://wxzhongwang.github.io/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
