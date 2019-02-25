@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wxzhongwang.github.io/"/>
-  <updated>2019-01-30T08:59:27.343Z</updated>
+  <updated>2019-02-25T02:49:48.918Z</updated>
   <id>https://wxzhongwang.github.io/</id>
   
   <author>
@@ -15,6 +15,107 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Greenplum 从入门到放弃（四）</title>
+    <link href="https://wxzhongwang.github.io/2019/02/04/Greenplum%20%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83%EF%BC%88%E5%9B%9B%EF%BC%89/"/>
+    <id>https://wxzhongwang.github.io/2019/02/04/Greenplum 从入门到放弃（四）/</id>
+    <published>2019-02-04T02:10:00.000Z</published>
+    <updated>2019-02-25T02:49:48.918Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Greenplum-从入门到放弃（四）"><a href="#Greenplum-从入门到放弃（四）" class="headerlink" title="Greenplum 从入门到放弃（四）"></a>Greenplum 从入门到放弃（四）</h1><h2 id="PostgreSQL与Greenplum的关系"><a href="#PostgreSQL与Greenplum的关系" class="headerlink" title="PostgreSQL与Greenplum的关系"></a>PostgreSQL与Greenplum的关系</h2><h3 id="PostgreSQL"><a href="#PostgreSQL" class="headerlink" title="PostgreSQL"></a>PostgreSQL</h3><p>PostgreSQL是一种非常先进的对象–关系型数据库管理系统（ORDBMS），是目前功能最强大，特性最丰富和技术最先进的自由软件数据库系统之一，其某些特性甚至连商业数据库都不具备。</p><p>PostgreSQL的特点可以说是数不胜数，称其为最先进的开<br>源软件数据库当之无愧，支持绝大部分的主流数据库特性，主<br>要体现在如下几方面：</p><ol><li>函数/存储过程</li></ol><p>PostgreSQL对非常丰富的过程类语言提供支持，可以编写自定义函数/存储过程</p><ul><li>内置的plpgsql，一种类似Oracle的PLsql的语言</li><li>支持的脚本语言有：PL/Lua、PL/LOLCODE、PL/Perl、PL/HP、PL/Python、PL/Ruby、PL/sh、PL/Tcl和PL/Scheme。、</li><li>编译语言有C、C++和JAVA。</li><li>·统计语言PL/R</li></ul><ol start="2"><li>索引</li></ol><p>PostgreSQL支持用户定义的索引访问方法，并且内置了Btree、哈希和GiST索引。PostgreSQL中的索引有下面几个特点：</p><ul><li>可以从后向前扫描</li><li>可以创建表达式索引</li><li>部分索引</li></ul><ol start="3"><li>触发器</li></ol><p>触发器是由SQL查询的动作触发的事件。比如，一个INSERT查询可能激活一个检查输入值是否有效的触发器。大多数触发器都只对INSERT或者UPDATE查询有效。PostgreSQL完全支持触发器，可以附着在表上，但是不能在视图上。不过视图可以有规则。多个触发器是按照字母顺序触发的。我们还可以用其他过程语言书写触发器函数，不仅仅PL/PgSQL。</p><ol start="4"><li>并发管理（MVCC）</li></ol><p>PostgreSQL的并发管理使用的是一种叫做“MVCC”（多版本并发机制）的机制，这种机制实际上就是现在在众多所谓的编程语言中极其火爆的“Lock Free”，其本质是通过类似科幻世界的时空穿梭的原理，给予每个用户一个自己的“时空”<br>，然后通过原子的“时空”控制来控制时间基线，并以此控制并发更改的可见区域，从而实现近乎无锁的并发，而同时还能在很大程度上保证数据库的ACID特性。</p><ol start="5"><li>规则（RULE）</li></ol><p>规则允许我们对由一个查询生成的查询树进行改写。</p><ol start="6"><li>数据类型</li></ol><p>PostgreSQL支持非常广泛的数据类型，包括：</p><ul><li>任意精度的数值类型；</li><li>无限长度的文本类型；</li><li>几何原语；</li><li>IPv4和IPv6类型；</li><li>CIDR块和MAC地址；</li><li>数组。</li></ul><p>用户还可以创建自己的类型，并且可以利用GiST框架把这些类型做成完全可索引的，比如来自PostGIS的地理信息系统（GIS）的数据类型。</p><ol start="7"><li>用户定义对象</li></ol><p>因为PostgreSQL使用一种基于系统表的可扩展的结构设计，所以PostgreSQL内部的几乎所有对象都可以由用户定义，这些对象包括：</p><ul><li>索引；</li><li>操作符（内部操作符可以被覆盖）；</li><li>聚集函数；</li><li>域；</li><li>类型转换；</li><li>编码转换。</li></ul><ol start="8"><li>继承</li></ol><p>PostgreSQL的表是可以相互继承的。一个表可以有父表，<br>父表的结构变化会导致子表的结构变化，而对子表的插入和数<br>据更新等也会反映到父表中。</p><ol start="9"><li>其他特性与扩展</li></ol><ul><li>二进制和文本大对象存储；</li><li>在线备份；</li><li>TOAST（The Oversized-Attribute Storage Technique）用于透明地在独立的地方保存大的数据库属性，当数据超过一定大小的时候，会自动进行压缩以节省空间；</li><li>正则表达式。</li></ul><p>此外PostgreSQL还有大量的附加模块和扩展版本，比如，多种不同的主从/主主复制方案:</p><ul><li>Slony-I；</li><li>pgcluster；</li><li>Mammoth replicator；</li><li>Bucardo。</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Greenplum-从入门到放弃（四）&quot;&gt;&lt;a href=&quot;#Greenplum-从入门到放弃（四）&quot; class=&quot;headerlink&quot; title=&quot;Greenplum 从入门到放弃（四）&quot;&gt;&lt;/a&gt;Greenplum 从入门到放弃（四）&lt;/h1&gt;&lt;h2 i
+      
+    
+    </summary>
+    
+      <category term="Greenplum" scheme="https://wxzhongwang.github.io/categories/Greenplum/"/>
+    
+    
+      <category term="Greenplum" scheme="https://wxzhongwang.github.io/tags/Greenplum/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Greenplum 从入门到放弃（三）</title>
+    <link href="https://wxzhongwang.github.io/2019/02/03/Greenplum%20%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83%EF%BC%88%E4%B8%89%EF%BC%89/"/>
+    <id>https://wxzhongwang.github.io/2019/02/03/Greenplum 从入门到放弃（三）/</id>
+    <published>2019-02-03T02:10:00.000Z</published>
+    <updated>2019-02-25T02:49:36.931Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Greenplum-从入门到放弃（三）"><a href="#Greenplum-从入门到放弃（三）" class="headerlink" title="Greenplum 从入门到放弃（三）"></a>Greenplum 从入门到放弃（三）</h1><h2 id="master-和-segment关系"><a href="#master-和-segment关系" class="headerlink" title="master 和 segment关系"></a>master 和 segment关系</h2><p>Master和Segment其实都是一个单独的PostgreSQL数据库。<br>每一个都有自己单独的一套元数据字典，在这里，Master节点<br>一般也叫主节点，Segment也叫做数据节点。<br>Segment节点与Master节点的通信，通过千兆（或万兆）<br>网卡组成的内部连接（InterConnect），在同一台数据节点机<br>器上可以放多个Segment，不同的Segment节点会被赋予不同的<br>端口，同时，Segment之间也不断地进行着交互。为了实现高<br>可用，每个Segment都有对应的备节点（Mirror Segment），分<br>别存在于不同的机器上。</p><blockquote><p>Client一般只能与Master节点进行交互，Client将SQL发给Master，然后Master对SQL进行分析后，再将其分配给所有的Segment进行操作，并且将汇总结果返回给客户端。</p></blockquote><h2 id="数据库存储"><a href="#数据库存储" class="headerlink" title="数据库存储"></a>数据库存储</h2><p>对于数据库来说，在性能上磁盘IO很容易成为瓶颈，由于数据库的特性，每一个SQL基本都是对全表数据进行分析，每次处理的数据量非常大，数据基本上都是没有缓存的（数据字典除外），极度消耗IO资源（全表扫描主要都是顺序IO），所以Greenplum对存储的要求比较高。在文件系统的选择上，在Linux下建议使用XFS，在Solaris下建议使用ZFS，对于Raid根据需求选择硬Raid或软Raid，如果需要更大的空间，建议使用Raid5，如果对性能有更高的要求，可以选择Raid 1+0。</p><h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><p>在确定机器配置的时候，要保证所有机器的网络都是通的，并且每台机器的防火墙都是关闭的，避免存在网络不通的问题。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Greenplum-从入门到放弃（三）&quot;&gt;&lt;a href=&quot;#Greenplum-从入门到放弃（三）&quot; class=&quot;headerlink&quot; title=&quot;Greenplum 从入门到放弃（三）&quot;&gt;&lt;/a&gt;Greenplum 从入门到放弃（三）&lt;/h1&gt;&lt;h2 i
+      
+    
+    </summary>
+    
+      <category term="Greenplum" scheme="https://wxzhongwang.github.io/categories/Greenplum/"/>
+    
+    
+      <category term="Greenplum" scheme="https://wxzhongwang.github.io/tags/Greenplum/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Greenplum 从入门到放弃（二）</title>
+    <link href="https://wxzhongwang.github.io/2019/02/02/Greenplum%20%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
+    <id>https://wxzhongwang.github.io/2019/02/02/Greenplum 从入门到放弃（二）/</id>
+    <published>2019-02-02T02:10:00.000Z</published>
+    <updated>2019-02-25T02:49:42.279Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Greenplum-从入门到放弃（二）"><a href="#Greenplum-从入门到放弃（二）" class="headerlink" title="Greenplum 从入门到放弃（二）"></a>Greenplum 从入门到放弃（二）</h1><h2 id="OLTP与OLAP"><a href="#OLTP与OLAP" class="headerlink" title="OLTP与OLAP"></a>OLTP与OLAP</h2><p>数据库系统一般分为两种类型，一种是面向前台应用的，应用比较简单，但是重吞吐和高并发的OLTP类型；一种是重计算的，对大数据集进行统计分析的OLAP类型。Greenplum属于后者。</p><p>OLTP（On-Line Transaction<br>Processing，联机事务处理）系统也称为生产系统，它是事件驱动的、面向应用的，比如电<br>子商务网站的交易系统就是一个典型的OLTP系统。OLTP的基本特点是：</p><ul><li>数据在系统中产生</li><li>基于交易的处理系统（Transaction-Based）</li><li>每次交易牵涉的数据量很小</li><li>对响应时间要求非常高</li><li>用户数量非常庞大，主要是操作人员</li><li>数据库的各种操作主要基于索引进行</li></ul><p>OLAP（On-Line Analytical Processing，联机分析处理）是基于数据仓库的信息分析处理过程，是数据仓库的用户接口部分。OLAP系统是跨部门的、面向主题的，其基本特点是：</p><ul><li>本身不产生数据，其基础数据来源于生产系统中的操作数据（OperationalData）</li><li>基于查询的分析系统</li><li>复杂查询经常使用多表联结、全表扫描等，牵涉的数据量往往十分庞大</li><li>响应时间与具体查询有很大关系</li><li>用户数量相对较小，其用户主要是业务人员与管理人员</li><li>由于业务问题不固定，数据库的各种操作不能完全基于索引进行</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Greenplum-从入门到放弃（二）&quot;&gt;&lt;a href=&quot;#Greenplum-从入门到放弃（二）&quot; class=&quot;headerlink&quot; title=&quot;Greenplum 从入门到放弃（二）&quot;&gt;&lt;/a&gt;Greenplum 从入门到放弃（二）&lt;/h1&gt;&lt;h2 i
+      
+    
+    </summary>
+    
+      <category term="Greenplum" scheme="https://wxzhongwang.github.io/categories/Greenplum/"/>
+    
+    
+      <category term="Greenplum" scheme="https://wxzhongwang.github.io/tags/Greenplum/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Greenplum 从入门到放弃（一）</title>
+    <link href="https://wxzhongwang.github.io/2019/02/01/Greenplum%20%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>https://wxzhongwang.github.io/2019/02/01/Greenplum 从入门到放弃（一）/</id>
+    <published>2019-02-01T02:10:00.000Z</published>
+    <updated>2019-02-25T02:49:30.643Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Greenplum-从入门到放弃（一）"><a href="#Greenplum-从入门到放弃（一）" class="headerlink" title="Greenplum 从入门到放弃（一）"></a>Greenplum 从入门到放弃（一）</h1><ul><li><p>Greenplum的性能在数据量为TB级别时表现非常优秀，单机性能相比Hadoop要快好几倍</p></li><li><p>Greenplum是基于PostgreSQL的一个完善的数据库，在功能和语法上都要比Hadoop上的SQL引擎Hive好用很多，对于普通用户来说更加容易上手。</p></li><li><p>Greenplum有着完善的工具，相比Hive，整个体系都比较完善，不需要像Hive一样花太多的时间和精力进行改造，非常适合作为一些大型的数据仓库解决方案。</p></li><li><p>Greenplum能够方便地与Hadoop进行结合，可直接把数据写在Hadoop上，还可以直接在数据库上写MapReduce任务，并且配置简单。</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Greenplum-从入门到放弃（一）&quot;&gt;&lt;a href=&quot;#Greenplum-从入门到放弃（一）&quot; class=&quot;headerlink&quot; title=&quot;Greenplum 从入门到放弃（一）&quot;&gt;&lt;/a&gt;Greenplum 从入门到放弃（一）&lt;/h1&gt;&lt;ul&gt;
+
+      
+    
+    </summary>
+    
+      <category term="Greenplum" scheme="https://wxzhongwang.github.io/categories/Greenplum/"/>
+    
+    
+      <category term="Greenplum" scheme="https://wxzhongwang.github.io/tags/Greenplum/"/>
+    
+  </entry>
   
   <entry>
     <title>Java VM 1.0</title>
@@ -421,109 +522,6 @@
     
     
       <category term="Git" scheme="https://wxzhongwang.github.io/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git起步</title>
-    <link href="https://wxzhongwang.github.io/2019/01/24/Git%E8%B5%B7%E6%AD%A5/"/>
-    <id>https://wxzhongwang.github.io/2019/01/24/Git起步/</id>
-    <published>2019-01-24T08:08:43.060Z</published>
-    <updated>2019-01-24T08:12:14.815Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Git起步"><a href="#Git起步" class="headerlink" title="Git起步"></a>Git起步</h1><blockquote><p>安装好第一步一定是配置用户名和邮箱.</p></blockquote><h2 id="配置用户名邮箱"><a href="#配置用户名邮箱" class="headerlink" title="配置用户名邮箱"></a>配置用户名邮箱</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git<span class="built_in"> config </span>--global user.name <span class="string">"shengwangzhong"</span></span><br><span class="line">$ git<span class="built_in"> config </span>--global user.email shengwangzhong@hengtiansoft.com</span><br></pre></td></tr></table></figure><p>再次强调，如果使用了 –global 选项，那么该命令只需要运行一次，因为之后无论你在该系统上做任何事情， Git 都会使用那些信息。 当你想针对特定项目使用不同的用户名称与邮件地址时，可以在那个项目目录下运行没有 –global 选项的命令来配置。</p><h2 id="检查配置"><a href="#检查配置" class="headerlink" title="检查配置"></a>检查配置</h2><p>如果想要检查你的配置，可以使用 git config –list 命令来列出所有 Git 当时能找到的配置。</p><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ git<span class="built_in"> config </span>--list</span><br><span class="line">core.<span class="attribute">symlinks</span>=<span class="literal">false</span></span><br><span class="line">core.<span class="attribute">autocrlf</span>=<span class="literal">true</span></span><br><span class="line">core.<span class="attribute">fscache</span>=<span class="literal">true</span></span><br><span class="line">color.<span class="attribute">diff</span>=auto</span><br><span class="line">color.<span class="attribute">status</span>=auto</span><br><span class="line">color.<span class="attribute">branch</span>=auto</span><br><span class="line">color.<span class="attribute">interactive</span>=<span class="literal">true</span></span><br><span class="line">help.<span class="attribute">format</span>=html</span><br><span class="line">rebase.<span class="attribute">autosquash</span>=<span class="literal">true</span></span><br><span class="line">http.<span class="attribute">sslcainfo</span>=D:/Git/mingw64/ssl/certs/ca-bundle.crt</span><br><span class="line">http.<span class="attribute">sslbackend</span>=openssl</span><br><span class="line">diff.astextplain.<span class="attribute">textconv</span>=astextplain</span><br><span class="line">filter.lfs.<span class="attribute">clean</span>=git-lfs clean -- %f</span><br><span class="line">filter.lfs.<span class="attribute">smudge</span>=git-lfs smudge -- %f</span><br><span class="line">filter.lfs.<span class="attribute">required</span>=<span class="literal">true</span></span><br><span class="line">filter.lfs.<span class="attribute">process</span>=git-lfs filter-process</span><br><span class="line">credential.<span class="attribute">helper</span>=manager</span><br><span class="line">user.<span class="attribute">name</span>=shengwangzhong</span><br><span class="line">user.<span class="attribute">email</span>=shengwangzhong@hengtiansoft.com</span><br><span class="line">credential.<span class="attribute">helper</span>=store</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;Git起步&quot;&gt;&lt;a href=&quot;#Git起步&quot; class=&quot;headerlink&quot; title=&quot;Git起步&quot;&gt;&lt;/a&gt;Git起步&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;安装好第一步一定是配置用户名和邮箱.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;
-      
-    
-    </summary>
-    
-      <category term="Git" scheme="https://wxzhongwang.github.io/categories/Git/"/>
-    
-    
-      <category term="Git" scheme="https://wxzhongwang.github.io/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git帮助</title>
-    <link href="https://wxzhongwang.github.io/2019/01/24/Git%E5%B8%AE%E5%8A%A9/"/>
-    <id>https://wxzhongwang.github.io/2019/01/24/Git帮助/</id>
-    <published>2019-01-24T08:08:38.524Z</published>
-    <updated>2019-01-24T08:10:09.309Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Git帮助"><a href="#Git帮助" class="headerlink" title="Git帮助"></a>Git帮助</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">若你使用 Git 时需要获取帮助，有三种方法可以找到 Git 命令的使用手册：</span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">help</span> &lt;verb&gt;</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git &lt;verb&gt; --<span class="built_in">help</span></span></span><br></pre></td></tr></table></figure><p>例如，要想获得 config 命令的手册，执行<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">help</span> config</span></span><br></pre></td></tr></table></figure></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;Git帮助&quot;&gt;&lt;a href=&quot;#Git帮助&quot; class=&quot;headerlink&quot; title=&quot;Git帮助&quot;&gt;&lt;/a&gt;Git帮助&lt;/h1&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;
-      
-    
-    </summary>
-    
-      <category term="Git" scheme="https://wxzhongwang.github.io/categories/Git/"/>
-    
-    
-      <category term="Git" scheme="https://wxzhongwang.github.io/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git安装</title>
-    <link href="https://wxzhongwang.github.io/2019/01/24/Git%E5%AE%89%E8%A3%85/"/>
-    <id>https://wxzhongwang.github.io/2019/01/24/Git安装/</id>
-    <published>2019-01-24T08:08:31.434Z</published>
-    <updated>2019-01-24T08:10:36.167Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Linux-安装Git"><a href="#Linux-安装Git" class="headerlink" title="Linux 安装Git:"></a>Linux 安装Git:</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">检查是否安装Git</span><br><span class="line">git --version </span><br><span class="line"></span><br><span class="line">在 Ubuntu 这类 Debian 体系的系统上，可以用 apt-<span class="builtin-name">get</span> 安装：</span><br><span class="line">sudo apt-<span class="builtin-name">get</span> install git</span><br><span class="line"></span><br><span class="line">CentOs:</span><br><span class="line">yum install -y git</span><br></pre></td></tr></table></figure><p>window安装比较简单不多说。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;Linux-安装Git&quot;&gt;&lt;a href=&quot;#Linux-安装Git&quot; class=&quot;headerlink&quot; title=&quot;Linux 安装Git:&quot;&gt;&lt;/a&gt;Linux 安装Git:&lt;/h1&gt;&lt;figure class=&quot;highlight routeros&quot;&gt;
-      
-    
-    </summary>
-    
-      <category term="Git" scheme="https://wxzhongwang.github.io/categories/Git/"/>
-    
-    
-      <category term="Git" scheme="https://wxzhongwang.github.io/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>互联网金融行业数仓分层</title>
-    <link href="https://wxzhongwang.github.io/2019/01/13/%E4%BA%92%E8%81%94%E7%BD%91%E9%87%91%E8%9E%8D%E8%A1%8C%E4%B8%9A%E6%95%B0%E4%BB%93%E5%88%86%E5%B1%82/"/>
-    <id>https://wxzhongwang.github.io/2019/01/13/互联网金融行业数仓分层/</id>
-    <published>2019-01-13T03:34:12.678Z</published>
-    <updated>2019-01-13T03:34:54.734Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="互联网金融行业数仓分层"><a href="#互联网金融行业数仓分层" class="headerlink" title="互联网金融行业数仓分层"></a>互联网金融行业数仓分层</h1><h2 id="专业术语"><a href="#专业术语" class="headerlink" title="专业术语"></a>专业术语</h2><ul><li><p>ODL层 （Operational Data Layer）：操作数据层</p><blockquote><p>外部数据什么样，该层数据就是什么样（关系型数据库、JSON格式等)<br>部分关系型数据可以直接转IDL层</p></blockquote></li><li><p>BDL层 （Base Data Layer）：基础数据层</p><blockquote><p>ODL层经过简单格式化解析后存储到BDL层，常见于JSON日志格式的解析。</p></blockquote></li><li><p>IDL层 （Interface Data Layer）：接口层，也称主题表，宽表</p><blockquote><p>由BDL层经过去重、去噪、字典翻译、空值转化，日期格式化、关联JOIN、维度分析等清洗后的数据。如：用户、产品、绑卡、订单、用户行为等明细数据。</p></blockquote></li><li><p>ADL层（Application Data Layer）：应用层 ，也称数据集市</p><blockquote><p>通常与需求对接，由IDL层基于某些维度的深度加工统计汇总等操作转化而来，涉及到多个主题以及tmp数据之间的关联JOIN后的结果。</p></blockquote></li><li><p>DIC层（Dictionary Data Layer）：字典层</p><blockquote><p>存储一些诸如省、市、县区域表、渠道列表、商品类目等等表数据，可以从数据源直接sqoop生成dic_xxx表，也可以通过odl层转化层dic_表。</p></blockquote></li><li><p>TMP层（Temporary Data Layer）：临时层</p><blockquote><p>存储一些中间计算结果</p></blockquote></li></ul><p><img src="https://upload-images.jianshu.io/upload_images/3763924-bfd47ed0607208d2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p><p>简要说明:</p><blockquote><ol><li>层次间的转换没必要循规蹈矩，按部就班，适当做到灵活，避免重复清洗浪费资源</li><li>ODL层干净的关系型数据可以直接转换为IDL层数据，减少计算量</li><li>ODL层侧重与外部对接，BDL层/TMP层/IDL层侧重清洗，IDL层和ADL层侧重对外提供应用服务</li><li>层数太少不够灵活，太多则在数据推翻重洗耗时，时间成本（一个坑）<br>数据源提供的数据越详细越好，避免后期大量重复的清洗工作。</li></ol></blockquote><h2 id="“星型模型”和“雪花模型”"><a href="#“星型模型”和“雪花模型”" class="headerlink" title="“星型模型”和“雪花模型”"></a>“星型模型”和“雪花模型”</h2><p>简单解释：  </p><ul><li>（1）星型模型：事实表+维度表（区域、类目、性别…)等多表通过预先JOIN冗余到一张宽表里去，常见IDL层。</li><li>（2）雪花模型：在计算的时候，才将事实表跟维度表做join。</li></ul><blockquote><p>现在一般都是采用（1）的模式，为什么呢？   预先计算，挺高性能，避免后续重复计算。CPU和内存的资源永远比磁盘空间宝贵的多。<br>至于（2)的方式，有点就是灵活，不需要太多的重复清洗，但是性能不如（1）.</p></blockquote><h2 id="建设思路"><a href="#建设思路" class="headerlink" title="建设思路"></a>建设思路</h2><blockquote><p>从需求出发，逆推应用层ADL结构，进而推导出它涉及的主题表IDL表结构，再推导可能涉及的基础表BDL表结构，最后分析所需的数据源取自何处。<br>需求包含“明确”需求和“潜在”需求。</p></blockquote><h2 id="开发步骤"><a href="#开发步骤" class="headerlink" title="开发步骤"></a>开发步骤</h2><ol><li>创建ODL、BDL、IDL、ADL层表结构(HQL)</li><li>确定数据抽取方案（增量或全量）</li><li>编写sqoop脚本将data同步到ODL层</li><li>编写ODL-&gt;BDL-&gt;IDL-&gt;ADL层ETL清洗脚本(HQL),注意：清洗的顺序，时间<br>确保上一层的数据稳定，减少对下一层的影响</li><li>编写Hue workflow Ooize脚本</li><li>打通Kylin、FineBI、Hive关系，实现数据可视化、可导出目标,将稳定后所有脚本WIKI上保存一份</li></ol><p>其他相关的请参照原博客</p><p>作者：水星有鱼<br>链接：<a href="https://www.jianshu.com/p/f941967aeee8" target="_blank" rel="noopener">https://www.jianshu.com/p/f941967aeee8</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;互联网金融行业数仓分层&quot;&gt;&lt;a href=&quot;#互联网金融行业数仓分层&quot; class=&quot;headerlink&quot; title=&quot;互联网金融行业数仓分层&quot;&gt;&lt;/a&gt;互联网金融行业数仓分层&lt;/h1&gt;&lt;h2 id=&quot;专业术语&quot;&gt;&lt;a href=&quot;#专业术语&quot; class=&quot;
-      
-    
-    </summary>
-    
-      <category term="数据仓库" scheme="https://wxzhongwang.github.io/categories/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
-    
-    
-      <category term="数据仓库" scheme="https://wxzhongwang.github.io/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
     
   </entry>
   
